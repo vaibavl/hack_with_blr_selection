@@ -1,10 +1,10 @@
 {
   "bank_name": "BharatApex Bank & FinTech",
   "version": "2026.4.1-IN",
-  "headquarters": "HITEC City, Cyberabad, Hyderabad, Telangana, India",
+  "headquarters": "MG Road, Bengaluru, Karnataka, India",
   "ifsc_code": "APEX0004921",
   "micr_code": "500099042",
-  "fx_rate_usd_to_inr": 86.50,
+  "fx_rate_usd_to_inr": 94.11,
   "regulatory_framework": "Reserve Bank of India (RBI) & NPCI Guidelines",
   "deposit_insurance": "DICGC Insured up to ₹5,00,000 per depositor",
   "compliance_rules": [

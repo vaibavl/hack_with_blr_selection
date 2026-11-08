@@ -41,7 +41,7 @@ class TestCoreBankingService(unittest.TestCase):
 
     def test_currency_conversion(self):
         conv = core_banking.convert_currency(100.0, "USD", "INR")
-        self.assertEqual(conv["converted_amount"], 8650.00)
+        self.assertEqual(conv["converted_amount"], 9411.00)
 
 if __name__ == "__main__":
     unittest.main()

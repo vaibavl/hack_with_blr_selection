@@ -2,7 +2,7 @@ from typing import Dict, Any, List, Optional
 from datetime import datetime, timezone
 from ..synthetic_data.data_loader import get_customer_by_id, get_transactions_by_customer, get_all_policies
 
-USD_INR_RATE = 86.50
+USD_INR_RATE = 94.11
 
 class CoreBankingService:
     """
@@ -92,7 +92,7 @@ class CoreBankingService:
             "total_liquid_usd": round(total_usd, 2),
             "cards": cards,
             "risk_score": cust["risk_score"],
-            "branch": "HITEC City Cyberabad Branch, Hyderabad",
+            "branch": "MG Road Corporate Branch, Bengaluru",
             "ifsc": policies.get("ifsc_code", "APEX0004921"),
             "fx_rate": fx_rate
         }

@@ -9,7 +9,7 @@
 
 **BharatApex AI** is an enterprise-grade, market-ready **FinTech Customer Support AI Agent** specifically architected for the Indian banking landscape with seamless cross-border global trade capabilities. Engineered with **Vectorize Hindsight Memory**, it eliminates the #1 customer pain point in banking: *having to repeat your story across multiple calls and tickets*.
 
-Located at our **HITEC City Cyberabad Branch in Hyderabad**, BharatApex AI handles **UPI dispute resolution**, **FIRC cross-border inward SWIFT remittances**, **merchant QR Soundbox settlements**, **instant card block/unblock**, **RBI courtesy fee waivers**, and **live dual-currency (₹ INR & $ USD) conversions**.
+Located at our **MG Road Corporate Branch in Bengaluru**, BharatApex AI handles **UPI dispute resolution**, **FIRC cross-border inward SWIFT remittances**, **merchant QR Soundbox settlements**, **instant card block/unblock**, **RBI courtesy fee waivers**, and **live dual-currency (₹ INR & $ USD) conversions**.
 
 ---
 
@@ -160,7 +160,7 @@ Follow this sequence to showcase the system to judges:
 
 ### 2. Show the Multi-Currency Converter
 - Ask: *"Convert $1,200 USD to INR"* or toggle the currency switcher to **Dual (₹ + $)** in the top navigation.
-- **Judge Impact**: Calculates real-time interbank rate ($1 = ₹86.50) with zero-markup forex benefits!
+- **Judge Impact**: Calculates real-time interbank rate ($1 = ₹94.11) with zero-markup forex benefits!
 
 ### 3. Show the MSME Trader Weekend Liquidity & Policy Memory
 - Log out, then log in as **rajesh / Apex@102** (Rajesh, MSME Vyapar).
