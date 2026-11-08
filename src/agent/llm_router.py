@@ -674,6 +674,94 @@ class LLMRouter:
                 f"{closer}"
             )
 
+        # 7.5 Chat-driven money transfer (send money flow)
+        transfer_intent = any(w in msg for w in [
+            "send money", "send funds", "transfer money", "transfer funds", "make a payment",
+            "send ₹", "send rs", "pay to", "bhej", "remit",
+        ]) or (bool(action.get("action") in ("MONEY_TRANSFERRED", "TRANSFER_INFO_REQUIRED")))
+        if transfer_intent:
+            if action.get("action") == "MONEY_TRANSFERRED":
+                closer = self._vary(seed + "|c", [
+                    "It's already visible in your Recent Activities — want a shareable receipt line?",
+                    "Want me to set up a beneficiary alias so you can repeat this in one word next time?",
+                ])
+                return (
+                    f"{empathy}{greeting}! Transfer done — money has moved.\n\n"
+                    f"• Mode: **{action.get('mode', 'UPI')}** | Amount: **{format_inr(action.get('amount_inr', 0))}**\n"
+                    f"• Transaction **{action.get('transaction_id', '')}** | UTR **{action.get('utr_ref', '')}**\n"
+                    f"• Status: **{action.get('status', 'Settled')}** — {action.get('payment_mode', '')} rails\n"
+                    f"• {action.get('debited_account_id', 'Your account')} now shows "
+                    f"**{format_inr(action.get('new_account_balance_inr', 0))}** — dashboard balance updated\n\n"
+                    f"{closer}"
+                )
+            if action.get("action") == "TRANSFER_INFO_REQUIRED":
+                missing = action.get("missing_fields") or ["the amount"]
+                mode = action.get("mode", "")
+                return (
+                    f"{greeting}! Happy to send it for you right here.\n\n"
+                    f"• I still need: **{', '.join(missing)}**\n"
+                    + (f"• For **{mode}**, that's the last piece before I can execute\n"
+                       if mode else "")
+                    + "• Rails reminder: UPI free up to **₹1,00,000/txn** (NPCI) — IMPS instant to ₹5,00,000, "
+                    "NEFT 24x7 T+0 batches, RTGS real-time for **₹2,00,000** and above\n\n"
+                    "Just reply with those details and I'll move the money."
+                )
+            # No tool ran yet (rare in fallback): start the guided flow
+            return (
+                f"{greeting}! I can execute the transfer for you end-to-end.\n\n"
+                "• Which mode: **UPI**, **IMPS**, **NEFT** or **RTGS**?\n"
+                "• UPI needs the **receiver's UPI ID** (name@bank); RTGS/NEFT/IMPS need "
+                "**beneficiary name, account number and IFSC**\n"
+                "• And of course the **amount**\n\n"
+                "Tell me these and I'll debit your account instantly with a UTR reference."
+            )
+
+        # 7.6 Chat-driven investments & savings advisory
+        invest_intent = any(w in msg for w in [
+            "invest", "investment", "investments", "sip", "mutual fund", "nifty", "portfolio",
+        ]) or bool(action.get("action") in ("INVESTMENT_RECOMMENDATIONS", "INVESTMENT_CREATED"))
+        if invest_intent:
+            if action.get("action") == "INVESTMENT_CREATED":
+                closer = self._vary(seed + "|c", [
+                    "Want to ladder another tranche later, or set a monthly auto-invest?",
+                    "Shall I add this to a goal tracker with maturity reminders?",
+                ])
+                return (
+                    f"{greeting}! Booked — this now sits in your **Investments & Savings tab**.\n\n"
+                    f"• **{action.get('product', 'Investment')}** — **{format_inr(action.get('amount_inr', 0))}** "
+                    f"@ **{action.get('rate_pct', '')}% p.a.** for **{action.get('tenure_months', '')} months**\n"
+                    f"• Reference **{action.get('investment_id', '')}** | expected maturity "
+                    f"**{format_inr(action.get('expected_maturity_value_inr', 0))}** on {action.get('maturity_date', '')[:10]}\n"
+                    f"• Debited from {action.get('debited_account_id', 'your account')} — balance updated instantly\n\n"
+                    f"{closer}"
+                )
+            recs = (action or {}).get("recommendations") or []
+            if recs:
+                bullets = []
+                for r in recs:
+                    bullets.append(
+                        f"• **{r['product']}** — indicative **{r['indicative_rate_pct']}% p.a.**, "
+                        f"risk {r['risk']}, min {format_inr(r['min_amount_inr'])} — _{r['why']}_")
+                surplus = action.get("investable_surplus_inr", 0)
+                due = self._vary(seed + "|c", [
+                    "Say the word — 'invest ₹X in <product>' — and I'll book it instantly, dashboard tab included.",
+                    "Pick one and I'll place it right now in your Investments & Savings tab.",
+                ])
+                return (
+                    f"{greeting}! Based on your **{action.get('customer_tier', tier)}** profile and investable "
+                    f"surplus of **{format_inr(surplus)}**, these look most viable today:\n\n"
+                    + "\n".join(bullets) +
+                    f"\n\n_{action.get('disclaimer', '')}_\n\n{due}"
+                )
+            # Intent but nothing returned yet
+            return (
+                f"{greeting}! I size options to your actual balance before saying a word, so the advice is real.\n\n"
+                "• Tell me an **amount and goal** (e.g. '₹50,000 for 1 year, low risk')\n"
+                "• I'll shortlist FDs (6.85–7.65%), corporate bond funds (~8.2%), or a Nifty 50 index SIP\n"
+                "• Say yes to any recommendation and I'll book it — it lands in your **Investments & Savings tab**\n\n"
+                "What's the amount in mind?"
+            )
+
         # 8. UPI Transfer Guidance & NPCI Limits
         if any(w in msg for w in ["upi", "transfer money via upi", "send via upi", "gpay",
                                   "phonepe", "paytm", "vpa"]):

@@ -27,7 +27,12 @@
         </div>
         <div class="field-group">
           <label for="login-password">Password</label>
-          <input id="login-password" type="password" autocomplete="current-password" required class="text-input" />
+          <div class="password-wrap">
+            <input id="login-password" type="password" autocomplete="current-password" required class="text-input" />
+            <button type="button" id="toggle-pw-btn" class="pw-toggle" onclick="togglePassword()" title="Show / hide password" aria-label="Show or hide password">
+              <i id="toggle-pw-icon" class="fa-solid fa-eye"></i>
+            </button>
+          </div>
         </div>
         <p id="login-error" class="login-error hidden"></p>
         <button id="login-btn" type="submit" class="btn-primary btn-block">Sign in</button>
@@ -64,6 +69,7 @@
         <a class="sb-link" href="#stats-row"><i class="fa-solid fa-address-card"></i><span>Accounts</span></a>
         <a class="sb-link" href="#wallet-panel"><i class="fa-solid fa-credit-card"></i><span>Cards</span></a>
         <a class="sb-link" href="#activities-panel"><i class="fa-solid fa-right-left"></i><span>Transactions</span></a>
+        <a class="sb-link" href="#investments-panel"><i class="fa-solid fa-seedling"></i><span>Investments</span></a>
         <a class="sb-link" href="#chat-section"><i class="fa-solid fa-comments"></i><span>Chat</span></a>
         <span class="sb-label">Manage</span>
         <a class="sb-link" href="#chat-section"><i class="fa-solid fa-brain"></i><span>Memory</span></a>
@@ -294,6 +300,17 @@
             <span class="panel-note mono">UTR / Ref Verified</span>
           </div>
           <div id="transactions-container" class="tx-list">
+            <!-- Dynamically populated -->
+          </div>
+        </section>
+
+        <!-- Investments & Savings tab (populated by chat-driven bookings + standing FDs) -->
+        <section id="investments-panel" class="panel">
+          <div class="panel-head">
+            <h2 class="panel-title"><i class="fa-solid fa-seedling"></i> Investments & Savings</h2>
+            <span class="panel-note mono" id="investments-total">Total Invested: ₹ —</span>
+          </div>
+          <div id="investments-container" class="inv-list">
             <!-- Dynamically populated -->
           </div>
         </section>

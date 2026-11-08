@@ -93,6 +93,7 @@ def overview(session: dict = Session):
     return {
         "profile": core_banking.get_account_summary(cid),
         "transactions": core_banking.get_transactions(cid, limit=10),
+        "investments": core_banking.get_investments(cid),
     }
 
 

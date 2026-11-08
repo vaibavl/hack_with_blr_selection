@@ -1234,3 +1234,81 @@ body.light-theme .chat-bubble-user { color: #fff; }
   .tx-side { flex-direction: column; align-items: flex-end; gap: 4px; }
   .tx-desc { max-width: 160px; }
 }
+
+/* ---------- Investments & Savings tab ---------- */
+.inv-list { display: flex; flex-direction: column; }
+.inv-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  padding: 14px 6px; border-bottom: 1px solid var(--border-subtle);
+}
+.inv-row:last-child { border-bottom: none; }
+.inv-row:hover { background: var(--bg-card-2); }
+.inv-main { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.inv-ico {
+  width: 38px; height: 38px; flex: 0 0 38px; border-radius: 12px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--accent-soft); color: var(--accent);
+}
+.inv-info { min-width: 0; }
+.inv-name { font-weight: 600; font-size: 14px; color: var(--text-main); }
+.inv-meta { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+.inv-span { font-size: 11px; color: var(--text-muted); opacity: 0.85; margin-top: 2px; }
+.inv-side { text-align: right; flex-shrink: 0; }
+.inv-amount { font-weight: 600; font-size: 15px; color: var(--text-main); }
+.inv-expected { font-size: 11.5px; color: var(--pos); margin-top: 2px; }
+.inv-est { color: var(--text-muted); font-size: 10.5px; }
+.inv-empty {
+  color: var(--text-muted); font-size: 13px; padding: 10px 4px;
+}
+
+/* ---------- In-chat success receipt screens ---------- */
+.receipt-card {
+  margin-top: 10px;
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--pos);
+  background: var(--bg-card-2);
+  border-radius: 12px;
+  padding: 12px 14px;
+  max-width: 420px;
+}
+.receipt-invest { border-left-color: var(--accent); }
+.receipt-head {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 700; font-size: 13px; color: var(--pos);
+}
+.receipt-invest .receipt-head { color: var(--accent); }
+.receipt-check {
+  width: 22px; height: 22px; border-radius: 50%; flex: 0 0 22px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--pos-bg); color: var(--pos); font-size: 11px;
+}
+.receipt-invest-check { background: var(--accent-soft); color: var(--accent); }
+.receipt-amount {
+  font-size: 21px; font-weight: 700; color: var(--text-bright);
+  margin: 7px 0 4px; letter-spacing: 0.3px;
+}
+.receipt-line {
+  display: flex; justify-content: space-between; gap: 12px;
+  font-size: 12px; padding: 3px 0; color: var(--text-muted);
+}
+.receipt-line strong {
+  color: var(--text-main); font-weight: 600; text-align: right;
+  overflow-wrap: anywhere;
+}
+.receipt-foot {
+  margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border-color);
+  font-size: 10.5px; color: var(--text-muted);
+}
+
+/* ---------- Login: show / hide password toggle ---------- */
+.password-wrap { position: relative; display: flex; align-items: center; }
+.password-wrap .text-input { width: 100%; padding-right: 44px; }
+.pw-toggle {
+  position: absolute; right: 8px;
+  width: 32px; height: 32px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; border: none; border-radius: 8px;
+  color: var(--text-muted); cursor: pointer; font-size: 14px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.pw-toggle:hover { color: var(--text-main); background: var(--bg-badge); }

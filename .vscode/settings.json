@@ -9,5 +9,6 @@
   ],
   "python.testing.unittestEnabled": true,
   "python.testing.pytestEnabled": false,
-  "python-envs.defaultEnvManager": "ms-python.python:system"
+  "python-envs.defaultEnvManager": "ms-python.python:system",
+  "python.terminal.useEnvFile": true
 }

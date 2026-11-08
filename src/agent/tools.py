@@ -61,6 +61,44 @@ TOOL_SCHEMAS: List[Dict[str, Any]] = [
         "parameters": {"type": "object", "properties": {
             "destination": {"type": "string"}},
             "required": ["destination"]}}},
+    {"type": "function", "function": {
+        "name": "send_money",
+        "description": ("Execute a money transfer for the customer on UPI, RTGS, NEFT or IMPS rails and debit their "
+                        "balance immediately. For UPI you MUST have the receiver's UPI ID. For RTGS/NEFT/IMPS you must "
+                        "have the beneficiary name, account number and IFSC. If any required detail is missing, ASK the "
+                        "customer in chat first — do NOT guess or fabricate placeholders."),
+        "parameters": {"type": "object", "properties": {
+            "mode": {"type": "string", "enum": ["UPI", "RTGS", "NEFT", "IMPS"],
+                     "description": "Payment rail. Ask the customer which mode they want if not clear from context."},
+            "amount_inr": {"type": "number", "description": "Amount to send in INR"},
+            "upi_id": {"type": "string", "description": "Receiver's UPI ID (required for UPI)"},
+            "beneficiary_name": {"type": "string", "description": "Receiver's full name (required for RTGS/NEFT/IMPS)"},
+            "account_number": {"type": "string", "description": "Receiver's account number (required for RTGS/NEFT/IMPS)"},
+            "ifsc_code": {"type": "string", "description": "Receiver's bank IFSC code (required for RTGS/NEFT/IMPS)"},
+            "note": {"type": "string", "description": "Optional remark / purpose of payment"}},
+            "required": ["mode", "amount_inr"]}}},
+    {"type": "function", "function": {
+        "name": "get_investment_recommendations",
+        "description": ("Get personalized, viable investment recommendations (FDs, liquid funds, corporate bonds, index "
+                        "SIPs, NRE/USD deposits...) based on the customer's tier and investable surplus. Always call this "
+                        "BEFORE recommending any investment."),
+        "parameters": {"type": "object", "properties": {
+            "goal": {"type": "string", "description": "Optional goal stated by the customer, e.g. 'tax saving', 'car purchase'"}}}}},
+    {"type": "function", "function": {
+        "name": "get_investment_portfolio",
+        "description": "List the customer's current investments & savings holdings (including FD accounts and new bookings).",
+        "parameters": {"type": "object", "properties": {}}}},
+    {"type": "function", "function": {
+        "name": "create_investment",
+        "description": ("Book a new investment for the customer from their liquid balance after they explicitly agree. "
+                        "Debits the amount immediately and adds it to their Investments & Savings tab."),
+        "parameters": {"type": "object", "properties": {
+            "product": {"type": "string",
+                        "description": "One of the recommended products, e.g. 'Nifty 50 Index Fund SIP', '3-Yr Tax Saver Fixed Deposit', 'Apex 1-Yr Fixed Deposit', 'Liquid Mutual Fund', 'Corporate Bond Fund', 'Recurring Deposit', 'NRE Fixed Deposit', 'USD Fixed Deposit'"},
+            "amount_inr": {"type": "number", "description": "Amount to invest in INR"},
+            "tenure_months": {"type": "integer", "description": "Optional tenure override in months"},
+            "goal": {"type": "string", "description": "Optional goal this investment is for"}},
+            "required": ["product", "amount_inr"]}}},
 ]
 
 
@@ -145,6 +183,35 @@ class ToolExecutor:
     def _t_register_travel_notice(self, destination: str):
         return {"success": True, "action": "TRAVEL_NOTICE_REGISTERED", "destination": destination,
                 "message": f"Travel notice registered for {destination}. Card whitelisted for POS/ATM there."}
+
+    def _t_send_money(self, mode: str, amount_inr: float, upi_id=None, beneficiary_name=None,
+                      account_number=None, ifsc_code=None, note=None):
+        if account_number is not None:
+            account_number = str(account_number).strip()
+        return core_banking.execute_transfer(
+            self.customer_id,
+            mode=mode,
+            amount_inr=amount_inr,
+            upi_id=upi_id,
+            beneficiary_name=beneficiary_name,
+            account_number=account_number,
+            ifsc_code=ifsc_code,
+            note=note,
+        )
+
+    def _t_get_investment_recommendations(self, goal: str = ""):
+        return core_banking.get_investment_recommendations(self.customer_id, goal=goal)
+
+    def _t_get_investment_portfolio(self):
+        rows = core_banking.get_investments(self.customer_id)
+        invested = sum(float(r.get("amount_inr") or 0) for r in rows)
+        return {"success": True, "investments": rows, "total_invested_inr": round(invested, 2)}
+
+    def _t_create_investment(self, product: str, amount_inr: float,
+                             tenure_months=None, goal: str = ""):
+        return core_banking.create_investment(
+            self.customer_id, product, amount_inr,
+            tenure_months=tenure_months, goal=goal)
 
 
 def result_to_json(result: Dict[str, Any]) -> str:

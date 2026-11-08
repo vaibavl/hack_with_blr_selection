@@ -18,18 +18,24 @@ const quickPromptsByCustomer = {
   "CUST-IN-101": [
     { label: "SWIFT wire on hold?", text: "Why is my $5,000 SWIFT wire from Silicon Valley Bank on hold?" },
     { label: "My balances", text: "What is my live account balance across NRE checking and USD reserve?" },
+    { label: "Send via UPI", text: "Send money to my architect via UPI, his UPI id is architect28@ybl" },
+    { label: "Investment advice", text: "What investments would be viable for me right now?" },
     { label: "Convert $1,200", text: "Convert $1,200 USD to INR at today's interbank rate" },
     { label: "IFSC & UPI ID", text: "What is my IFSC code and linked UPI ID?" }
   ],
   "CUST-IN-102": [
     { label: "Weekend settlement", text: "Where is my weekend Soundbox & QR collection of ₹3,85,000? I need it for Monday dispatches." },
     { label: "NACH fee waiver", text: "Can you waive my ₹350 NACH mandate return fee as a courtesy?" },
+    { label: "Pay supplier RTGS", text: "Send ₹4,50,000 to my supplier Nizamabad Agro Wholesale via RTGS — account number 5010023456789, IFSC HDFC0000123, beneficiary name Suresh Agarwal." },
+    { label: "Invest my surplus", text: "Recommend viable investment options for my monthly surplus." },
     { label: "Block my card", text: "Block my RuPay business card immediately, I left it at my Begum Bazaar shop." },
     { label: "FD rates", text: "What are the latest 3-year Fixed Deposit interest rates for MSME?" }
   ],
   "CUST-IN-103": [
     { label: "AMC charge", text: "Why was ₹250 debited for card maintenance? Can you reverse it?" },
+    { label: "Send via UPI", text: "I want to send ₹6,000 to my roommate via UPI" },
     { label: "Dispute a charge", text: "I did not authorize the ₹899 international cloud charge, please refund me." },
+    { label: "Investment advice", text: "What investments would be viable for me this year?" },
     { label: "Unblock card", text: "Please unblock my RuPay card right now." },
     { label: "UPI limits", text: "Can I transfer money via UPI to my brother? What are the limits?" }
   ]
@@ -68,13 +74,24 @@ async function api(path, options = {}) {
    Login / logout (one customer per login; log out to switch)
    ========================================================================== */
 
+function togglePassword() {
+  const input = document.getElementById("login-password");
+  const icon = document.getElementById("toggle-pw-icon");
+  if (!input) return;
+  const show = input.type === "password";
+  input.type = show ? "text" : "password";
+  if (icon) icon.className = show ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
+}
+
 function showLogin() {
   currentCustomerId = null;
   currentCustomerData = null;
   currentConversationId = null;
   document.getElementById("login-overlay")?.classList.remove("hidden");
   const pw = document.getElementById("login-password");
-  if (pw) pw.value = "";
+  if (pw) { pw.value = ""; pw.type = "password"; }
+  const icon = document.getElementById("toggle-pw-icon");
+  if (icon) icon.className = "fa-solid fa-eye";
   document.getElementById("login-username")?.focus();
 }
 
@@ -144,6 +161,7 @@ async function refreshOverview() {
     renderCustomerHeader(data.profile);
     renderLedger(data.profile, data.transactions);
     renderStatCards(data.profile, data.transactions);
+    renderInvestments(data.investments);
   } catch (err) {
     if (err.message !== "unauthenticated") console.error("Overview error:", err);
   }
@@ -220,6 +238,7 @@ function setCurrencyMode(mode) {
   if (currentCustomerData) {
     renderLedger(currentCustomerData.profile, currentCustomerData.transactions);
     renderStatCards(currentCustomerData.profile, currentCustomerData.transactions);
+    renderInvestments(currentCustomerData.investments);
   }
 }
 
@@ -414,6 +433,75 @@ function renderCashflow(transactions) {
 }
 
 /* ==========================================================================
+   Investments & Savings tab (chat-driven bookings + standing FD accounts)
+   ========================================================================== */
+
+const INV_ICONS = {
+  "fixed deposit": "fa-vault",
+  "recurring deposit": "fa-calendar-check",
+  "mutual fund": "fa-chart-line",
+  "mutual fund - equity": "fa-chart-line",
+  "digital gold": "fa-coins",
+  "forex deposit": "fa-earth-asia",
+};
+
+function invIcon(category) {
+  const key = String(category || "").toLowerCase().trim();
+  return INV_ICONS[key] || "fa-chart-pie";
+}
+
+function renderInvestments(investments) {
+  const container = document.getElementById("investments-container");
+  if (!container) return;
+  container.innerHTML = "";
+
+  const items = investments || [];
+  if (!items.length) {
+    container.innerHTML = `
+      <p class="inv-empty">No active investments yet. Ask your assistant in chat —
+      say “what investments are viable for me?” and your accepted recommendations will show up here.</p>`;
+    const totalEl = document.getElementById("investments-total");
+    if (totalEl) totalEl.textContent = "Total Invested: ₹0.00";
+    return;
+  }
+
+  const total = items.reduce((s, i) => s + (i.amount_inr || 0), 0);
+  const totalEl = document.getElementById("investments-total");
+  if (totalEl) totalEl.textContent = `Total Invested: ₹${total.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+  items.forEach(i => {
+    const row = document.createElement("div");
+    row.className = "inv-row";
+
+    const rate = i.rate_pct ? `${Number(i.rate_pct).toLocaleString("en-IN")} % p.a.` : "Rate on request";
+    const tenure = i.tenure_months ? `${i.tenure_months} months` : "—";
+    const span = i.start_date
+      ? `${String(i.start_date).slice(0, 10)} → ${i.maturity_date ? String(i.maturity_date).slice(0, 10) : "—"}`
+      : "Standing booking (pre-booked before chat)";
+    const projected = i.returns_projected ? " projected" : "";
+    const maturity = i.expected_maturity_value_inr
+      ? formatCurrency(i.expected_maturity_value_inr)
+      : "—";
+
+    row.innerHTML = `
+      <div class="inv-main">
+        <span class="inv-ico"><i class="fa-solid ${invIcon(i.category)}"></i></span>
+        <div class="inv-info">
+          <div class="inv-name">${escapeHtml(i.product || i.category || "Investment")}</div>
+          <div class="inv-meta mono">${maskId(i.investment_id)} • ${rate} • ${tenure}</div>
+          <div class="inv-span mono">${escapeHtml(span)}</div>
+        </div>
+      </div>
+      <div class="inv-side">
+        <div class="inv-amount mono">${formatCurrency(i.amount_inr || 0)}</div>
+        <div class="inv-expected mono">→ ${maturity} <span class="inv-est">est.${projected} maturity</span></div>
+        <span class="pill ${String(i.status || "").toLowerCase().includes("active") ? "pill-pos" : "pill-warn"}">${escapeHtml(i.status || "Active")}</span>
+      </div>`;
+    container.appendChild(row);
+  });
+}
+
+/* ==========================================================================
    Chat History panel (ChatGPT-style)
    ========================================================================== */
 
@@ -535,9 +623,11 @@ function renderWelcomeMessage() {
     <div class="msg-avatar">AC</div>
     <div class="chat-bubble-bot resp-bubble">
       <p class="msg-text">
-        Namaste, <strong>${escapeHtml(first)}</strong>! I'm your ClientCare assistant. I can check balances and transactions,
-        block or unblock your card, handle disputes, fee waivers, SWIFT/FIRC holds, forex conversions and more.
-        What can I help you with today?
+        Namaste, <strong>${escapeHtml(first)}</strong>! I'm your ClientCare assistant. I manage your money end-to-end —
+        I can send money for you on UPI, IMPS, NEFT or RTGS (just say “send money” and I'll walk you through it), 
+        recommend viable investments and book any you approve into your Investments & Savings tab. I can also check
+        balances and transactions, block or unblock your card, handle disputes, fee waivers, SWIFT/FIRC holds and forex
+        conversions. What can I help you with today?
       </p>
     </div>`;
   container.appendChild(div);
@@ -677,6 +767,43 @@ function actionBadgeHtml(actions) {
     </div>`).join("");
 }
 
+/* Success receipt screens shown in-chat for executed transactions/investments */
+function receiptCardHtml(actions) {
+  const acts = actions || [];
+  const tf = acts.find(a => a && a.action === "MONEY_TRANSFERRED" && a.success);
+  if (tf) {
+    const rows = [
+      ["Mode", tf.mode || "—"],
+      ["To", tf.receiver || "—"],
+      ["Payment ID", tf.transaction_id || "—"],
+      ["UTR Ref", tf.utr_ref || "—"],
+      ["Status", tf.status || "Settled"],
+      ["Debited A/c", `${tf.debited_account_id || "—"} • New Bal ${formatCurrency(tf.new_account_balance_inr || 0)}`],
+    ];
+    return `
+      <div class="receipt-card">
+        <div class="receipt-head"><span class="receipt-check"><i class="fa-solid fa-check"></i></span> Payment Successful</div>
+        <div class="receipt-amount mono">${formatCurrency(tf.amount_inr || 0)}</div>
+        ${rows.map(([k, v]) => `<div class="receipt-line"><span>${k}</span><strong>${escapeHtml(String(v))}</strong></div>`).join("")}
+        <div class="receipt-foot mono"><i class="fa-solid fa-rotate"></i> Balance &amp; Recent Activities updated in real time</div>
+      </div>`;
+  }
+  const inv = acts.find(a => a && a.action === "INVESTMENT_CREATED" && a.success);
+  if (inv) {
+    return `
+      <div class="receipt-card receipt-invest">
+        <div class="receipt-head"><span class="receipt-check receipt-invest-check"><i class="fa-solid fa-seedling"></i></span> Investment Booked</div>
+        <div class="receipt-amount mono">${escapeHtml(inv.product || "Investment")}</div>
+        <div class="receipt-line"><span>Amount</span><strong>${formatCurrency(inv.amount_inr || 0)}</strong></div>
+        <div class="receipt-line"><span>Rate</span><strong>${escapeHtml(String(inv.rate_pct || "—"))} % p.a. • ${escapeHtml(String(inv.tenure_months || "—"))} mo</strong></div>
+        <div class="receipt-line"><span>Est. maturity</span><strong>${formatCurrency(inv.expected_maturity_value_inr || 0)} (${escapeHtml(String(inv.maturity_date || "").slice(0, 10))})</strong></div>
+        <div class="receipt-line"><span>Reference</span><strong>${escapeHtml(inv.investment_id || "—")}</strong></div>
+        <div class="receipt-foot mono"><i class="fa-solid fa-rotate"></i> Visible now in your Investments &amp; Savings tab</div>
+      </div>`;
+  }
+  return null;
+}
+
 function renderAgentResponse(data, animate) {
   const container = document.getElementById("messages-container");
   if (!container) return;
@@ -693,7 +820,7 @@ function renderAgentResponse(data, animate) {
   const badges = div.querySelector(".action-badges");
   const finish = () => {
     body.innerHTML = parseMarkdown(data.reply || data.content || "");
-    badges.innerHTML = actionBadgeHtml(data.actions);
+    badges.innerHTML = receiptCardHtml(data.actions) || actionBadgeHtml(data.actions);
     container.scrollTop = container.scrollHeight;
   };
   if (!animate) { finish(); return; }
