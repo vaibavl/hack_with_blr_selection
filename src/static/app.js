@@ -12,7 +12,7 @@ let isBenchmarkMode = false;
 let isSending = false;
 let currencyMode = "INR"; // "INR", "USD", or "DUAL"
 
-const FX_RATE = 86.50;
+const FX_RATE = 94.11;
 
 const quickPromptsByCustomer = {
   "CUST-IN-101": [
@@ -143,6 +143,7 @@ async function refreshOverview() {
     currentCustomerData = data;
     renderCustomerHeader(data.profile);
     renderLedger(data.profile, data.transactions);
+    renderStatCards(data.profile, data.transactions);
   } catch (err) {
     if (err.message !== "unauthenticated") console.error("Overview error:", err);
   }
@@ -170,7 +171,7 @@ function initTheme() {
   if (savedTheme === "light") {
     body.classList.add("light-theme");
     if (icon) {
-      icon.className = "fa-solid fa-moon text-blue-600";
+      icon.className = "fa-solid fa-moon";
     }
     if (label) {
       label.textContent = "Dark";
@@ -178,7 +179,7 @@ function initTheme() {
   } else {
     body.classList.remove("light-theme");
     if (icon) {
-      icon.className = "fa-solid fa-sun text-amber-500";
+      icon.className = "fa-solid fa-sun";
     }
     if (label) {
       label.textContent = "Bright";
@@ -194,11 +195,11 @@ function toggleTheme() {
 
   if (isLight) {
     localStorage.setItem("apex_theme", "light");
-    if (icon) icon.className = "fa-solid fa-moon text-blue-600";
+    if (icon) icon.className = "fa-solid fa-moon";
     if (label) label.textContent = "Dark";
   } else {
     localStorage.setItem("apex_theme", "dark");
-    if (icon) icon.className = "fa-solid fa-sun text-amber-500";
+    if (icon) icon.className = "fa-solid fa-sun";
     if (label) label.textContent = "Bright";
   }
 }
@@ -210,14 +211,15 @@ function toggleTheme() {
 function setCurrencyMode(mode) {
   currencyMode = mode;
   document.querySelectorAll("[id^='curr-']").forEach(btn => {
-    btn.className = "px-2.5 py-1 rounded font-medium text-[var(--text-muted)] hover:text-[var(--text-main)]";
+    btn.className = "curr-chip";
   });
   const activeBtn = document.getElementById(`curr-${mode.toLowerCase()}`);
   if (activeBtn) {
-    activeBtn.className = "px-2.5 py-1 rounded font-medium text-blue-600 bg-blue-500/10 border border-blue-500/30";
+    activeBtn.className = "curr-chip curr-chip-active";
   }
   if (currentCustomerData) {
     renderLedger(currentCustomerData.profile, currentCustomerData.transactions);
+    renderStatCards(currentCustomerData.profile, currentCustomerData.transactions);
   }
 }
 
@@ -251,6 +253,20 @@ function startMicInput() {
   };
 }
 
+/* ---- Small formatting helpers for the redesigned widgets ---- */
+
+function maskId(val) {
+  const s = String(val || "");
+  return s.length > 6 ? "•••• " + s.slice(-4) : s;
+}
+
+function statusPillClass(status) {
+  const s = String(status || "").toLowerCase();
+  if (s.includes("hold") || s.includes("pending") || s.includes("progress")) return "pill pill-warn";
+  if (s.includes("fail") || s.includes("revers") || s.includes("bounce")) return "pill pill-neg";
+  return "pill pill-pos";
+}
+
 function renderLedger(profile, transactions) {
   const accountContainer = document.getElementById("account-cards-container");
   if (!accountContainer) return;
@@ -258,25 +274,24 @@ function renderLedger(profile, transactions) {
 
   (profile.accounts || []).forEach(acc => {
     const card = document.createElement("div");
-    card.className = "p-3 rounded-lg bg-[var(--bg-strip)] border border-[var(--border-color)] flex items-center justify-between";
-    
+    card.className = "wallet-tile";
+
     const balInr = acc.balance_inr !== undefined ? acc.balance_inr : acc.balance;
     const formattedBal = formatCurrency(balInr, acc.currency);
-    
-    const holdBadge = acc.hold_amount > 0 
-      ? `<span class="text-[10px] text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/30 font-mono block mt-1">Under Hold: ${formatCurrency(acc.hold_amount)}</span>` 
+
+    const holdBadge = acc.hold_amount > 0
+      ? `<span class="hold-badge">Under Hold: ${formatCurrency(acc.hold_amount)}</span>`
       : "";
 
     card.innerHTML = `
-      <div>
-        <div class="text-xs font-semibold text-[var(--text-main)]">${acc.type}</div>
-        <div class="text-[10px] text-[var(--text-muted)] font-mono mt-0.5">${acc.account_id} • ${acc.currency}</div>
+      <div class="wt-left">
+        <div class="wt-type">${acc.type}</div>
+        <div class="wt-meta mono">${maskId(acc.account_id)} • ${acc.currency}</div>
       </div>
-      <div class="text-right">
-        <div class="text-xs font-bold text-emerald-600 font-mono">${formattedBal}</div>
+      <div class="wt-right">
+        <div class="wt-bal mono">${formattedBal}</div>
         ${holdBadge}
-      </div>
-    `;
+      </div>`;
     accountContainer.appendChild(card);
   });
 
@@ -286,52 +301,116 @@ function renderLedger(profile, transactions) {
     cardsContainer.innerHTML = "";
     (profile.cards || []).forEach(c => {
       const isFrozen = c.status.toLowerCase().includes("frozen");
-      const statusClass = isFrozen 
-        ? "text-rose-600 bg-rose-500/10 border-rose-500/30" 
-        : "text-emerald-600 bg-emerald-500/10 border-emerald-500/30";
-      
+      const statusClass = isFrozen ? "pill-neg" : "pill-pos";
+
       const div = document.createElement("div");
-      div.className = "flex items-center justify-between p-2 rounded-lg bg-[var(--bg-strip)] border border-[var(--border-color)] text-xs";
+      div.className = "regcard";
       div.innerHTML = `
-        <div class="flex items-center gap-2">
-          <i class="fa-solid fa-credit-card text-[var(--text-muted)] text-xs"></i>
+        <div class="rc-left">
+          <i class="fa-solid fa-credit-card rc-ico"></i>
           <div>
-            <div class="text-[var(--text-main)] font-medium text-xs font-mono">${c.masked_number}</div>
-            <div class="text-[10px] text-[var(--text-muted)]">${c.network || 'RuPay'}</div>
+            <div class="rc-num mono">${c.masked_number}</div>
+            <div class="rc-net">${c.network || 'RuPay'}</div>
           </div>
         </div>
-        <span class="text-[10px] px-2 py-0.5 rounded border font-mono font-medium ${statusClass}">${c.status}</span>
-      `;
+        <span class="pill ${statusClass}">${c.status}</span>`;
       cardsContainer.appendChild(div);
     });
   }
 
-  // Transactions
+  // Transactions (Recent Activities table)
   const txContainer = document.getElementById("transactions-container");
   if (txContainer) {
     txContainer.innerHTML = "";
     (transactions || []).forEach(t => {
       const div = document.createElement("div");
-      div.className = "p-2 rounded bg-[var(--bg-strip)] border border-[var(--border-color)] flex items-center justify-between text-xs";
-      
+      div.className = "tx-row";
+
       const amtInr = t.amount_inr !== undefined ? t.amount_inr : t.amount;
       const isCredit = amtInr > 0;
-      const amtColor = isCredit ? "text-emerald-600" : "text-[var(--text-main)]";
       const prefix = isCredit ? "+" : "";
-      
+
       div.innerHTML = `
-        <div class="truncate max-w-[190px]">
-          <div class="font-medium text-[var(--text-main)] truncate text-[11px]">${t.description}</div>
-          <div class="text-[10px] text-[var(--text-muted)] font-mono">${t.date.slice(0, 10)} • ${t.payment_mode || 'UPI'}</div>
+        <div class="tx-main">
+          <span class="tx-ico">${(t.description || "T").trim().charAt(0).toUpperCase()}</span>
+          <div class="tx-info">
+            <div class="tx-desc">${t.description}</div>
+            <div class="tx-meta mono">${t.date.slice(0, 10)} • ${t.payment_mode || 'UPI'} • ${t.utr_ref || t.status}</div>
+          </div>
         </div>
-        <div class="text-right">
-          <div class="font-semibold font-mono text-[11px] ${amtColor}">${prefix}${formatCurrency(Math.abs(amtInr))}</div>
-          <div class="text-[9px] text-[var(--text-muted)] truncate max-w-[95px] font-mono">${t.utr_ref || t.status}</div>
-        </div>
-      `;
+        <div class="tx-side">
+          <div class="tx-amt mono ${isCredit ? "tx-credit" : ""}">${prefix}${formatCurrency(Math.abs(amtInr))}</div>
+          <span class="pill ${statusPillClass(t.status)}">${t.status}</span>
+        </div>`;
       txContainer.appendChild(div);
     });
   }
+}
+
+/* ==========================================================================
+   Stat cards + Cash Flow chart (derived from the same /api/overview data)
+   ========================================================================== */
+
+function renderStatCards(profile, transactions) {
+  if (!profile) return;
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  const accounts = profile.accounts || [];
+  const balOf = acc => (acc.balance_inr !== undefined ? acc.balance_inr : (acc.balance || 0));
+  const total = accounts.reduce((s, a) => s + balOf(a), 0);
+
+  // Hero card: masked primary account + total relationship balance
+  const primary = accounts[0];
+  if (primary) set("stat-balance-account", maskId(primary.account_id));
+  set("stat-balance-value", formatCurrency(total));
+
+  // Savings / deposit card (first INR account)
+  const savings = accounts.find(a => (a.currency || "INR") === "INR") || primary;
+  if (savings) {
+    set("stat-savings-name", `${savings.type} • ${maskId(savings.account_id)}`);
+    set("stat-savings-value", formatCurrency(balOf(savings)));
+  }
+
+  // Forex wallet card (USD holdings)
+  const forex = accounts.find(a => (a.currency || "") === "USD");
+  if (forex) {
+    set("stat-forex-name", `${forex.type || "Forex Wallet"} • USD Reserve`);
+    set("stat-forex-value", formatCurrency(balOf(forex)));
+  }
+
+  // Net-flow pill derived from the latest transactions
+  let credits = 0, debits = 0;
+  (transactions || []).forEach(t => {
+    const a = t.amount_inr !== undefined ? t.amount_inr : (t.amount || 0);
+    if (a > 0) credits += a; else debits += Math.abs(a);
+  });
+  const net = credits - debits;
+  const base = credits + debits;
+  const pct = base ? Math.abs((net / base) * 100) : 0;
+  const pill = document.getElementById("stat-balance-pill");
+  if (pill) {
+    pill.classList.toggle("pct-neg", net < 0);
+    set("stat-balance-pill-text", `${net >= 0 ? "+" : "−"}${pct.toFixed(1)}% vs last cycle`);
+  }
+
+  renderCashflow(transactions);
+}
+
+function renderCashflow(transactions) {
+  const chart = document.getElementById("cashflow-chart");
+  if (!chart) return;
+  const txs = (transactions || []).slice(0, 16).reverse();
+  const amounts = txs.map(t => Math.abs(t.amount_inr !== undefined ? t.amount_inr : (t.amount || 0)));
+  const max = Math.max(...amounts, 1);
+  chart.innerHTML = "";
+  txs.forEach(t => {
+    const amtInr = t.amount_inr !== undefined ? t.amount_inr : (t.amount || 0);
+    const isCredit = amtInr > 0;
+    const bar = document.createElement("div");
+    bar.className = "cf-bar " + (isCredit ? "cf-in" : "cf-out");
+    bar.style.height = Math.max(6, Math.round((Math.abs(amtInr) / max) * 100)) + "%";
+    bar.title = `${t.date.slice(0, 10)} • ${t.description} (${formatCurrency(Math.abs(amtInr))})`;
+    chart.appendChild(bar);
+  });
 }
 
 /* ==========================================================================
@@ -355,19 +434,18 @@ function renderHistory() {
   if (!list) return;
   list.innerHTML = "";
   if (!conversations.length) {
-    list.innerHTML = `<p class="text-[var(--text-muted)] text-center py-4 text-xs font-mono">No conversations yet.</p>`;
+    list.innerHTML = `<p class="hist-empty">No conversations yet.</p>`;
     return;
   }
   conversations.forEach(c => {
     const row = document.createElement("div");
     const active = c.id === currentConversationId;
-    row.className = "history-item group flex items-center gap-1 rounded-lg px-2.5 py-2 cursor-pointer border " +
-      (active ? "bg-blue-500/10 border-blue-500/30" : "border-transparent hover:bg-[var(--bg-strip)]");
+    row.className = "history-item" + (active ? " active" : "");
     row.innerHTML = `
-      <i class="fa-regular fa-message text-[10px] text-[var(--text-muted)]"></i>
-      <span class="flex-1 truncate text-[12px] text-[var(--text-main)]">${escapeHtml(c.title)}</span>
-      <button title="Rename" class="hist-btn text-[var(--text-muted)] hover:text-blue-500 px-1"><i class="fa-solid fa-pen text-[10px]"></i></button>
-      <button title="Delete" class="hist-btn text-[var(--text-muted)] hover:text-rose-500 px-1"><i class="fa-solid fa-trash text-[10px]"></i></button>
+      <i class="fa-regular fa-message hi-ico"></i>
+      <span class="hi-title">${escapeHtml(c.title)}</span>
+      <button title="Rename" class="hist-btn hist-rename"><i class="fa-solid fa-pen"></i></button>
+      <button title="Delete" class="hist-btn hist-delete"><i class="fa-solid fa-trash"></i></button>
     `;
     row.onclick = () => openConversation(c.id);
     const [renameBtn, deleteBtn] = row.querySelectorAll(".hist-btn");
@@ -439,8 +517,8 @@ function renderQuickPrompts(custId) {
   (quickPromptsByCustomer[custId] || []).forEach(p => {
     const btn = document.createElement("button");
     btn.type = "button";
-    btn.className = "quick-prompt-btn font-mono";
-    btn.innerHTML = `<i class="fa-solid fa-play text-blue-500 text-[9px]"></i><span>${escapeHtml(p.label)}</span>`;
+    btn.className = "quick-prompt-btn";
+    btn.innerHTML = `<i class="fa-solid fa-play qp-ico"></i><span>${escapeHtml(p.label)}</span>`;
     btn.onclick = () => sendMessage(p.text);
     container.appendChild(btn);
   });
@@ -452,11 +530,11 @@ function renderWelcomeMessage() {
   const profile = currentCustomerData.profile;
   const first = profile.name.split(" ")[0];
   const div = document.createElement("div");
-  div.className = "flex gap-3 text-xs";
+  div.className = "msg-row";
   div.innerHTML = `
-    <div class="w-8 h-8 rounded bg-blue-600/10 border border-blue-600/30 flex items-center justify-center font-bold text-xs text-blue-600 flex-shrink-0 font-mono">AC</div>
-    <div class="chat-bubble-bot rounded-lg p-4 max-w-2xl leading-relaxed shadow-sm">
-      <p class="text-[12px] leading-relaxed text-[var(--text-main)]">
+    <div class="msg-avatar">AC</div>
+    <div class="chat-bubble-bot resp-bubble">
+      <p class="msg-text">
         Namaste, <strong>${escapeHtml(first)}</strong>! I'm your ClientCare assistant. I can check balances and transactions,
         block or unblock your card, handle disputes, fee waivers, SWIFT/FIRC holds, forex conversions and more.
         What can I help you with today?
@@ -468,8 +546,7 @@ function renderWelcomeMessage() {
 function toggleBenchmarkMode() {
   isBenchmarkMode = !isBenchmarkMode;
   document.getElementById("benchmark-banner")?.classList.toggle("hidden", !isBenchmarkMode);
-  document.getElementById("benchmark-toggle-btn")?.classList.toggle("bg-blue-600", isBenchmarkMode);
-  document.getElementById("benchmark-toggle-btn")?.classList.toggle("text-white", isBenchmarkMode);
+  document.getElementById("benchmark-toggle-btn")?.classList.toggle("bench-active", isBenchmarkMode);
 }
 
 /* ==========================================================================
@@ -513,12 +590,10 @@ function appendUserMessage(text) {
   const container = document.getElementById("messages-container");
   if (!container) return;
   const div = document.createElement("div");
-  div.className = "flex gap-3 justify-end text-xs";
+  div.className = "msg-row user-row";
   div.innerHTML = `
-    <div class="chat-bubble-user rounded-lg p-3 max-w-lg leading-relaxed text-[12px] shadow-sm whitespace-pre-wrap">${escapeHtml(text)}</div>
-    <div class="w-8 h-8 rounded bg-blue-600 text-white flex items-center justify-center font-bold text-xs flex-shrink-0 font-mono">
-      <i class="fa-solid fa-user text-[11px]"></i>
-    </div>`;
+    <div class="chat-bubble-user user-bubble">${escapeHtml(text)}</div>
+    <div class="msg-avatar msg-avatar-user"><i class="fa-solid fa-user"></i></div>`;
   container.appendChild(div);
   container.scrollTop = container.scrollHeight;
 }
@@ -526,12 +601,10 @@ function appendUserMessage(text) {
 function addLoader(label) {
   const container = document.getElementById("messages-container");
   const loader = document.createElement("div");
-  loader.className = "flex gap-3 text-xs";
+  loader.className = "msg-row";
   loader.innerHTML = `
-    <div class="w-8 h-8 rounded bg-blue-600/10 border border-blue-600/30 flex items-center justify-center text-blue-600 flex-shrink-0">
-      <i class="fa-solid fa-spinner fa-spin text-xs"></i>
-    </div>
-    <div class="chat-bubble-bot rounded-lg p-3 text-[var(--text-muted)] flex items-center gap-1 font-mono text-[11px]">
+    <div class="msg-avatar"><i class="fa-solid fa-spinner fa-spin"></i></div>
+    <div class="chat-bubble-bot resp-bubble thinking-bubble">
       <span>${label}</span><span class="typing-dots"><i></i><i></i><i></i></span>
     </div>`;
   container.appendChild(loader);
@@ -559,7 +632,7 @@ async function runStandardChat(message) {
 function renderErrorBubble(msg) {
   const container = document.getElementById("messages-container");
   const div = document.createElement("div");
-  div.className = "p-3 text-xs text-rose-500 bg-rose-500/10 border border-rose-500/30 rounded-lg font-mono";
+  div.className = "msg-error";
   div.textContent = `Something went wrong: ${msg}. Please try again.`;
   container.appendChild(div);
   container.scrollTop = container.scrollHeight;
@@ -598,8 +671,8 @@ function parseMarkdown(text) {
 
 function actionBadgeHtml(actions) {
   return (actions || []).filter(a => a && a.success).map(a => `
-    <div class="mt-2.5 p-2 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-[11px] font-mono flex items-center gap-2">
-      <i class="fa-solid fa-circle-check text-emerald-500"></i>
+    <div class="action-badge">
+      <i class="fa-solid fa-circle-check ab-ico"></i>
       <span><strong>${escapeHtml((a.action || a.tool || "Action").replace(/_/g, " "))}:</strong> ${escapeHtml(a.message || a.status || "Completed")}</span>
     </div>`).join("");
 }
@@ -608,11 +681,11 @@ function renderAgentResponse(data, animate) {
   const container = document.getElementById("messages-container");
   if (!container) return;
   const div = document.createElement("div");
-  div.className = "flex gap-3 text-xs";
+  div.className = "msg-row";
   div.innerHTML = `
-    <div class="w-8 h-8 rounded bg-blue-600/10 border border-blue-600/30 flex items-center justify-center font-bold text-xs text-blue-600 flex-shrink-0 font-mono">AC</div>
-    <div class="chat-bubble-bot rounded-lg p-4 max-w-2xl leading-relaxed shadow-sm">
-      <div class="markdown-body text-[var(--text-main)]"></div>
+    <div class="msg-avatar">AC</div>
+    <div class="chat-bubble-bot resp-bubble">
+      <div class="markdown-body"></div>
       <div class="action-badges"></div>
     </div>`;
   container.appendChild(div);
@@ -646,7 +719,7 @@ function renderAgentResponse(data, animate) {
 async function runBenchmark(message) {
   const container = document.getElementById("messages-container");
   const loader = document.createElement("div");
-  loader.className = "p-3 text-xs text-center text-blue-600 bg-blue-500/10 border border-blue-500/30 rounded-lg font-mono animate-pulse";
+  loader.className = "bench-loader";
   loader.textContent = "Running benchmark: stateless bot vs. memory-augmented agent...";
   container.appendChild(loader);
   try {
@@ -665,45 +738,37 @@ function renderBenchmarkCard(data) {
   if (!container) return;
 
   const card = document.createElement("div");
-  card.className = "bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl p-4 shadow-lg space-y-3";
+  card.className = "bench-card";
 
   card.innerHTML = `
-    <div class="flex items-center justify-between border-b border-[var(--border-color)] pb-2.5 text-xs font-mono">
-      <span class="font-bold text-[var(--text-main)] flex items-center gap-2">
-        <i class="fa-solid fa-code-compare text-blue-600"></i> Comparative Benchmark: Memory Value Attribution
-      </span>
-      <span class="text-[var(--text-muted)]">Account: ${data.customer_name}</span>
+    <div class="bench-head">
+      <span class="bench-title"><i class="fa-solid fa-code-compare"></i> Comparative Benchmark: Memory Value Attribution</span>
+      <span class="bench-cust mono">Account: ${data.customer_name}</span>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+    <div class="bench-grid">
       <!-- Stateless Left -->
-      <div class="p-3.5 rounded-lg border border-rose-500/30 bg-rose-500/5 space-y-2">
-        <div class="flex items-center justify-between">
-          <span class="font-semibold text-rose-600 text-xs font-mono">Stateless Legacy Bot</span>
-          <span class="text-[9px] bg-rose-500/10 text-rose-600 px-2 py-0.5 rounded border border-rose-500/30 font-mono">Context: 0%</span>
+      <div class="bench-col bench-neg">
+        <div class="bench-col-head">
+          <span class="bench-col-name">Stateless Legacy Bot</span>
+          <span class="pill pill-neg mono">Context: 0%</span>
         </div>
-        <p class="text-[var(--text-main)] leading-relaxed text-[11px]">${escapeHtml(data.stateless.reply)}</p>
-        <div class="text-[10px] text-[var(--text-muted)] font-mono pt-1">
-          Outcome: Demanded redundant forms and branch visit.
-        </div>
+        <p class="bench-reply">${escapeHtml(data.stateless.reply)}</p>
+        <div class="bench-outcome">Outcome: Demanded redundant forms and branch visit.</div>
       </div>
 
       <!-- Hindsight Right -->
-      <div class="p-3.5 rounded-lg border border-emerald-500/30 bg-emerald-500/5 space-y-2">
-        <div class="flex items-center justify-between">
-          <span class="font-semibold text-emerald-600 text-xs font-mono">Hindsight Memory-Augmented</span>
-          <span class="text-[9px] bg-emerald-500/10 text-emerald-600 px-2 py-0.5 rounded border border-emerald-500/30 font-mono font-bold">${data.hindsight.context_score}</span>
+      <div class="bench-col bench-pos">
+        <div class="bench-col-head">
+          <span class="bench-col-name">Hindsight Memory-Augmented</span>
+          <span class="pill pill-pos mono">${data.hindsight.context_score}</span>
         </div>
-        <p class="text-[var(--text-main)] leading-relaxed text-[11px]">${escapeHtml(data.hindsight.reply)}</p>
-        <div class="text-[10px] text-emerald-600 font-mono pt-1">
-          Outcome: Instant STP resolution via verified memory bank.
-        </div>
+        <p class="bench-reply">${escapeHtml(data.hindsight.reply)}</p>
+        <div class="bench-outcome bench-outcome-pos">Outcome: Instant STP resolution via verified memory bank.</div>
       </div>
     </div>
 
-    <div class="p-2.5 rounded bg-[var(--bg-strip)] border border-[var(--border-color)] text-[11px] text-[var(--text-muted)] font-mono">
-      <strong class="text-blue-600">Audit Takeaway:</strong> ${data.comparison_summary[1]}
-    </div>
+    <div class="bench-take"><strong>Audit Takeaway:</strong> ${data.comparison_summary[1]}</div>
   `;
   container.appendChild(card);
   container.scrollTop = container.scrollHeight;
