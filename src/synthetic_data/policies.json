@@ -1,0 +1,60 @@
+{
+  "bank_name": "BharatApex Bank & FinTech",
+  "version": "2026.4.1-IN",
+  "headquarters": "MG Road, Bengaluru, Karnataka, India",
+  "ifsc_code": "APEX0004921",
+  "micr_code": "560002042",
+  "fx_rate_usd_to_inr": 94.11,
+  "regulatory_framework": "Reserve Bank of India (RBI), NPCI & FEMA Guidelines",
+  "deposit_insurance": "DICGC Insured up to ₹5,00,000 per depositor",
+  "compliance_rules": [
+    "NEVER request or log customer UPI PIN, ATM PIN, full 16-digit card number, CVV, or Aadhaar OTP.",
+    "RBI 2017 Zero Liability Charter: Unauthorized electronic transactions reported within 3 days carry zero liability for the customer.",
+    "Inward SWIFT transfers over $2,500 USD require electronic FIRC Purpose Code declaration under FEMA.",
+    "NPCI UPI Auto-reversal Rule: Failed UPI debits must be auto-credited back to payer within T+1 working day or attract ₹100/day penalty.",
+    "Courtesy fee waivers are restricted to 1 waiver per rolling 12 months for retail customers; MSME waivers require Branch Manager approval.",
+    "RBI Integrated Ombudsman Scheme (RB-IOS): Unresolved grievances after 30 days can be escalated to cms.rbi.org.in for compensation up to ₹30 Lakh."
+  ],
+  "policies": [
+    {
+      "topic": "Fee & AMC Reversals",
+      "policy_id": "POL-RBI-FEE-001",
+      "rule": "Retail and Student savings accounts are eligible for ONE courtesy fee/AMC reversal every 12 months if account maintains clean standing. MSME accounts require Regional Branch Manager sign-off if a waiver was already given within 180 days."
+    },
+    {
+      "topic": "FIRC & Inward Remittances",
+      "policy_id": "POL-FEMA-FIRC-004",
+      "rule": "Foreign Inward Remittance Certificates (FIRC) are generated automatically for pre-verified corporate and personal software/consulting purpose codes (e.g. P0802). Holds are released within 15 minutes of electronic declaration."
+    },
+    {
+      "topic": "Card Security & Instant Lock",
+      "policy_id": "POL-RUPAY-SEC-002",
+      "rule": "RuPay and Mastercard cards can be frozen or unfrozen instantly via conversational banking or mobile app. Freezing blocks new POS, ATM, and e-commerce transactions while pre-authorized UPI AutoPay remains intact."
+    },
+    {
+      "topic": "UPI Dispute & Chargebacks",
+      "policy_id": "POL-NPCI-DISP-003",
+      "rule": "Customers can dispute failed UPI transactions, duplicate debits, or unauthorized charges. Provisional credit is credited within 24 hours for Premier clients and within 48 hours for standard accounts."
+    },
+    {
+      "topic": "Merchant QR & POS Batch Settlements",
+      "policy_id": "POL-MERCH-SETTLE-007",
+      "rule": "Weekend QR Soundbox collections are aggregated and settled automatically via NPCI merchant clearing on Monday morning at 06:00 IST."
+    },
+    {
+      "topic": "Fixed Deposit & Savings Interest Rates",
+      "policy_id": "POL-RATES-FD-009",
+      "rule": "Savings interest is 4.00% p.a. calculated daily. Fixed Deposit rates range from 6.75% (1 yr) to 7.65% (3 yr Tax-Saver) for general public, with an additional +0.50% p.a. for Senior Citizens."
+    },
+    {
+      "topic": "ATM Failed Cash Withdrawal Auto-Reversal",
+      "policy_id": "POL-RBI-ATM-010",
+      "rule": "Per RBI Harmonisation of Turn Around Time (TAT) guidelines, failed ATM cash withdrawals where the account is debited must be reversed within T+5 calendar days, failing which the bank pays ₹100 per day of delay automatically."
+    },
+    {
+      "topic": "RBI Integrated Ombudsman Escalation",
+      "policy_id": "POL-RBI-IOS-011",
+      "rule": "If a customer grievance is not resolved within 30 days of lodging with the bank, the customer may escalate to the RBI Ombudsman via cms.rbi.org.in or CRPC Chandigarh (Toll-free 14448)."
+    }
+  ]
+}
