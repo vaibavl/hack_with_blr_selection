@@ -11,3 +11,5 @@ ENV/
 !.vscode/launch.json
 !.vscode/settings.json
 data/hindsight_local_banks.json
+
+.env

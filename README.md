@@ -113,7 +113,7 @@ The agent ships with a deterministic local FinTech reasoning engine, so the demo
    ```env
    LLM_PROVIDER=groq
    GROQ_API_KEY=your_groq_api_key
-   GROQ_MODEL=llama-3.3-70b-versatile
+   GROQ_MODEL=openai/gpt-oss-120b
    ```
 
 If the key is blank or a Groq request fails, the agent automatically falls back to the local engine. Optional Gemini and OpenAI keys are also documented in `.env.example`.
