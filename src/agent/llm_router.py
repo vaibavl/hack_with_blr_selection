@@ -729,7 +729,7 @@ class LLMRouter:
                 f"{greeting}! Here are the routing credentials you'd need.\n\n"
                 f"• Branch: **{BANK_BRANCH_FULL}**\n"
                 f"• IFSC code: `{ifsc}`\n"
-                f"• MICR code: `500099042`\n"
+                f"• MICR code: `560002042`\n"
                 f"• Linked UPI VPA: `{upi_id or 'apex@apexmudra'}`\n"
                 "• NEFT / RTGS / IMPS clearing runs **24x7x365**\n\n"
                 "Want me to copy these into a single shareable line for a vendor?"
