@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+venv/
+env/
+ENV/
+.idea/
+.vscode/*
+!.vscode/launch.json
+!.vscode/settings.json
+data/hindsight_local_banks.json

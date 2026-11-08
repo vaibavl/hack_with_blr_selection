@@ -1,0 +1,209 @@
+[
+  {
+    "id": "CUST-IN-101",
+    "name": "Aarav Singhania",
+    "email": "aarav.singhania@techpulse.in",
+    "phone": "+91 98490 12845",
+    "city": "Hyderabad / San Francisco",
+    "tier": "Premier Private & NRI Wealth",
+    "kyc_status": "Verified - CKYC Level 3 (PAN & Passport Linked)",
+    "security_token": "SEC-IN-88214-ARV",
+    "upi_id": "aarav@apexmudra",
+    "preferred_channel": "WhatsApp & In-App Push",
+    "risk_score": "Low (0.03)",
+    "currency_preference": "Dual (INR / USD)",
+    "accounts": [
+      {
+        "account_id": "ACC-NRE-98214",
+        "type": "Premier NRE / Wealth Checking",
+        "currency": "INR",
+        "currency_symbol": "₹",
+        "balance": 2850000.00,
+        "available_balance": 2420000.00,
+        "hold_amount": 430000.00,
+        "hold_reason": "Inward Foreign SWIFT Wire Review ($5,000 USD from TechPulse US - Awaiting FIRC Purpose Code)"
+      },
+      {
+        "account_id": "ACC-USD-98215",
+        "type": "Global Reserve Foreign Currency Account",
+        "currency": "USD",
+        "currency_symbol": "$",
+        "balance": 45000.00,
+        "available_balance": 45000.00,
+        "hold_amount": 0.00
+      },
+      {
+        "account_id": "ACC-FD-98216",
+        "type": "High-Yield Tax Saver Fixed Deposit (7.65% p.a.)",
+        "currency": "INR",
+        "currency_symbol": "₹",
+        "balance": 1500000.00,
+        "available_balance": 1500000.00,
+        "hold_amount": 0.00
+      }
+    ],
+    "cards": [
+      {
+        "card_id": "CARD-METAL-4481",
+        "masked_number": "************4481",
+        "card_type": "Apex Metal World Elite (Zero Forex Markup)",
+        "network": "Mastercard World Elite",
+        "status": "Active",
+        "daily_limit_inr": 1000000.00,
+        "international_enabled": true
+      }
+    ],
+    "historical_memories": [
+      {
+        "timestamp": "2026-10-14T14:30:00Z",
+        "fact": "Aarav frequently transfers funds between Silicon Valley Bank / Brex in San Francisco and Apex Bank Hyderabad for angel investments and tech ventures.",
+        "type": "world",
+        "tags": ["nri_profile", "cross_border", "venture_capital"]
+      },
+      {
+        "timestamp": "2026-10-24T09:15:00Z",
+        "fact": "Aarav experienced an inward wire transfer delay for $5,000 USD where funds were held pending Foreign Inward Remittance Certificate (FIRC) purpose code P0802 (Software Consultancy). Support expedited compliance release after automated digital declaration.",
+        "type": "experience",
+        "tags": ["firc_hold", "swift_inward", "p0802", "resolved"]
+      },
+      {
+        "timestamp": "2026-10-25T11:00:00Z",
+        "fact": "Aarav prefers concise executive communication, no unnecessary polite banter, and wants all transaction receipts directly sent to his verified WhatsApp.",
+        "type": "observation",
+        "tags": ["communication_style", "whatsapp_preference", "executive"]
+      }
+    ]
+  },
+  {
+    "id": "CUST-IN-102",
+    "name": "Rajesh Sharma",
+    "email": "rajesh@sharmatraders.in",
+    "phone": "+91 94401 77219",
+    "city": "Hyderabad (Begum Bazaar & Shamshabad)",
+    "tier": "Vyapar Commercial & MSME Current",
+    "kyc_status": "Verified - GSTIN & Udhyam Registered",
+    "security_token": "SEC-IN-44109-RJS",
+    "upi_id": "sharmatraders@apexmudra",
+    "preferred_channel": "SMS & WhatsApp",
+    "risk_score": "Moderate (0.15)",
+    "currency_preference": "INR",
+    "accounts": [
+      {
+        "account_id": "ACC-CURR-44109",
+        "type": "Vyapar MSME Current Account",
+        "currency": "INR",
+        "currency_symbol": "₹",
+        "balance": 1420500.00,
+        "available_balance": 1420500.00,
+        "hold_amount": 0.00
+      },
+      {
+        "account_id": "ACC-POS-44110",
+        "type": "Dynamic QR & Bharat Soundbox Settlement Account",
+        "currency": "INR",
+        "currency_symbol": "₹",
+        "balance": 385000.00,
+        "available_balance": 0.00,
+        "hold_amount": 385000.00,
+        "hold_reason": "Weekend QR/UPI Merchant Batch Clearing (RBI T+1 Clearing - Clears Monday 06:00 IST)"
+      }
+    ],
+    "cards": [
+      {
+        "card_id": "CARD-RUPAY-8912",
+        "masked_number": "************8912",
+        "card_type": "RuPay Business Platinum Card",
+        "network": "RuPay / NPCI",
+        "status": "Active",
+        "daily_limit_inr": 500000.00,
+        "international_enabled": false
+      }
+    ],
+    "historical_memories": [
+      {
+        "timestamp": "2026-09-18T16:45:00Z",
+        "fact": "Rajesh runs a wholesale grocery distribution trade in Begum Bazaar, Hyderabad. He relies heavily on weekend UPI Soundbox collections to pay dispatch suppliers every Monday afternoon.",
+        "type": "world",
+        "tags": ["sme_trader", "begum_bazaar", "upi_soundbox", "supplier_cycle"]
+      },
+      {
+        "timestamp": "2026-10-05T10:20:00Z",
+        "fact": "Rajesh incurred an unexpected ₹350 NACH mandate return fee when an institutional cheque cleared late. Support approved a one-time courtesy reversal under RBI guidelines and noted that any future NACH return waiver requires Branch Manager authorization.",
+        "type": "experience",
+        "tags": ["nach_fee", "courtesy_used", "waiver_history"]
+      },
+      {
+        "timestamp": "2026-10-28T08:30:00Z",
+        "fact": "Rajesh gets anxious about weekend UPI batch deposits showing as pending. He appreciates clear confirmation with expected IST clearing timestamps.",
+        "type": "observation",
+        "tags": ["batch_anxiety", "upi_settlement", "ist_timings"]
+      }
+    ]
+  },
+  {
+    "id": "CUST-IN-103",
+    "name": "Priya Patel",
+    "email": "priya.patel@hyderabadtech.dev",
+    "phone": "+91 97011 88342",
+    "city": "Hyderabad (HITEC City / Madhapur)",
+    "tier": "Youth Digital Advantage Savings",
+    "kyc_status": "Verified - Aadhaar Paperless eKYC & PAN",
+    "security_token": "SEC-IN-77312-PRY",
+    "upi_id": "priya@apexmudra",
+    "preferred_channel": "In-App Chat",
+    "risk_score": "Low (0.01)",
+    "currency_preference": "Dual (INR / USD)",
+    "accounts": [
+      {
+        "account_id": "ACC-SAV-77312",
+        "type": "Smart DigiSavings Account (Zero Maintenance)",
+        "currency": "INR",
+        "currency_symbol": "₹",
+        "balance": 62400.00,
+        "available_balance": 62150.00,
+        "hold_amount": 250.00,
+        "hold_reason": "Annual Debit Card Maintenance Charge Assessment (₹250 + 18% GST)"
+      },
+      {
+        "account_id": "ACC-FOREX-77313",
+        "type": "Multi-Currency Forex Travel Wallet",
+        "currency": "USD",
+        "currency_symbol": "$",
+        "balance": 1250.00,
+        "available_balance": 1250.00,
+        "hold_amount": 0.00
+      }
+    ],
+    "cards": [
+      {
+        "card_id": "CARD-RUPAY-1102",
+        "masked_number": "************1102",
+        "card_type": "RuPay Platinum Contactless with UPI Linkage",
+        "network": "RuPay / NPCI",
+        "status": "Active",
+        "daily_limit_inr": 100000.00,
+        "international_enabled": true
+      }
+    ],
+    "historical_memories": [
+      {
+        "timestamp": "2026-09-02T13:10:00Z",
+        "fact": "Priya is a software engineer in HITEC City, Hyderabad. She maintains meticulous monthly budgeting through UPI and has auto-sweep enabled into fixed deposits.",
+        "type": "world",
+        "tags": ["software_engineer", "hitec_city", "auto_sweep", "upi"]
+      },
+      {
+        "timestamp": "2026-10-15T18:00:00Z",
+        "fact": "Priya was charged ₹899 ($10.80 USD) for an international cloud subscription auto-debit she had cancelled. Support raised a chargeback dispute and temporarily disabled International Card-Not-Present (e-commerce) transactions.",
+        "type": "experience",
+        "tags": ["subscription_dispute", "international_ecom", "resolved"]
+      },
+      {
+        "timestamp": "2026-11-01T09:40:00Z",
+        "fact": "Priya has had zero prior fee waivers in her 2-year banking history and maintains flawless credit standing with a 790 CIBIL score. Eligible for instant courtesy fee waiver.",
+        "type": "world",
+        "tags": ["waiver_eligible", "high_cibil", "loyal_customer"]
+      }
+    ]
+  }
+]

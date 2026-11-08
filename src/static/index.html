@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apex Bank India & Wealth | Institutional Conversational Banking Terminal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="bg-[var(--bg-app)] text-[var(--text-main)] min-h-screen flex flex-col font-['Inter'] antialiased transition-colors duration-200">
+
+  <!-- Login overlay: shown until a valid session exists -->
+  <div id="login-overlay" class="fixed inset-0 z-[100] bg-[var(--bg-app)] flex items-center justify-center p-4">
+    <form id="login-form" onsubmit="handleLogin(event)" class="w-full max-w-sm bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl shadow-2xl p-7 space-y-5">
+      <div class="text-center space-y-2">
+        <div class="w-14 h-14 mx-auto rounded-xl bg-blue-600/10 border border-blue-600/30 flex items-center justify-center text-blue-600">
+          <i class="fa-solid fa-landmark text-2xl"></i>
+        </div>
+        <h1 class="text-lg font-bold text-[var(--text-main)]">Apex<span class="text-blue-600">ClientCare</span></h1>
+        <p class="text-xs text-[var(--text-muted)]">Sign in to chat with your banking assistant</p>
+      </div>
+      <div class="space-y-3">
+        <div>
+          <label for="login-username" class="block text-[11px] font-mono font-medium text-[var(--text-main)] mb-1">Username</label>
+          <input id="login-username" type="text" autocomplete="username" autocapitalize="none" required
+            class="w-full bg-[var(--bg-input)] border border-[var(--border-color)] rounded-lg px-3 py-2.5 text-sm text-[var(--text-main)] focus:outline-none focus:ring-1 focus:ring-blue-500" />
+        </div>
+        <div>
+          <label for="login-password" class="block text-[11px] font-mono font-medium text-[var(--text-main)] mb-1">Password</label>
+          <input id="login-password" type="password" autocomplete="current-password" required
+            class="w-full bg-[var(--bg-input)] border border-[var(--border-color)] rounded-lg px-3 py-2.5 text-sm text-[var(--text-main)] focus:outline-none focus:ring-1 focus:ring-blue-500" />
+        </div>
+        <p id="login-error" class="hidden text-xs text-rose-500 font-medium"></p>
+        <button id="login-btn" type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg text-sm transition">Sign in</button>
+      </div>
+      <div class="text-[11px] text-[var(--text-muted)] font-mono border-t border-[var(--border-color)] pt-3 space-y-0.5">
+        <div class="font-semibold text-[var(--text-main)]">Demo accounts</div>
+        <div>aarav / Apex@101 &nbsp;(NRI Wealth)</div>
+        <div>rajesh / Apex@102 &nbsp;(MSME Trader)</div>
+        <div>priya / Apex@103 &nbsp;(Retail / Youth)</div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Institutional Compliance & Audit Header Strip -->
+  <div class="bg-[var(--bg-strip)] border-b border-[var(--border-color)] px-4 md:px-8 py-1.5 text-[11px] text-[var(--text-muted)] flex flex-wrap items-center justify-between gap-2 font-mono transition-colors">
+    <div class="flex items-center gap-3">
+      <span class="flex items-center gap-1.5 font-semibold text-[var(--text-main)]">
+        <i class="fa-solid fa-shield-halved text-blue-500"></i>
+        <span>APEX COMMERCIAL BANK LTD.</span>
+      </span>
+      <span class="text-slate-500">|</span>
+      <span class="hidden sm:inline">Scheduled Commercial Bank • Lic. No. RBI/2026/HYD-049</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="text-emerald-500 flex items-center gap-1 font-medium">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>DICGC INSURED UP TO ₹5,00,000</span>
+      </span>
+      <span class="hidden md:inline text-slate-500">|</span>
+      <span class="hidden md:inline">RBI Ref FX: 1 USD = ₹86.5000 INR</span>
+      <span class="hidden md:inline text-slate-500">|</span>
+      <span class="text-blue-500 flex items-center gap-1">
+        <i class="fa-solid fa-lock text-[10px]"></i>
+        <span>TLS 1.3 / DPDP-2023 CERTIFIED</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- Primary Banking Navigation Bar -->
+  <header class="border-b border-[var(--border-color)] bg-[var(--bg-header)] sticky top-0 z-40 px-4 md:px-8 py-3 flex flex-wrap items-center justify-between gap-3 shadow-sm transition-colors">
+    
+    <!-- Bank Seal & System Identification -->
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-lg bg-blue-600/10 border border-blue-600/30 flex items-center justify-center text-blue-600">
+        <i class="fa-solid fa-landmark text-lg"></i>
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="font-bold text-base tracking-tight text-[var(--text-main)]">
+            Apex<span class="text-blue-600">ClientCare</span> <span class="text-xs font-normal text-[var(--text-muted)]">Terminal</span>
+          </h1>
+          <span class="text-[10px] px-2 py-0.5 rounded font-mono font-medium bg-[var(--bg-badge)] text-[var(--text-main)] border border-[var(--border-color)]">
+            v2.4.1
+          </span>
+        </div>
+        <p class="text-[11px] text-[var(--text-muted)]">
+          Cyberabad Wealth Branch (<span class="font-mono text-blue-500 font-medium">IFSC: APEX0004921</span>)
+        </p>
+      </div>
+    </div>
+
+    <!-- Signed-in customer (one login = one customer) -->
+    <div class="flex items-center gap-2 bg-[var(--bg-input)] px-3 py-1.5 rounded-lg border border-[var(--border-color)] text-xs">
+      <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+      <span class="text-[var(--text-muted)] font-mono uppercase text-[10px] font-semibold">Signed in:</span>
+      <span id="header-user-name" class="font-semibold text-[var(--text-main)]">&nbsp;</span>
+      <button onclick="logout()" class="ml-1 text-[var(--text-muted)] hover:text-rose-500 transition flex items-center gap-1 font-mono text-[11px]" title="Sign out">
+        <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+      </button>
+    </div>
+
+    <!-- Valuation Currency, Benchmark, and Theme Toggles -->
+    <div class="flex items-center gap-2.5">
+      <!-- Valuation Currency Mode Selector -->
+      <div class="flex items-center bg-[var(--bg-input)] p-0.5 rounded border border-[var(--border-color)] text-xs font-mono">
+        <button onclick="setCurrencyMode('INR')" id="curr-inr" class="px-2.5 py-1 rounded font-medium text-blue-600 bg-blue-500/10 border border-blue-500/30">INR (₹)</button>
+        <button onclick="setCurrencyMode('USD')" id="curr-usd" class="px-2.5 py-1 rounded font-medium text-[var(--text-muted)] hover:text-[var(--text-main)]">USD ($)</button>
+        <button onclick="setCurrencyMode('DUAL')" id="curr-dual" class="px-2.5 py-1 rounded font-medium text-[var(--text-muted)] hover:text-[var(--text-main)]">Dual</button>
+      </div>
+
+      <!-- Benchmark Compare Toggle -->
+      <button onclick="toggleBenchmarkMode()" id="benchmark-toggle-btn" class="px-3 py-1.5 rounded text-xs font-medium bg-[var(--bg-input)] hover:bg-[var(--bg-badge)] text-[var(--text-main)] border border-[var(--border-color)] flex items-center gap-1.5 transition font-mono">
+        <i class="fa-solid fa-code-compare text-blue-500"></i>
+        <span>Benchmark</span>
+      </button>
+
+      <!-- Theme Switcher (Dark Mode / Bright Mode) -->
+      <button onclick="toggleTheme()" id="theme-toggle-btn" title="Toggle Dark/Bright Mode" class="px-2.5 py-1.5 rounded bg-[var(--bg-input)] hover:bg-[var(--bg-badge)] text-[var(--text-main)] border border-[var(--border-color)] flex items-center gap-1.5 transition text-xs font-mono">
+        <i id="theme-icon" class="fa-solid fa-sun text-amber-500"></i>
+        <span id="theme-label" class="hidden sm:inline">Bright</span>
+      </button>
+
+      <!-- Hindsight Engine Operational Badge -->
+      <div class="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded bg-[var(--bg-input)] border border-[var(--border-color)] text-xs font-mono text-[var(--text-muted)]">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        <span>HINDSIGHT: ACTIVE</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Institutional Workspace Grid -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-5 overflow-hidden">
+
+    <!-- Left / Primary: Verified Banking Communication Terminal (8 cols) -->
+    <section id="chat-section" class="lg:col-span-8 flex flex-col bg-[var(--bg-card)] rounded-xl border border-[var(--border-color)] shadow-sm overflow-hidden relative">
+
+      <!-- Terminal Header / Verified Client Identifier -->
+      <div class="px-5 py-3 border-b border-[var(--border-color)] bg-[var(--bg-header-inner)] flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded bg-blue-600/10 border border-blue-600/30 flex items-center justify-center font-bold text-xs text-blue-600 font-mono" id="customer-avatar">
+            --
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span id="customer-name-display" class="text-sm font-semibold text-[var(--text-main)]">&nbsp;</span>
+              <span id="customer-cif-display" class="text-[10px] font-mono text-[var(--text-muted)] bg-[var(--bg-badge)] px-1.5 py-0.5 rounded border border-[var(--border-color)]">CIF<//span>
+              <span class="text-[10px] text-emerald-600 font-medium flex items-center gap-1">
+                <i class="fa-solid fa-circle-check text-[9px]"></i> CKYC Level-3
+              </span>
+            </div>
+            <div class="text-[11px] text-[var(--text-muted)] flex items-center gap-2 mt-0.5 font-mono">
+              <span id="customer-tier-display" class="text-amber-600 font-medium">&nbsp;</span>
+              <span>•</span>
+              <span id="customer-upi-display" class="text-[var(--text-muted)]">&nbsp;</span>
+              <span>•</span>
+              <span id="customer-city-display" class="text-[var(--text-muted)]">&nbsp;</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 font-mono text-xs">
+          <button onclick="newChat()" class="text-[var(--text-muted)] hover:text-[var(--text-main)] px-2.5 py-1 rounded bg-[var(--bg-input)] border border-[var(--border-color)] transition flex items-center gap-1">
+            <i class="fa-solid fa-plus text-[10px]"></i>
+            <span>New chat</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Benchmark Assessment Banner -->
+      <div id="benchmark-banner" class="hidden bg-blue-500/10 border-b border-blue-500/30 px-5 py-2.5 text-xs text-blue-700 dark:text-blue-300 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-scale-balanced text-blue-600 text-sm"></i>
+          <span><strong>Comparative Benchmark Active:</strong> Compare a stateless bot with the memory-augmented agent.</span>
+        </div>
+        <button onclick="toggleBenchmarkMode()" class="text-blue-600 font-mono text-[11px] underline">Close</button>
+      </div>
+
+      <!-- Messages Stream Area -->
+      <div id="messages-container" class="flex-1 p-5 overflow-y-auto space-y-4 max-h-[calc(100vh-360px)]">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Verified Test Scenarios (1-Click Audit) -->
+      <div class="px-5 py-2.5 border-t border-[var(--border-color)] bg-[var(--bg-strip)]">
+        <div class="flex items-center justify-between mb-1.5">
+          <span class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-semibold font-mono flex items-center gap-1">
+            <i class="fa-solid fa-bolt text-blue-500"></i> Try asking:
+          </span>
+          <span class="text-[10px] text-[var(--text-muted)] font-mono">One-click prompts</span>
+        </div>
+        <div id="quick-prompts-container" class="flex flex-wrap gap-2">
+          <!-- Populated dynamically with functional direct click handlers -->
+        </div>
+      </div>
+
+      <!-- Secure Input Bar -->
+      <form id="chat-form" onsubmit="handleSendMessage(event)" class="p-3.5 border-t border-[var(--border-color)] bg-[var(--bg-card)] flex items-center gap-2.5">
+        <div class="relative flex-1">
+          <input 
+            type="text" 
+            id="message-input" 
+            placeholder="Message your banking assistant..." 
+            class="w-full bg-[var(--bg-input)] border border-[var(--border-color)] rounded-lg pl-3.5 pr-10 py-2.5 text-xs text-[var(--text-main)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-blue-500 font-sans"
+            autocomplete="off"
+          />
+          <button type="button" onclick="startMicInput()" title="Voice input" class="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-blue-600 transition">
+            <i class="fa-solid fa-microphone text-xs"></i>
+          </button>
+        </div>
+        <button 
+          type="submit" 
+          id="send-btn" 
+          class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2.5 rounded-lg text-xs transition shadow-sm flex items-center gap-1.5 font-mono">
+          <span>Submit</span>
+          <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </button>
+      </form>
+    </section>
+
+    <!-- Right: Chat History & Account Overview (4 cols) -->
+    <aside class="lg:col-span-4 flex flex-col gap-4">
+
+      <!-- Chat History -->
+      <div class="bg-[var(--bg-card)] rounded-xl border border-[var(--border-color)] shadow-sm overflow-hidden flex flex-col">
+        <div class="px-4 py-3 border-b border-[var(--border-color)] bg-[var(--bg-header-inner)] flex items-center justify-between font-mono">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-clock-rotate-left text-blue-500 text-xs"></i>
+            <h2 class="text-xs font-semibold text-[var(--text-main)] uppercase tracking-wider">Chat History</h2>
+          </div>
+          <button onclick="newChat()" class="text-[11px] px-2 py-0.5 rounded bg-blue-600 hover:bg-blue-700 text-white font-medium flex items-center gap-1">
+            <i class="fa-solid fa-plus text-[9px]"></i><span>New Chat</span>
+          </button>
+        </div>
+        <div id="history-list" class="p-2 space-y-1 max-h-56 overflow-y-auto text-xs"></div>
+      </div>
+
+      <!-- Account Overview Card -->
+      <div class="bg-[var(--bg-card)] rounded-xl border border-[var(--border-color)] shadow-sm overflow-hidden flex flex-col flex-1">
+        <div class="px-4 py-3 border-b border-[var(--border-color)] bg-[var(--bg-header-inner)] flex items-center justify-between font-mono">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-wallet text-emerald-500 text-xs"></i>
+            <h2 class="text-xs font-semibold text-[var(--text-main)] uppercase tracking-wider">Account Overview</h2>
+          </div>
+          <span class="text-[10px] text-[var(--text-muted)]">Live Snapshot</span>
+        </div>
+
+        <div class="p-4 space-y-3">
+          <!-- Account Balances -->
+          <div id="account-cards-container" class="space-y-2">
+            <!-- Dynamically populated -->
+          </div>
+
+          <!-- Registered Payment Cards -->
+          <div class="pt-2 border-t border-[var(--border-color)]">
+            <div class="flex items-center justify-between mb-1.5 font-mono">
+              <span class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-semibold">Registered Cards:</span>
+              <span class="text-[10px] text-[var(--text-muted)]">NPCI / RuPay / Mastercard</span>
+            </div>
+            <div id="registered-cards-container" class="space-y-1.5">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Recent Transactions Audit -->
+          <div class="pt-2 border-t border-[var(--border-color)]">
+            <div class="flex items-center justify-between mb-1.5 font-mono">
+              <span class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] font-semibold">Recent Transactions:</span>
+              <span class="text-[10px] text-[var(--text-muted)]">UTR / Ref Verified</span>
+            </div>
+            <div id="transactions-container" class="space-y-1.5 max-h-36 overflow-y-auto text-xs">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+  </main>
+
+  <!-- Institutional Footer -->
+  <footer class="border-t border-[var(--border-color)] bg-[var(--bg-header)] px-4 md:px-8 py-3 text-[11px] text-[var(--text-muted)] flex flex-wrap items-center justify-between gap-2 font-mono transition-colors">
+    <div>
+      © 2026 Apex Commercial Bank Ltd. • Licensed under Section 22 of Banking Regulation Act, 1949.
+    </div>
+    <div class="flex items-center gap-4">
+      <span>Security: ISO 27001 / PCI-DSS v4.0</span>
+      <span>•</span>
+      <span>Grievance Nodal Officer: nodalofficer@apexbank.in</span>
+    </div>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

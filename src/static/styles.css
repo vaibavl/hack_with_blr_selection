@@ -1,0 +1,227 @@
+/* ==========================================================================
+   Apex Commercial Bank & Wealth | Institutional Design System & Theme Engine
+   Official Design Tokens - WCAG AAA Compliant - Dual Mode (Dark & Bright)
+   ========================================================================== */
+
+:root {
+  /* Institutional Corporate Banking Dark Theme (Default) */
+  --bg-app: #080D1A;
+  --bg-card: #0D1527;
+  --bg-header: #0A101F;
+  --bg-header-inner: #111C30;
+  --bg-strip: #060913;
+  --bg-input: #121E36;
+  --bg-badge: #1A2847;
+  --bg-bubble-bot: #0D1629;
+  --bg-bubble-user: #1E293B;
+  --border-color: #1E2E4A;
+  --border-subtle: #162238;
+  --text-main: #F1F5F9;
+  --text-muted: #94A3B8;
+  --text-bright: #FFFFFF;
+  --scrollbar-track: #060913;
+  --scrollbar-thumb: #1E2E4A;
+  --scrollbar-thumb-hover: #33486E;
+  --quick-prompt-bg: #111C30;
+  --quick-prompt-hover: #192742;
+  --quick-prompt-text: #CBD5E1;
+  --quick-prompt-border: #1E2E4A;
+  --benchmark-left-bg: #141724;
+  --benchmark-left-border: #4C1D24;
+  --benchmark-right-bg: #0C1E1B;
+  --benchmark-right-border: #064E3B;
+}
+
+body.light-theme {
+  /* Institutional Commercial Banking Bright Theme */
+  --bg-app: #F4F6F9;
+  --bg-card: #FFFFFF;
+  --bg-header: #FFFFFF;
+  --bg-header-inner: #F8FAFC;
+  --bg-strip: #EAEEF4;
+  --bg-input: #F1F5F9;
+  --bg-badge: #E2E8F0;
+  --bg-bubble-bot: #F8FAFC;
+  --bg-bubble-user: #1E293B;
+  --border-color: #CBD5E1;
+  --border-subtle: #E2E8F0;
+  --text-main: #0F172A;
+  --text-muted: #64748B;
+  --text-bright: #020617;
+  --scrollbar-track: #F1F5F9;
+  --scrollbar-thumb: #CBD5E1;
+  --scrollbar-thumb-hover: #94A3B8;
+  --quick-prompt-bg: #F8FAFC;
+  --quick-prompt-hover: #EFF6FF;
+  --quick-prompt-text: #1E293B;
+  --quick-prompt-border: #CBD5E1;
+  --benchmark-left-bg: #FFF1F2;
+  --benchmark-left-border: #FECDD3;
+  --benchmark-right-bg: #ECFDF5;
+  --benchmark-right-border: #A7F3D0;
+}
+
+/* Base Smooth Transitions */
+body, header, aside, section, div, footer, input, button {
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+/* Crisp Institutional Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* Institutional Customer Profile Tabs */
+.cust-btn.active {
+  background: #2563EB !important;
+  color: #FFFFFF !important;
+  border-color: #2563EB !important;
+  box-shadow: 0 1px 3px 0 rgba(37, 99, 235, 0.35);
+}
+
+.cust-btn.active span.text-\[10px\] {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #FFFFFF !important;
+}
+
+.cust-btn:not(.active) {
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+.cust-btn:not(.active):hover {
+  background: var(--bg-badge);
+  color: var(--text-main);
+  border-color: var(--border-color);
+}
+
+/* Quick Audit Prompts (1-Click Buttons) */
+.quick-prompt-btn {
+  background: var(--quick-prompt-bg);
+  color: var(--quick-prompt-text);
+  border: 1px solid var(--quick-prompt-border);
+  padding: 6px 11px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.quick-prompt-btn:hover {
+  background: var(--quick-prompt-hover);
+  border-color: #3B82F6;
+  color: #2563EB;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.quick-prompt-btn:active {
+  transform: translateY(0);
+}
+
+/* Chat Message Formatting */
+.chat-bubble-bot {
+  background: var(--bg-bubble-bot);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+
+.chat-bubble-user {
+  background: var(--bg-bubble-user);
+  color: #FFFFFF;
+  border: 1px solid var(--border-color);
+}
+
+/* Markdown Content Elements Inside Chat */
+.markdown-body {
+  line-height: 1.65;
+  font-size: 12.5px;
+}
+
+.markdown-body p {
+  margin-bottom: 0.6em;
+}
+
+.markdown-body p:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body ul, .markdown-body ol {
+  margin: 0.5em 0;
+  padding-left: 1.25em;
+}
+
+.markdown-body ul {
+  list-style-type: disc;
+}
+
+.markdown-body ol {
+  list-style-type: decimal;
+}
+
+.markdown-body li {
+  margin-bottom: 0.25em;
+}
+
+.markdown-body strong {
+  font-weight: 600;
+  color: var(--text-bright);
+}
+
+body.light-theme .markdown-body strong {
+  color: #0F172A;
+}
+
+.markdown-body code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  background: var(--bg-badge);
+  padding: 2px 5px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+/* Tabular Financial Numbers */
+.font-mono {
+  font-feature-settings: "tnum" on, "zero" on;
+}
+
+/* Institutional Focus Ring */
+input:focus, textarea:focus, button:focus {
+  outline: none;
+}
+
+/* ---- Chat history rows & typing indicator ---- */
+.history-item .hist-btn { opacity: 0; transition: opacity 0.15s ease; }
+.history-item:hover .hist-btn { opacity: 1; }
+@media (hover: none) { .history-item .hist-btn { opacity: 1; } }
+
+.typing-dots { display: inline-flex; gap: 3px; margin-left: 2px; }
+.typing-dots i {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--text-muted); display: block;
+  animation: typing-bounce 1.2s infinite ease-in-out;
+}
+.typing-dots i:nth-child(2) { animation-delay: 0.15s; }
+.typing-dots i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes typing-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
