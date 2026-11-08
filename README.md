@@ -1,193 +1,196 @@
-# 🏛️ BharatApex AI — Enterprise Indian & Global FinTech Banking Agent
-### Built for HackwithHyderabad 3.0 • Powered by Vectorize Hindsight Memory Engine
+# 🏦 BharatApex AI — ClientCare Conversational Banking Agent
 
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688.svg?style=flat&logo=fastapi)](https://fastapi.tiangolo.com)
-[![Hindsight Memory](https://img.shields.io/badge/Hindsight-Vectorize-6366f1.svg?style=flat)](https://github.com/vectorize-io/hindsight)
-[![RBI & NPCI](https://img.shields.io/badge/Banking_Rails-UPI_%7C_RuPay_%7C_SWIFT-ff9933.svg?style=flat)](https://www.npci.org.in/)
-[![Python 3.10+](https://img.shields.io/badge/Python-3.10+-blue.svg?style=flat&logo=python)](https://python.org)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+> A full-stack **FinTech customer-support AI agent** for an Indian commercial bank ("BharatApex"),
+> with **persistent long-term client memory**, tool-calling over a synthetic core-banking layer,
+> and a compliance guardrail engine (RBI / NPCI / FEMA style rules).
+> Originally built for a hackathon; this repository is the maintained version used for
+> **Hack-with-Bengaluru selection** — shared so teammates (and any AI assistant) can understand
+> and run it quickly.
 
-**BharatApex AI** is an enterprise-grade, market-ready **FinTech Customer Support AI Agent** specifically architected for the Indian banking landscape with seamless cross-border global trade capabilities. Engineered with **Vectorize Hindsight Memory**, it eliminates the #1 customer pain point in banking: *having to repeat your story across multiple calls and tickets*.
-
-Located at our **MG Road Corporate Branch in Bengaluru**, BharatApex AI handles **UPI dispute resolution**, **FIRC cross-border inward SWIFT remittances**, **merchant QR Soundbox settlements**, **instant card block/unblock**, **RBI courtesy fee waivers**, and **live dual-currency (₹ INR & $ USD) conversions**.
+**Status:** working & demo-ready · **Stack:** Python 3.10+ / FastAPI / SQLite / vanilla JS (no build step) · **Real LLM:** Groq (`openai/gpt-oss-120b`), with a deterministic local fallback engine so the demo **never breaks without keys**.
 
 ---
 
-## ✨ Core Features
+## 1. What is this, in one paragraph?
 
-- **Customer login** — username/password sign-in for three synthetic customers, backed by server-side sessions and an `HttpOnly` `apex_session` cookie.
-- **Strict persona isolation** — each login sees exactly one customer's accounts, cards, memories, and conversations. There is no in-app persona switcher.
-- **Persistent chat history** — a ChatGPT-style right-hand **Chat History** panel with New Chat, rename, and delete; conversations survive page refreshes.
-- **Long-term banking memory** — Vectorize Hindsight Cloud when configured, with the built-in local Hindsight engine as a zero-key fallback.
-- **Account Overview** — the live banking ledger (formerly the core banking ledger panel) with accounts, cards, balances, and holds.
-- **Currency modes** — one-click **INR**, **USD**, and **Dual (₹ + $)** display toggle.
-- **Conversational chatbot** — with a Groq key the assistant holds a real multi-turn conversation (it sees the earlier messages in the chat) and uses *tool calling* to check balances/transactions and to block or unblock cards, file disputes, request fee waivers, release SWIFT holds, convert currency and register travel notices. Tools are bound to the logged-in customer, so the model can never touch another customer's data. Without a key, a deterministic local engine answers instead.
-- **Demo extras** — Hindsight On/Off benchmark comparison, quick-prompt scenarios, dark/bright theme toggle, and voice input.
+BharatApex AI is a **customer-service agent for a bank**, exposed through a premium dark dashboard
+at `http://127.0.0.1:8000`. A user logs in as one of three synthetic bank customers, and chats with
+"ClientCare" — an agent that checks balances, releases SWIFT/FIRC holds, blocks/unblocks cards,
+files RBI disputes, waives fees (with policy limits), converts INR↔USD, and registers travel
+notices — by **calling real backend tools**, not by hallucinating. Every action and insight is
+remembered in a **long-term memory engine (Vectorize Hindsight)**, so the agent answers follow-ups
+with context on later days ("that wire we talked about…"). A **Benchmark button** compares this
+memory-enabled agent against a classic stateless chatbot to show the difference during pitches.
+Everything is sandboxed per customer: one login can only ever see its own accounts, cards,
+memories and conversations.
 
----
+## 2. The 30-second demo script
 
-## 🌟 Why This Wins at HackwithHyderabad 3.0: The Hindsight Difference
+1. Open `http://127.0.0.1:8000`, log in as `aarav` / `Apex@101`.
+2. Ask: *"Why is my $5,000 SWIFT wire from Silicon Valley Bank on hold?"* → agent recalls purpose
+   code **P0802** from memory and **releases the FIRC compliance hold** (tool call, real state change).
+3. Click **Benchmark** → the stateless-bot comparison shows what a normal chatbot would ask.
+4. Toggle **INR / USD / Dual** in the top bar → balances re-render in both currencies.
+5. Refresh the page → the conversation and history survive (SQLite persistence).
 
-Stateless chatbots frustrate Indian banking customers by demanding manual branch visits, Form 60 resubmissions, and repetitive KYC verifications.
+Login accounts (all synthetic, seeds are in `src/synthetic_data/customers.json`):
 
-With **Vectorize Hindsight Memory**, BharatApex AI:
-1. **Remembers Regulatory Purpose Codes**: Remembers that NRI tech founder Aarav uses purpose code `P0802` (Software Consultancy) for US inward wires, expediting FIRC release in **15 minutes** instead of 5 days.
-2. **Tracks Rolling Fee Waiver Rules**: Enforces RBI courtesy waiver limits. Recognizes when an MSME trader (Rajesh) already used his 12-month courtesy waiver, politely escalating to the Regional Branch Manager rather than giving conflicting answers.
-3. **Protects Working Capital**: Understands that Begum Bazaar trader Rajesh needs weekend UPI collections cleared by Monday 06:00 IST to fund vendor dispatches.
-4. **Instant Security Actions**: Allows zero-friction card unblocking and instantly flags unauthorized electronic transactions under RBI Zero-Liability guidelines.
+| Username | Password | Customer | Persona |
+|----------|----------|----------|---------|
+| `aarav`  | `Apex@101` | CUST-IN-101 Aarav Singhania | Premier Private & NRI Wealth (USD + NRE, SWIFT/FIRC) |
+| `rajesh` | `Apex@102` | CUST-IN-102 Rajesh Sharma | MSME Vyapar trader (UPI/Soundbox weekend batches) |
+| `priya`  | `Apex@103` | CUST-IN-103 Priya Patel | Youth digital (disputes, card controls, fee waiver) |
 
----
+Passwords are demo defaults, overridable via `DEMO_*_PASSWORD` in `.env`.
 
-## 👥 Realistic Indian Personas Pre-Loaded
-
-| Customer | Persona & Profile | Financial Context & Memory Nuances |
-| :--- | :--- | :--- |
-| **Aarav Singhania** (`CUST-IN-101`) | **Premier Private & NRI Wealth**<br>Hyderabad & San Francisco | **₹28,50,000 NRE Checking + $45,000 USD Reserve**.<br>Frequently wires funds from Silicon Valley Bank for tech investments. Recalls past FIRC hold on $5,000 wire; prefers concise executive WhatsApp updates. |
-| **Rajesh Sharma** (`CUST-IN-102`) | **MSME Vyapar Trader**<br>Begum Bazaar, Hyderabad | **₹14,20,500 Current Account + ₹3,85,000 QR Batch**.<br>Depends on weekend Soundbox UPI batches for Monday supplier dispatches. Used a one-time courtesy NACH bounce waiver last month. |
-| **Priya Patel** (`CUST-IN-103`) | **Youth Digital / Software Engineer**<br>HITEC City, Hyderabad | **₹62,400 DigiSavings + $1,250 Forex Wallet**.<br>Zero penalty history with a 790 CIBIL score. Eligible for instant automated waiver of annual card fees. Reported recurring international subscription dispute. |
-
----
-
-## 🔐 Login & Demo Accounts
-
-Start the app and sign in at **[http://127.0.0.1:8000](http://127.0.0.1:8000)** with one of the synthetic demo accounts:
-
-| Username | Password | Customer | Profile |
-| :--- | :--- | :--- | :--- |
-| `aarav` | `Apex@101` | Aarav Singhania (`CUST-IN-101`) | Premier Private & NRI Wealth |
-| `rajesh` | `Apex@102` | Rajesh Sharma (`CUST-IN-102`) | MSME Vyapar Trader |
-| `priya` | `Apex@103` | Priya Patel (`CUST-IN-103`) | Youth Digital / Software Engineer |
-
-- **One login, one customer.** Each session is isolated to the authenticated customer and can only see that customer's accounts, cards, memories, and chat history.
-- **No persona switching inside the app.** To view another demo customer, log out and sign in with that customer's credentials.
-- Sessions are server-side and carried by the `HttpOnly` **`apex_session`** cookie; the default lifetime is 12 hours (`SESSION_TTL_HOURS`).
-- Conversations, messages, and other application data are persisted in SQLite at `data/clientcare.db` (configurable via `DATABASE_PATH`).
-- The demo passwords above are defaults and can be overridden with the `DEMO_*_PASSWORD` variables in `.env`.
-
----
-
-## 🕘 Chat History
-
-The right-hand **Chat History** panel replaces the old Hindsight Memory Bank inspector. It works like a ChatGPT conversation sidebar:
-
-- **Persistent conversations** — chats are stored in SQLite and restored after a page refresh.
-- **New Chat** — start a fresh thread without losing earlier conversations.
-- **Rename / Delete** — organize or remove conversations from the panel.
-- **Per-customer scope** — history belongs to the logged-in customer and is never shared between accounts.
-- The **Account Overview** panel (the renamed banking ledger) continues to show live accounts, cards, balances, and holds, with the INR / USD / Dual toggle available in the top bar.
-
----
-
-## 🧠 Memory: Hindsight Cloud with Local Fallback
-
-BharatApex AI remembers each customer's case history through Vectorize Hindsight.
-
-- **Local fallback (default):** leave `HINDSIGHT_API_KEY` and `HINDSIGHT_BASE_URL` blank (or skip `.env` entirely). The built-in local engine seeds memory from the synthetic customer profiles and persists it to `data/hindsight_local_banks.json`. No network or API key is required.
-- **Hindsight Cloud:** open the existing `.env` file (`.env.example` is kept only as a reference template) and set:
-
-  ```env
-  HINDSIGHT_API_KEY=your_hindsight_api_key
-  HINDSIGHT_BASE_URL=https://api.hindsight.vectorize.io
-  ```
-
-  The agent uses the cloud service when it is reachable and automatically falls back to the local engine if a request fails, so the demo keeps working either way.
-
-To reset local memory to the clean seeded baseline, run:
+## 3. How to run it
 
 ```powershell
-python scripts/reset_memory.py
+# 1. Install dependencies (Python 3.10+ required)
+pip install -r requirements.txt
+
+# 2. (Optional) create .env — copy from .env.example and add keys.
+#    The app runs 100% fine with NO keys: it falls back to the local engine.
+
+# 3. Start
+python run.py
+# → http://127.0.0.1:8000   (dashboard + login)
+# → http://127.0.0.1:8000/docs  (interactive FastAPI/Swagger docs)
 ```
 
-This removes every local bank (including leftover test banks such as `test_bank_cust_in_999`) and re-seeds the three demo customers.
+⚠️ **Windows console note:** `run.py` prints an emoji banner. If PowerShell throws
+`UnicodeEncodeError`, run with `$env:PYTHONIOENCODING="utf-8"; python run.py`
+(or add the variable in `.vscode/launch.json` — it is already configured there; **F5 works as-is**).
 
----
+### Environment variables (see `.env.example`)
 
-## ⚡ LLM Setup: Groq with Local Fallback
+| Variable | Purpose | If empty |
+|---|---|---|
+| `LLM_PROVIDER` | `groq` (recommended) / `gemini` / `openai` | local fallback engine |
+| `GROQ_API_KEY` / `GROQ_MODEL` | real conversational LLM with tool-calling | local fallback engine |
+| `HINDSIGHT_API_KEY`, `HINDSIGHT_BASE_URL` | Vectorize Hindsight Cloud memory | built-in local memory engine (`data/hindsight_local_banks.json`) |
+| `PORT` / `HOST` | server binding | `127.0.0.1:8000` |
+| `SESSION_TTL_HOURS` | server-side session lifetime | `12` |
 
-The agent ships with a deterministic local FinTech reasoning engine, so the demo works with zero API keys. For generative, natural-language replies, Groq's fast free tier is recommended:
+Stale-data note: the FX rate used everywhere is **1 USD = ₹94.11** (brought in from the live
+rate on 2026-11-08), and the bank's branch identity is **MG Road Corporate Branch, Bengaluru**
+(`RBI/2026/BLR-049`). Customer residences remain Hyderabad-based on purpose.
 
-1. Create a free API key at **[console.groq.com](https://console.groq.com/)**.
-2. Open the existing `.env` file in the project root (it is already created; `.env.example` is only a reference).
-3. Set the following values:
+## 4. What the agent can actually do (capability + compliance map)
 
-   ```env
-   LLM_PROVIDER=groq
-   GROQ_API_KEY=your_groq_api_key
-   GROQ_MODEL=openai/gpt-oss-120b
-   ```
+| Capability | Rule/logic behind it | Where it lives |
+|---|---|---|
+| Card block / unblock | instant, zero-friction; urgent on "lost/stolen" | `src/banking/core_banking_service.py` |
+| Fee waivers | courtesy waiver once per 12 months (`POL-RBI-FEE-001`), else escalate to Regional Branch Manager | same |
+| Disputes + provisional credit | RBI zero-liability / customer-protection style flow | same |
+| SWIFT / FIRC hold release | purpose-code memory (`P0802`) expedites hold | same |
+| Currency conversion | USD↔INR at ₹94.11, zero portfolio markup, Indian digit grouping | same |
+| Reminder of settlement times | weekend UPI/QR batches settle Monday 06:00 IST | same |
+| Travel notices | card regions enabled on request | same |
+| Compliance guardrails | never asks for PIN/CVV/OTP; escalates RBI-Ombudsman/legal threats to the Principal Nodal Officer; single-customer data isolation | `src/banking/compliance.py` |
 
-If the key is blank or a Groq request fails, the agent automatically falls back to the local engine. Optional Gemini and OpenAI keys are also documented in `.env.example`.
+## 5. Project structure (LLM-friendly map)
 
----
+```
+apex-fintech-agent/
+├── run.py                       # entry point: uvicorn on 127.0.0.1:8000 (F5 profile = same)
+├── requirements.txt             # FastAPI, uvicorn, python-dotenv, httpx, requests, jinja2
+├── .env.example                 # key template — copy to .env (real keys never committed)
+├── data/
+│   ├── clientcare.db            # SQLite: sessions, conversations, messages (auto-created)
+│   └── hindsight_local_banks.json  # local memory fallback store (auto-created/seeded)
+├── scripts/
+│   └── reset_memory.py          # wipes local memory banks, re-seeds the 3 demo customers
+├── src/
+│   ├── api/
+│   │   └── app.py               # FastAPI app + ALL routes (§6) + static file serving
+│   ├── auth.py                  # login, server-side sessions, HttpOnly `apex_session` cookie
+│   ├── db.py                    # SQLite helpers (conversations/messages persist across refreshes)
+│   ├── agent/                   # ★ the conversational brain
+│   │   ├── orchestrator.py      # pipeline: compliance → memory recall → snapshot → LLM/tools → retain memory
+│   │   ├── llm_router.py        # Groq/OpenAI/Gemini router + tool loop + post-processing + LOCAL fallback engine
+│   │   ├── prompts.py           # FINTECH_SYSTEM_PROMPT (tone/rules/facts) + classification prompt
+│   │   ├── tools.py             # ToolExecutor: binds tool calls to the logged-in customer only
+│   │   └── comparison.py        # stateless-bot benchmark copy for the Benchmark button
+│   ├── banking/                 # ★ the synthetic bank
+│   │   ├── core_banking_service.py  # accounts, cards, transactions, holds, waivers, conversions (USD_INR_RATE=94.11)
+│   │   └── compliance.py        # input sanitization + escalation checks
+│   ├── hindsight/               # ★ memory layer (Vectorize Hindsight Cloud w/ local fallback)
+│   │   ├── client_wrapper.py    # cloud client + local fallback wiring
+│   │   ├── engine.py            # local memory engine (seeded facts, recall/reflect/retain)
+│   │   └── types.py             # Recall/Reflect/Retain result types
+│   ├── synthetic_data/          # demo world (loaded at startup)
+│   │   ├── customers.json       # 3 personas, balances, memory facts
+│   │   ├── transactions.json    # transaction ledger seed
+│   │   ├── policies.json        # bank policies (FX, UPI caps, waiver rule, HQ, MICR)
+│   │   └── data_loader.py       # loads/validates the JSON seeds
+│   └── static/                  # the whole frontend (served at /)
+│       ├── index.html           # layout: sidebar / top bar / stat cards / chat / wallet / history
+│       ├── styles.css           # dark premium design system (orange #FF4D00 accent) + light theme
+│       └── app.js               # all UI logic, fetch calls, chat rendering — no frameworks
+├── tests/                       # 19 unittest tests (all mocked, no network needed)
+└── WORK-*.md / *.py             # scratch files (safe to ignore)
+```
 
-## 🚀 How to Run in Visual Studio Code (Step-by-Step)
+### The message pipeline (read this to modify the agent)
 
-### Prerequisites
-- **Python 3.10+**
-- Install dependencies from the project root:
-  ```powershell
-  pip install -r requirements.txt
-  ```
+```
+user message (index.html/app.js)
+   → POST /api/chat (app.py, session-checked)
+   → BankingComplianceGuard.sanitize / escalation check            (banking/compliance.py)
+   → Hindsight recall + reflect: memories & directives             (hindsight/, per-customer "bank")
+   → _customer_snapshot(): cards/balances/last 8 txns context      (agent/orchestrator.py)
+   → LLMRouter.agentic_chat / generate with history + tools:       (agent/llm_router.py)
+        Groq (openai/gpt-oss-120b, ~4 tool rounds max, dedupe)
+        ├─ ToolExecutor(customer_id) MUTATES bank state            (agent/tools.py → banking/)
+        └─ replies post-processed (strip meta text) & enhanced
+   → fallback: deterministic data-driven local engine (no CLI keys needed)
+   → Hindsight retain (stores resolution as a new memory)
+   → JSON: { reply, actions[], banking_action, recalled_memories[], latency_ms, ... }
+   → app.js renders chat bubble + action badges; ledger/stats refresh
+```
 
-### Option 1: One-Click Run with F5 (Recommended)
-1. Open **VS Code**.
-2. Go to **File** > **Open Folder...** and open the project folder (the folder containing `run.py`).
-3. *(Optional)* Open `.env` and add any API keys you want to use. It is already present; `.env.example` is only a template.
-4. Press **`F5`** on your keyboard (or click **Run and Debug** on the left bar and choose **Run Apex FinTech Agent (FastAPI)**).
-5. The server will launch in your integrated terminal.
-6. Open your browser at **[http://127.0.0.1:8000](http://127.0.0.1:8000)** and log in with a demo account from the table above.
+## 6. API endpoints
 
-### Option 2: Run via VS Code Terminal
-1. Open the project folder in VS Code, then open the integrated terminal (`Ctrl + ~` or **Terminal** > **New Terminal**).
-2. Start the application:
-   ```powershell
-   python run.py
-   ```
-3. Open your browser at **[http://127.0.0.1:8000](http://127.0.0.1:8000)** and log in.
-   *(Interactive Swagger documentation is available at **[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)**.)*
+| Method | Path | Auth | Purpose |
+|---|---|---|---|
+| POST | `/api/auth/login` | – | demo credentials → session cookie |
+| POST | `/api/auth/logout` | ✔ | clear session |
+| GET | `/api/auth/me` | ✔ | current customer profile |
+| GET | `/api/overview` | ✔ | accounts, cards, transactions, tiers (drives stat cards/wallet) |
+| GET | `/api/conversations` | ✔ | chat-history sidebar |
+| POST | `/api/conversations` | ✔ | new chat |
+| DELETE | `/api/conversations/{id}` | ✔ | delete chat |
+| GET | `/api/conversations/{id}/messages` | ✔ | reload a conversation |
+| POST | `/api/chat` | ✔ | send message → agent reply + actions + memories |
+| POST | `/api/benchmark` | ✔ | stateless-bot vs memory-agent comparison |
+| GET | `/api/health` | – | liveness |
 
----
+All user-scoped endpoints are strictly isolated to the logged-in customer.
 
-## 🎯 60-Second Judge Pitch Demo Script
+## 7. Tests
 
-Follow this sequence to showcase the system to judges:
-
-### 1. Show the NRI Cross-Border SWIFT & FIRC Memory
-- Log in as **aarav / Apex@101** (Aarav, NRI Wealth).
-- Click Quick Scenario: *"Why is my $5,000 SWIFT wire from Silicon Valley Bank on hold?"*
-- **Judge Impact**: The agent recalls his Oct 24th transfer, recognizes Purpose Code `P0802`, and releases the FIRC compliance hold in 15 minutes!
-- Click **Benchmark** to show what a traditional stateless chatbot does (asks him to take physical documents to a branch and wait 5 days).
-
-### 2. Show the Multi-Currency Converter
-- Ask: *"Convert $1,200 USD to INR"* or toggle the currency switcher to **Dual (₹ + $)** in the top navigation.
-- **Judge Impact**: Calculates real-time interbank rate ($1 = ₹94.11) with zero-markup forex benefits!
-
-### 3. Show the MSME Trader Weekend Liquidity & Policy Memory
-- Log out, then log in as **rajesh / Apex@102** (Rajesh, MSME Vyapar).
-- Click Quick Scenario: *"Where is my weekend Soundbox & QR collection of ₹3,85,000?"*
-- **Judge Impact**: Confirms Batch #HYD-9021 from 342 payments clearing at Monday 06:00 IST to protect his Begum Bazaar supplier cycle.
-- Ask: *"Can you waive my NACH return fee?"*
-- **Judge Impact**: Recalls he already received a ₹350 waiver on Oct 5th; enforces `POL-RBI-FEE-001` and escalates to Regional Manager for exception approval.
-
-### 4. Show Card Unblock & Instant Zero-Liability Dispute
-- Log out, then log in as **priya / Apex@103** (Priya, Youth Tech).
-- Click: *"I did not authorize the ₹899 international cloud charge, please refund me."*
-- **Judge Impact**: Registers formal RBI Grievance Dispute `DSP-RBI-7041` with 24-hr provisional credit under RBI Customer Protection Charter, and disables international e-com transactions.
-- Click: *"Please unblock my RuPay card right now."*
-- **Judge Impact**: Instantly reactivates card with zero friction.
-
-### 5. Show Persistent Chat History & Persona Isolation
-- Refresh the page: the current conversation and its messages are still there.
-- In the right-hand **Chat History** panel, start a **New Chat**, rename it, and delete a conversation.
-- **Judge Impact**: Unlike a stateless demo, conversations persist across refreshes, and each login remains isolated to its own customer.
-
----
-
-## 🧪 Automated Test Verification
-
-Run all tests from the project root:
 ```powershell
 python -m unittest discover tests
 ```
 
-The suite contains 19 tests covering memory retention, compliance masking, dual currency conversion, fee policies, conversational routing, login/session security, per-customer conversation isolation, chat-history persistence, and the Groq tool-calling loop (mocked, no network needed).
+19 tests, fully offline/mocked: memory retention, compliance masking, FX conversion, fee policy,
+routing, login/session security, per-customer conversation isolation, chat-history persistence,
+and the Groq tool-calling loop. (`OK (Some noise)` = Starlette/httpx deprecation warning; ignore it.)
+
+## 8. Known quirks / notes for contributors
+
+- The `.env` holds real keys and is **gitignored by design** — never commit it.
+- If Hindsight Cloud is unreachable, the app silently switches to local memory (log line:
+  `Cloud recall error … Using local`); the demo stays fully functional.
+- Model on Groq: `llama-3.3-70b-versatile` was decommissioned; use `openai/gpt-oss-120b` (current `.env`).
+- Emoji banner needs UTF-8 console (see §3).
+- The UI was redesigned (v3): orange-accent dark dashboard, sidebar nav, stat cards, wallet tiles,
+  cash-flow chart, recent-activities table, and an INR/USD/Dual toggle bound to all money displays.
+
+## 9. Repo / team workflow for Hack-with-BLR
+
+- Upstream repo: `hack_with_blr_selection` (shared selection repo).
+- Do not push `.env` or `data/*.json` generated stores.
+- Suggested branches: `main` = stable demo, `feat/<name>-<topic>` per teammate.
+- Quick check before pushing: `python -m unittest discover tests` must be green.
