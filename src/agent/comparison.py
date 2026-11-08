@@ -33,7 +33,7 @@ class MemoryBenchmarkComparator:
         personalization_delta = min(100, 40 + recalled_count * 15)
 
         comparison_insights = [
-            f"Stateless bot treated {hindsight_res['customer_name']} as an unknown customer, asking for manual branch visits and form resubmissions.",
+            f"Stateless bot treated {hindsight_res['customer_name']} as an unknown customer, directing them to the MG Road Corporate Branch (Bengaluru) counter for manual paperwork and form resubmissions.",
             f"Hindsight recalled {recalled_count} historical facts (past FIRC purpose codes, prior NACH waivers, verified VPA preferences) and resolved the inquiry proactively.",
             "Eliminated repetitive security verification, saving an estimated 12 minutes of customer support time.",
             f"Agent latency: {hindsight_res['latency_ms']}ms."

@@ -7,8 +7,11 @@ from ..hindsight.client_wrapper import hindsight_service
 from ..banking.compliance import BankingComplianceGuard
 from ..banking.core_banking_service import core_banking
 from .prompts import FINTECH_SYSTEM_PROMPT
-from .llm_router import LLMRouter
+from .llm_router import LLMRouter, format_inr
 from .tools import ToolExecutor
+
+SNAPSHOT_NOTICE = ("CUSTOMER SNAPSHOT (read-only, a few seconds old — CALL the banking tools before "
+                   "quoting exact live figures or performing any action):")
 
 class FinTechSupportAgent:
     """
@@ -30,6 +33,9 @@ class FinTechSupportAgent:
         history: earlier turns of THIS conversation as [{"role": "user"|"assistant", "content": ...}].
         """
         history = history or []
+        # Keep the window lean (last 12 messages = 6 exchanges) so replies stay fast
+        # while follow-ups like "what about the other one?" still carry context.
+        history = history[-12:]
         start_time = time.time()
         bank_id = f"bank_{customer_id}"
 
@@ -74,9 +80,14 @@ class FinTechSupportAgent:
         actions: List[Dict[str, Any]] = []
         reply_text: Optional[str] = None
 
+        # Compact read-only snapshot of THIS customer's own state, so the model can
+        # answer with specifics immediately and persona isolation is guaranteed.
+        customer_snapshot = self._customer_snapshot(customer, customer_id)
+
         # Preferred path: real conversation + LLM tool-calling (needs a Groq key).
         if use_memory and self.llm_router.agentic_available:
-            agent_system_prompt = self._build_system_prompt(customer, recalled_text_list, directives)
+            agent_system_prompt = self._build_system_prompt(customer, recalled_text_list, directives,
+                                                            customer_snapshot)
             result = self.llm_router.agentic_chat(
                 system_prompt=agent_system_prompt,
                 history=history,
@@ -98,10 +109,13 @@ class FinTechSupportAgent:
                 )
                 if banking_action_result:
                     actions = [banking_action_result]
+            # Hand the local/LLM engines the same read-only snapshot (never the live dict).
+            customer_context = dict(customer)
+            customer_context["recent_transactions"] = customer_snapshot["recent_transactions"]
             reply_text = self.llm_router.generate(
                 system_prompt=FINTECH_SYSTEM_PROMPT,
                 user_message=clean_message,
-                customer_context=customer,
+                customer_context=customer_context,
                 recalled_memories=recalled_text_list,
                 directives=directives,
                 banking_action_result=banking_action_result,
@@ -152,7 +166,57 @@ class FinTechSupportAgent:
         }
 
     @staticmethod
-    def _build_system_prompt(customer: Dict[str, Any], memories: List[str], directives: List[str]) -> str:
+    def _customer_snapshot(customer: Dict[str, Any], customer_id: str) -> Dict[str, Any]:
+        """Compact, read-only snapshot of the logged-in customer's own data.
+
+        Strictly scoped: built from the authenticated customer's profile and
+        transactions only, so the model can never see another customer's state.
+        """
+        accounts = []
+        for a in customer.get("accounts", []):
+            accounts.append({
+                "account_id": a.get("account_id"),
+                "type": a.get("type"),
+                "currency": a.get("currency"),
+                "balance_inr": a.get("balance_inr"),
+                "balance_usd": a.get("balance_usd"),
+                "hold_amount": a.get("hold_amount", 0.0) or 0.0,
+                "hold_reason": a.get("hold_reason", ""),
+            })
+        cards = [{
+            "card_id": c.get("card_id"),
+            "card_type": c.get("card_type"),
+            "masked_number": c.get("masked_number"),
+            "status": c.get("status"),
+            "international_enabled": c.get("international_enabled"),
+        } for c in customer.get("cards", [])]
+        recent_transactions = [{
+            "transaction_id": t.get("transaction_id"),
+            "date": str(t.get("date", "")),
+            "description": t.get("description", ""),
+            "category": t.get("category", ""),
+            "amount_inr": t.get("amount_inr", 0.0),
+            "status": t.get("status", ""),
+        } for t in core_banking.get_transactions(customer_id, limit=8)]
+        return {
+            "accounts": accounts,
+            "cards": cards,
+            "recent_transactions": recent_transactions,
+            "total_liquid_inr": customer.get("total_liquid_inr"),
+            "total_liquid_usd": customer.get("total_liquid_usd"),
+            "upi_id": customer.get("upi_id"),
+            "city": customer.get("city"),
+            "branch": customer.get("branch"),
+            "kyc_status": customer.get("kyc_status"),
+        }
+
+    @staticmethod
+    def _build_system_prompt(
+        customer: Dict[str, Any],
+        memories: List[str],
+        directives: List[str],
+        snapshot: Optional[Dict[str, Any]] = None,
+    ) -> str:
         today = datetime.now(timezone(timedelta(hours=5, minutes=30))).strftime("%A, %d %B %Y, %I:%M %p IST")
         lines = [
             FINTECH_SYSTEM_PROMPT,
@@ -160,6 +224,22 @@ class FinTechSupportAgent:
             f"- Name: {customer.get('name')} | Tier: {customer.get('tier')} | UPI: {customer.get('upi_id')}",
             f"- Now: {today}",
         ]
+        if snapshot:
+            lines.append(SNAPSHOT_NOTICE)
+            lines.append(f"- Portfolio total: {format_inr(snapshot['total_liquid_inr'])} "
+                         f"(~${snapshot['total_liquid_usd']:,.2f} USD)")
+            for a in snapshot["accounts"]:
+                hold = a.get("hold_amount") or 0.0
+                hold_note = (f" — ON HOLD {format_inr(hold)}: {a['hold_reason'][:60]}" if hold else "")
+                lines.append(f"- Account {a['account_id']} ({a['type']}): "
+                             f"{format_inr(a['balance_inr'])}{hold_note}")
+            for c in snapshot["cards"]:
+                intl = "international ON" if c.get("international_enabled") else "international OFF"
+                lines.append(f"- Card {c['card_id']} ({c['card_type']}): status {c['status']}, {intl}")
+            lines.append(f"- UPI handle: {snapshot['upi_id']} | Branch: {snapshot['branch']}")
+            for t in snapshot["recent_transactions"][:8]:
+                lines.append(f"- Recent txn: {t['date'][:10]} | {t['description'][:56]} | "
+                             f"{format_inr(t['amount_inr'])} | {t['status']}")
         if memories:
             lines.append("WHAT YOU REMEMBER ABOUT THIS CUSTOMER (long-term memory; use it naturally, don't recite it):")
             lines += [f"- {m}" for m in memories]

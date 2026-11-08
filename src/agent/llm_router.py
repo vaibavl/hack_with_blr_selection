@@ -1,10 +1,38 @@
 import os
 import json
 import re
+import hashlib
 import httpx
 from typing import Dict, Any, List, Optional
 from ..banking.core_banking_service import USD_INR_RATE
 from .tools import TOOL_SCHEMAS, result_to_json
+
+# The bank's own branch identity (updated). Customer locations (Begum Bazaar,
+# HITEC City residences, batch #HYD-9021 collections in Hyderabad) stay as-is.
+BANK_BRANCH = "MG Road Corporate Branch, Bengaluru"
+BANK_BRANCH_FULL = "MG Road Corporate Branch, Bengaluru - 560001"
+
+
+def format_inr(amount: float) -> str:
+    """Format an INR amount with Indian digit grouping: 12,34,567.89."""
+    try:
+        amount = float(amount)
+    except (TypeError, ValueError):
+        return str(amount)
+    neg = amount < 0
+    s = f"{abs(round(amount, 2)):.2f}"
+    whole, frac = s.split(".")
+    if len(whole) > 3:
+        last3, rest = whole[-3:], whole[:-3]
+        groups = []
+        while len(rest) > 2:
+            groups.insert(0, rest[-2:])
+            rest = rest[:-2]
+        if rest:
+            groups.insert(0, rest)
+        whole = ",".join(groups) + "," + last3
+    return ("-" if neg else "") + f"₹{whole}.{frac}"
+
 
 class LLMRouter:
     """
@@ -15,6 +43,8 @@ class LLMRouter:
     3. OpenAI API (gpt-4o / gpt-4o-mini)
     4. Enterprise Gemini-Grade Local FinTech Reasoning Engine (Dynamic, comprehensive, zero-dependency)
     """
+
+    MAX_AGENTIC_ROUNDS = 4  # cap the tool-calling loop so replies stay responsive
 
     def __init__(self):
         self.gemini_api_key = os.getenv("GEMINI_API_KEY")
@@ -50,7 +80,7 @@ class LLMRouter:
             try:
                 gemini_reply = self._call_gemini(system_prompt, prompt_content, history)
                 if gemini_reply:
-                    return gemini_reply
+                    return self._clean_reply(gemini_reply)
             except Exception as e:
                 print(f"[LLMRouter] Gemini API call failed: {e}. Falling back.")
 
@@ -69,7 +99,9 @@ class LLMRouter:
                     temperature=0.3,
                     max_tokens=700
                 )
-                return chat_completion.choices[0].message.content
+                groq_reply = self._clean_reply(chat_completion.choices[0].message.content or "")
+                if groq_reply:
+                    return groq_reply
             except Exception as e:
                 self._note_groq_error(e)
                 print(f"[LLMRouter] Groq API call failed: {e}. Falling back.")
@@ -91,19 +123,21 @@ class LLMRouter:
                 with httpx.Client(timeout=20.0) as client:
                     resp = client.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
                     if resp.status_code == 200:
-                        return resp.json()["choices"][0]["message"]["content"]
+                        openai_reply = self._clean_reply(resp.json()["choices"][0]["message"]["content"] or "")
+                        if openai_reply:
+                            return openai_reply
             except Exception as e:
                 print(f"[LLMRouter] OpenAI API call failed: {e}. Falling back.")
 
         # 4. Fallback to Gemini-Grade Local FinTech Reasoning Engine
-        return self._local_gemini_grade_reasoning(
+        return self._clean_reply(self._local_gemini_grade_reasoning(
             user_message=user_message,
             customer_context=customer_context,
             recalled_memories=recalled_memories,
             directives=directives,
             banking_action_result=banking_action_result,
             is_stateless=is_stateless
-        )
+        ))
 
     # ------------------------------------------------------------------
     # Agentic chat: Groq function-calling loop with banking tools
@@ -118,11 +152,12 @@ class LLMRouter:
         history: List[Dict[str, str]],
         user_message: str,
         tool_executor,
-        max_rounds: int = 5,
+        max_rounds: Optional[int] = None,
     ) -> Optional[Dict[str, Any]]:
         """Returns {"reply": str, "actions": [tool results]} or None if Groq is unusable."""
         if not self.agentic_available:
             return None
+        max_rounds = max(2, min(int(max_rounds or self.MAX_AGENTIC_ROUNDS), 8))
         try:
             from groq import Groq
             client = Groq(api_key=self.groq_api_key)
@@ -133,6 +168,8 @@ class LLMRouter:
                 {"role": "user", "content": user_message},
             ]
             actions: List[Dict[str, Any]] = []
+            seen_calls: Dict[tuple, Dict[str, Any]] = {}
+            reply: Optional[str] = None
 
             for _ in range(max_rounds):
                 resp = client.chat.completions.create(
@@ -141,7 +178,8 @@ class LLMRouter:
                 )
                 msg = resp.choices[0].message
                 if not msg.tool_calls:
-                    return {"reply": (msg.content or "").strip(), "actions": actions}
+                    reply = (msg.content or "").strip()
+                    break
 
                 messages.append({
                     "role": "assistant",
@@ -157,20 +195,96 @@ class LLMRouter:
                         args = json.loads(tc.function.arguments or "{}")
                     except json.JSONDecodeError:
                         args = {}
-                    result = tool_executor.run(tc.function.name, args)
+                    name = tc.function.name
+                    key = (name, json.dumps(args, sort_keys=True, default=str))
+                    if key in seen_calls:
+                        # Redundant call: hand back the cached result once and tell the
+                        # model to answer from it instead of looping on the same tool.
+                        cached = dict(seen_calls[key])
+                        cached["note"] = ("Duplicate call suppressed: this exact result was already "
+                                          "returned in this turn. Use it now and answer the customer.")
+                        messages.append({"role": "tool", "tool_call_id": tc.id,
+                                         "content": result_to_json(cached)})
+                        continue
+                    result = tool_executor.run(name, args)
+                    seen_calls[key] = dict(result)
                     if result.get("action") or "success" in result:
-                        actions.append({"tool": tc.function.name, **result})
+                        actions.append({"tool": name, **result})
                     messages.append({"role": "tool", "tool_call_id": tc.id,
                                      "content": result_to_json(result)})
 
-            # Out of rounds: ask for a final answer without tools
-            final = client.chat.completions.create(
-                model=model, messages=messages, temperature=0.4, max_tokens=700)
-            return {"reply": (final.choices[0].message.content or "").strip(), "actions": actions}
+            if reply is None:
+                # Out of rounds: force a final answer that uses the tool output numbers.
+                final_messages = messages + [{
+                    "role": "user",
+                    "content": ("Stop calling tools. Give the customer your final answer now, "
+                                "using the exact numbers and statuses from the tool results above. "
+                                "Never claim an action succeeded if its tool result was success=false."),
+                }]
+                final = client.chat.completions.create(
+                    model=model, messages=final_messages, temperature=0.4, max_tokens=700)
+                reply = (final.choices[0].message.content or "").strip()
+
+            return {"reply": self._clean_reply(reply), "actions": actions}
         except Exception as e:
             self._note_groq_error(e)
             print(f"[LLMRouter] Groq agentic call failed: {e}. Falling back.")
             return None
+
+    # ------------------------------------------------------------------
+    # Reply post-processing: strip leaked meta-text without touching substance
+    # ------------------------------------------------------------------
+    _META_SENTENCE_RE = re.compile(
+        r"^\s*(?:as an? ai\b|i(?:'m| am) an? (?:ai|large language model|artificial intelligence|machine)\b|"
+        r"i was trained by\b|my (?:internal|system) (?:instructions|prompts?)\b).*$",
+        re.IGNORECASE,
+    )
+    _ROLE_LABEL_RE = re.compile(r"^\s*(assistant|ai|chatbot|bot|agent|user|customer|system)\s*:\s*", re.IGNORECASE)
+
+    @classmethod
+    def _clean_reply(cls, text: str) -> str:
+        if not text:
+            return text or ""
+        out = text
+
+        # Strip a trailing/leading markdown code fence wrapper around the whole reply.
+        lines = out.splitlines()
+        if len(lines) >= 2 and lines[0].strip().startswith("```") and lines[-1].strip().endswith("```"):
+            lines = lines[1:]
+            if lines and lines[-1].strip() == "```":
+                lines = lines[:-1]
+            out = "\n".join(lines)
+
+        # Remove leaked internal tool-call JSON skeletons (whole-line JSON blobs).
+        kept = []
+        for line in out.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("{"):
+                try:
+                    parsed = json.loads(stripped)
+                except (json.JSONDecodeError, ValueError):
+                    parsed = None
+                if isinstance(parsed, dict) and ("tool_calls" in parsed or
+                                                 ("function" in parsed and "name" in parsed)):
+                    continue
+            if cls._META_SENTENCE_RE.match(line):
+                continue
+            kept.append(line)
+        out = "\n".join(kept)
+
+        # Remove code fences left empty by the cleanup above (```json\n```).
+        out = re.sub(r"```[a-zA-Z0-9]*\n\s*```", "", out)
+
+        # Strip stray role labels at the start of lines ("Assistant:", "User:", ...).
+        cleaned_lines = []
+        for line in out.splitlines():
+            new_line, n = cls._ROLE_LABEL_RE.subn(lambda m: "", line, count=1)
+            cleaned_lines.append(new_line if n else line)
+        out = "\n".join(cleaned_lines)
+
+        # Collapse excess blank lines and trim.
+        out = re.sub(r"\n{3,}", "\n\n", out).strip()
+        return out
 
     def _call_gemini(self, system_prompt: str, prompt_content: str,
                      history: Optional[List[Dict[str, str]]] = None) -> Optional[str]:
@@ -211,10 +325,19 @@ class LLMRouter:
         is_stateless: bool
     ) -> str:
         lines = [f"CUSTOMER INQUIRY: {user_message}"]
-        lines.append(f"AUTHENTICATED CLIENT: {customer_context.get('name')} (Tier: {customer_context.get('tier')}, Branch: Cyberabad, Hyderabad)")
+        lines.append(f"AUTHENTICATED CLIENT: {customer_context.get('name')} "
+                     f"(Tier: {customer_context.get('tier')}, Branch: {BANK_BRANCH})")
         lines.append(f"ACCOUNTS: {json.dumps(customer_context.get('accounts', []))}")
         lines.append(f"CARDS: {json.dumps(customer_context.get('cards', []))}")
-        
+
+        recent = customer_context.get("recent_transactions") or []
+        if recent:
+            lines.append("RECENT ACCOUNT ACTIVITY (latest 8, read-only snapshot):")
+            for t in recent:
+                amount = t.get("amount_inr", 0.0)
+                lines.append(f"• {str(t.get('date', ''))[:10]} | {t.get('description', '')[:60]} | "
+                             f"{format_inr(amount)} | {t.get('status', '')}")
+
         if not is_stateless:
             lines.append("\nHINDSIGHT LONG-TERM MEMORY CITATIONS (Past tickets, preferences, and regulatory resolutions):")
             for m in recalled_memories:
@@ -229,6 +352,44 @@ class LLMRouter:
             lines.append(f"\nREAL-TIME CORE BANKING ACTION RESULT: {json.dumps(banking_action_result, indent=2)}")
 
         return "\n".join(lines)
+
+    # ------------------------------------------------------------------
+    # Local deterministic engine (used when no LLM key is available)
+    # ------------------------------------------------------------------
+    _NEGATIVE_HINTS = [
+        "angry", "frustrat", "worried", "worried sick", "shock", "worst", "pathetic",
+        "ridiculous", "useless", "fed up", "cheat", "bakwas", "upset", "tense",
+        "horrible", "terrible", "annoy", "scam", "gussa", "pareshan",
+    ]
+
+    @staticmethod
+    def _vary(seed: str, options: List[str]) -> str:
+        """Deterministic, seed-stable phrasing variation."""
+        digest = int(hashlib.sha1(seed.encode("utf-8", "ignore")).hexdigest(), 16)
+        return options[digest % len(options)]
+
+    @classmethod
+    def _empathy_prefix(cls, msg: str) -> str:
+        if not any(w in msg for w in cls._NEGATIVE_HINTS):
+            return ""
+        return cls._vary(msg, [
+            "I completely get the concern — let me sort this out for you right now.",
+            "That does sound worrying — give me a moment, I'll take care of it.",
+            "Sorry about the trouble — you shouldn't have to chase this. I'm on it.",
+        ]) + "\n\n"
+
+    @staticmethod
+    def _greeting(first_name: str, tier: str, seed: str) -> str:
+        greet = LLMRouter._vary(seed, ["Namaste", "Hello", "Hi"])
+        ji = " ji" if ("vyapar" in tier.lower() or "msme" in tier.lower()) else ""
+        return f"{greet} {first_name}{ji}"
+
+    @staticmethod
+    def _merchant_context(tier: str) -> str:
+        low = tier.lower()
+        if "vyapar" in low or "msme" in low:
+            return "your Begum Bazaar wholesale dispatch pipeline"
+        return "your weekend merchant collections"
 
     def _local_gemini_grade_reasoning(
         self,
@@ -247,6 +408,12 @@ class LLMRouter:
         cards = customer_context.get("cards", [])
         primary_card = cards[0] if cards else {}
         masked_card = primary_card.get("masked_number", "your registered card")
+        upi_id = customer_context.get("upi_id", "")
+        recent = customer_context.get("recent_transactions", []) or []
+        action = banking_action_result or {}
+        seed = f"{msg}|{name}"
+        conversion_intent = any(w in msg for w in ["convert", "usd to inr", "inr to usd", "forex",
+                                                   "exchange rate", "dollar to rupee", "rupee"])
 
         # ----------------------------------------------------
         # STATELESS PATH (Without Memory Benchmark Evaluation)
@@ -298,206 +465,346 @@ class LLMRouter:
                 )
 
         # ----------------------------------------------------
-        # HINDSIGHT-POWERED PATH (Gemini-Grade Institutional Reasoning)
+        # HINDSIGHT-POWERED PATH (data-driven, conversational)
         # ----------------------------------------------------
+        empathy = self._empathy_prefix(msg)
+        greeting = self._greeting(first_name, tier, seed)
 
-        # 1. Card Unblock / Reactivation (Strict priority over block)
+        # 1. Card Unblock / Reactivation (strict priority over block)
         if any(w in msg for w in ["unfreeze", "unblock", "reactivate", "unlock", "chalu karo"]):
+            card_ref = action.get("card_id", primary_card.get("card_id", masked_card)) or masked_card
+            status = action.get("status", "Active") if action.get("status") else "Active"
+            opener = self._vary(seed, [
+                f"{empathy}{greeting}! Your card is back in action.",
+                f"{empathy}{greeting}! Good news — the card is live again.",
+            ])
+            note = f"_{action.get('message', 'Card reactivated.')}_" if action.get("message") else ""
+            closer = self._vary(seed + "|c", [
+                "Want me to run a quick check that UPI AutoPay and any recurring mandates are unaffected?",
+                "Want me to confirm international and contactless usage as well?",
+            ])
             return (
-                f"Namaste {first_name}. Your {masked_card} has been successfully reactivated and unblocked.\n\n"
-                f"• Security Status: Active & Operational\n"
-                f"• Channels Restored: Domestic contactless tap-to-pay, ATM withdrawals, and online e-commerce\n"
-                f"• Zero-Forex Markup: Active per your {tier} account privileges\n\n"
-                f"An electronic confirmation advice has been dispatched to your registered cellular number and WhatsApp for your records."
+                f"{opener}\n\n"
+                f"• **{card_ref}** — status: **{status}, unblocked**\n"
+                f"• Channels restored: chip, contactless tap-to-pay, ATM and online e-commerce\n"
+                "• Zero-forex markup stays active on your " + f"{tier} account\n"
+                + (f"• {note}\n" if note else "\n") +
+                f"{closer}"
             )
 
         # 2. Card Freeze / Emergency Lock
         if any(w in msg for w in ["block", "freeze", "lock", "lost", "stolen", "card band"]):
+            card_ref = action.get("card_id", primary_card.get("card_id", masked_card)) or masked_card
+            status = action.get("status", "Frozen - Protection Active") if action.get("status") \
+                else "Frozen - Protection Active"
+            closer = self._vary(seed + "|c", [
+                "Want me to unblock it the moment you confirm the card is safe?",
+                "Say the word once you're comfortable and I'll reactivate it instantly.",
+            ])
             return (
-                f"Namaste {first_name}. An immediate electronic security freeze has been enforced on your {masked_card}.\n\n"
-                f"• Authorization Status: Blocked for all new point-of-sale, international, and online e-commerce transactions\n"
-                f"• Protected Continuity: Scheduled domestic UPI AutoPay mandates and inward salary credits remain completely unaffected\n"
-                f"• Restoration: You can safely unblock this card anytime with a single message right here once secured."
+                f"{empathy}{greeting}! I've locked your card down right away.\n\n"
+                f"• **{card_ref}** — status: **{status}**\n"
+                "• All new POS, ATM and online authorizations are blocked\n"
+                "• Scheduled UPI AutoPay mandates and inward salary credits stay unaffected\n\n"
+                f"{closer}"
             )
 
         # 3. Dispute / Unauthorized Charge / Fraud Reporting
-        if any(w in msg for w in ["dispute", "refund", "unrecognized", "did not do", "fraud", "unauthorized", "kyu kata", "charges kyu"]):
-            provisional_sla = "24 hours (Zero-Liability SLA)" if "Premier" in tier else "48 hours (RBI Charter)"
-            disp_id = banking_action_result.get("dispute_id", "DSP-RBI-7041") if banking_action_result else "DSP-RBI-7041"
-            
+        if any(w in msg for w in ["dispute", "refund", "unrecognized", "did not do", "fraud",
+                                  "unauthorized", "kyu kata", "charges kyu"]):
+            # Prefer the actual dispute registry + the customer's own transaction.
+            disputed = next((t for t in recent
+                             if (t.get("status", "") and "dispute" in str(t.get("status", "")).lower())
+                             or str(t.get("transaction_id", "")).startswith("DSP-")), None)
+            txn_desc = disputed.get("description", "") if disputed else ""
+
             memory_citation = ""
             if any("dispute" in m.lower() or "subscription" in m.lower() for m in recalled_memories):
-                memory_citation = "\n• Historical Context: I recall your prior international subscription dispute on Oct 15th which was resolved with zero loss."
+                memory_citation = ("\n• Historical context: I also recall your prior international "
+                                   "subscription dispute (resolved with zero loss to you).")
 
+            if action.get("dispute_id"):
+                dispute_id = action["dispute_id"]
+                timeline = action.get("timeline", "48 hours (RBI Charter)")
+                status = action.get("status", "Provisional Credit Posted per RBI Grievance Policy")
+            else:
+                dispute_id = "DSP-RBI-7041"
+                timeline = "24 hours (Zero-Liability SLA)" if "Premier" in tier else "48 hours (RBI Charter)"
+                status = "Provisional Credit Posted per RBI Grievance Policy"
+
+            desc_line = f"\n• Charged item on record: **{txn_desc}**" if txn_desc else ""
+            closer = self._vary(seed + "|c", [
+                "Want me to also pause international e-commerce on the card while we investigate?",
+                "Should I set a reminder to check that the provisional credit lands on time?",
+            ])
             return (
-                f"Namaste {first_name}. I have registered formal electronic grievance **{disp_id}** for the disputed charge.{memory_citation}\n\n"
-                f"• Regulatory Framework: RBI Master Direction on Customer Protection in Unauthorized Electronic Transactions\n"
-                f"• Provisional Settlement: Full provisional credit will reflect in your account within {provisional_sla}\n"
-                f"• Preventive Action: International Card-Not-Present (e-commerce) channels on your card have been paused to prevent any recurring deductions."
+                f"{empathy}{greeting}! I've filed the formal dispute for you.\n\n"
+                f"• Dispute reference: **{dispute_id}** — {status}{desc_line}{memory_citation}\n"
+                f"• **Provisional credit arrives within {timeline}**, per the RBI Master Direction on "
+                "Customer Protection in Unauthorized Electronic Transactions\n"
+                "• Zero-liability applies — you are not responsible for the disputed amount\n\n"
+                f"{closer}"
             )
 
-        # 4. Inward SWIFT Remittance & FIRC Clearance (Aarav Singhania)
-        if any(w in msg for w in ["wire", "swift", "firc", "remittance", "5000", "430000", "silicon valley"]):
+        # 4. Currency Conversion (before SWIFT so "convert $5,000" isn't misrouted)
+        if conversion_intent:
+            amt_match = re.search(r"(\d[\d,]*(?:\.\d+)?)", msg)
+            amt = float(amt_match.group(1).replace(",", "")) if amt_match else 1200.0
+            if action.get("exchange_rate"):  # a convert_currency tool already ran
+                rate = action["exchange_rate"]
+                preview = action.get("formatted", "")
+            else:
+                rate = USD_INR_RATE
+                if "rupee" in msg and "dollar" not in msg:
+                    usd_val = amt / rate
+                    preview = f"{format_inr(amt)} = ${usd_val:,.2f} USD"
+                else:
+                    inr_val = amt * rate
+                    preview = f"${amt:,.2f} USD = {format_inr(inr_val)}"
+            closer = self._vary(seed + "|c", [
+                f"Want me to convert a specific amount now — quoting at **₹{rate}/USD, zero markup**?",
+                "Shall I execute an actual conversion for you at the same zero-markup rate?",
+            ])
+            return (
+                f"{greeting}! Here's the live math for you.\n\n"
+                f"• **{preview}**\n"
+                f"• Rate applied: **₹{rate}/USD** (bank interbank reference)\n"
+                f"• Markup: **0.00%** — standard on your {tier} account\n"
+                f"• INR quoting: Indian digit grouping (e.g. {format_inr(430000)})\n\n"
+                f"{closer}"
+            )
+
+        # 5. Inward SWIFT Remittance & FIRC Clearance
+        if any(w in msg for w in ["wire", "swift", "firc", "remittance", "430000", "silicon valley", "90811"]):
             has_firc_memory = any("firc" in m.lower() or "swift" in m.lower() or "p0802" in m.lower() for m in recalled_memories)
             prefers_concise = any("concise" in m.lower() or "executive" in m.lower() for m in recalled_memories)
+            hold_release = bool(action.get("action") == "FIRC_HOLD_RELEASED" and action.get("success"))
+            status_label = "released" if hold_release else "on compliance hold"
 
-            if has_firc_memory:
-                if prefers_concise:
-                    return (
-                        f"Good afternoon, Aarav. Inward SWIFT transfer TXN-IN-90811 ($5,000 USD / ₹4,30,000 INR) from Silicon Valley Bank US has been cleared.\n\n"
-                        f"• Purpose Code Applied: P0802 (Software Consultancy / IT Advisory) per your standing declaration from Oct 24th\n"
-                        f"• Settlement: Compliance hold removed; ₹4,30,000 is now liquid in your Premier NRE checking balance\n"
-                        f"• Documentation: Digital Foreign Inward Remittance Certificate (FIRC) copy forwarded to your verified WhatsApp."
-                    )
-                else:
-                    return (
-                        f"Namaste Aarav. I identified your incoming $5,000 USD (₹4,30,000 INR) SWIFT remittance from Silicon Valley Bank (TXN-IN-90811).\n\n"
-                        f"Remembering our prior resolution on Oct 24th, I have applied your pre-verified FEMA declaration under Purpose Code P0802 (Software & Tech Advisory). "
-                        f"The regulatory hold has been released immediately with zero paperwork required. The funds are now liquid in your Premier NRE Checking account, and an official digital FIRC has been issued."
-                    )
-
-        # 5. Weekend UPI Soundbox & Merchant Settlement (Rajesh Sharma)
-        if any(w in msg for w in ["settlement", "batch", "soundbox", "385000", "qr", "begum bazaar", "supplier", "paise kab"]):
-            return (
-                f"Namaste Rajesh ji. I understand how critical weekend collection liquidity is for your Begum Bazaar wholesale supplier dispatches on Monday afternoon.\n\n"
-                f"• Batch Identifier: Batch #HYD-9021 (Aggregated from 342 customer Soundbox and QR collections)\n"
-                f"• Total Clearing Amount: ₹3,85,000.00 INR (~$4,450.85 USD)\n"
-                f"• Expected Settlement Finality: Exactly 06:00 IST Monday morning, per NPCI merchant clearing guidelines\n\n"
-                f"Your funds will be fully liquid in your Vyapar Current Account well before your supplier dispatches. No manual paperwork is needed."
+            base = (
+                f"{empathy}{greeting}! Your inward wire from **Silicon Valley Bank — "
+                "$5,000 USD / " + f"{format_inr(430000)}** (TXN-IN-90811) is {status_label}.\n\n"
             )
-
-        # 6. Fee Waiver & Courtesy Reversal (Priya Patel vs Rajesh Sharma)
-        if any(w in msg for w in ["waiver", "reverse", "amc", "250", "350", "fee", "penalty", "nach"]):
-            courtesy_used = any("courtesy_used" in m.lower() or "nach_fee" in m.lower() for m in recalled_memories)
-            if courtesy_used or (banking_action_result and banking_action_result.get("requires_escalation")):
-                return (
-                    f"Namaste Rajesh ji. I reviewed your account history and note that our Cyberabad branch previously extended a ₹350 courtesy waiver for a NACH return on Oct 5th.\n\n"
-                    f"• Bank Policy POL-RBI-FEE-001: Automated fee waivers are restricted to one courtesy credit every 12 months for commercial accounts\n"
-                    f"• Exception Escalation: In recognition of your exemplary MSME trade relationship in Begum Bazaar, I have escalated this directly to our Regional Branch Manager for priority exception review."
+            if hold_release:
+                base += (
+                    f"• **{format_inr(430000)} is now liquid** in your Premier NRE checking balance\n"
+                    f"• Purpose code applied: **{action.get('purpose_code', 'P0802')}** — "
+                    "software consultancy / IT advisory per your standing declaration\n"
+                    "• Official FIRC certificate issued digitally — ideal for your FEMA filing\n\n"
+                    "Should I walk you through filing the FIRC for your next compliance cycle?"
+                )
+            elif has_firc_memory and prefers_concise:
+                base += (
+                    "• As we discussed, purpose code **P0802** clears this in one step\n"
+                    "• Release lands the full ₹4,30,000 into your NRE account instantly\n\n"
+                    "Want me to apply P0802 and release the hold now?"
+                )
+            elif has_firc_memory:
+                base += (
+                    "Remembering our Oct 24th resolution, your verified FEMA declaration under "
+                    "**P0802 (Software & Tech Advisory)** is already on file — releasing the hold "
+                    "takes zero paperwork. Shall I release it now?"
                 )
             else:
-                return (
-                    f"Namaste Priya. I reviewed your banking records and confirm you maintain an outstanding 790 CIBIL score with zero penalty reversals in your 2-year banking history.\n\n"
-                    f"• Policy Applied: POL-RBI-FEE-001 Courtesy Fee Waiver\n"
-                    f"• Action Taken: The ₹250.00 Annual Maintenance Charge has been waived and credited back to your Smart DigiSavings account immediately\n"
-                    f"• Account Status: Your balance hold is cleared, and your RuPay Platinum Card remains in pristine standing."
+                base += (
+                    "• **Why it's held:** RBI FIRC rules need a purpose code for inward business "
+                    "transfers above $2,500 equivalent\n"
+                    "• **Fastest fix:** apply your purpose code **P0802** — one message from you and "
+                    f"the {format_inr(430000)} becomes liquid\n"
+                    "• UTR on record: SWIFT990214881\n\n"
+                    f"Want me to release it under P0802 right away?"
                 )
+            return base
 
-        # 7. UPI Transfer Guidance & NPCI Limits
-        if any(w in msg for w in ["upi", "transfer money via upi", "send via upi", "gpay", "phonepe", "paytm", "vpa"]):
-            upi_id = customer_context.get("upi_id", "priya@apexmudra")
+        # 6. Weekend UPI Soundbox & Merchant Settlement
+        if any(w in msg for w in ["settlement", "batch", "soundbox", "385000", "qr", "begum bazaar",
+                                  "supplier", "paise kab", "paise aayenge"]):
+            pending = [t for t in recent
+                       if "clearing" in str(t.get("status", "")).lower()
+                       or "batch" in str(t.get("description", "")).lower()]
+            batch = pending[0] if pending else None
+            if batch:
+                batch_amt = batch.get("amount_inr", 385000.0)
+                batch_desc = batch.get("description", "Weekend UPI Soundbox & QR settlement batch")
+                batch_utr = batch.get("utr_ref", "UPIBATCH44901")
+            else:
+                batch_amt, batch_desc, batch_utr = 385000.0, "Weekend UPI Soundbox & QR settlement batch", "UPIBATCH44901"
+            merchant_ref = self._merchant_context(tier)
+            closer = self._vary(seed + "|c", [
+                "Anything else on your collections — supplier payouts, or Credit Line against this batch?",
+                "Shall I check next weekend's clearing calendar for you as well?",
+            ])
             return (
-                f"⚡ Instant UPI Payment Service (BharatApex Cyberabad):\n\n"
-                f"• Your Linked VPA: `{upi_id}`\n"
-                f"• Per-Transaction Limit: ₹1,00,000 (per NPCI guidelines)\n"
-                f"• Daily Cumulative Limit: ₹2,00,000 or 20 transfers per rolling 24 hours\n"
-                f"• Interbank Tariff: ₹0.00 (Zero charges on peer-to-peer and merchant QR)\n\n"
-                f"You can initiate payments instantly via your linked UPI app (Google Pay, PhonePe, Paytm, or BHIM) or by scanning any Bharat QR code."
+                f"{empathy}{greeting}! Your weekend collection money is safe and on schedule.\n\n"
+                f"• In transit right now: **{format_inr(batch_amt)}** — {batch_desc}\n"
+                f"• UTR/batch ref: **{batch_utr}** (aggregated QR + Soundbox collections)\n"
+                f"• **Final settlement: Monday at 06:00 IST** sharp, per NPCI merchant clearing "
+                "guidelines — you'll see it credited well before "
+                f"{merchant_ref}\n"
+                "• Nothing manual is required from your side — clearing is fully automatic\n\n"
+                f"{closer}"
             )
 
-        # 8. Balance / Financial Portfolio Inquiry
+        # 7. Fee Waiver & Courtesy Reversal
+        if any(w in msg for w in ["waiver", "reverse", "amc", "250", "350", "fee", "penalty", "nach"]):
+            courtesy_used = any("courtesy_used" in m.lower() or "nach_fee" in m.lower() for m in recalled_memories)
+            escalated = (action and (action.get("requires_escalation") or action.get("action") == "FEE_WAIVER_DENIED"))
+            if courtesy_used or escalated:
+                return (
+                    f"{empathy}{greeting}! I checked your record carefully before answering.\n\n"
+                    "• I note our **MG Road branch** already extended you a **₹350** courtesy waiver "
+                    "for a NACH mandate return on **Oct 5th**\n"
+                    "• **Policy POL-RBI-FEE-001**: automated waivers are limited to one courtesy credit "
+                    "every 12 months for commercial accounts\n"
+                    "• Rather than a flat no, I've **escalated to the Regional Branch Manager** for a "
+                    "priority exception review, citing your strong MSME trade relationship\n\n"
+                    "Want me to flag it at high severity so you hear back within one business day?"
+                )
+            credited = action.get("amount_credited_inr", 250.0) if action.get("success") else 250.0
+            closer = self._vary(seed + "|c", [
+                "Want a confirmation note with the credit reference for your records?",
+                "Shall I also review your last 3 charges to make sure nothing else needs a look?",
+            ])
+            return (
+                f"{empathy}{greeting}! Handled — and you didn't have to escalate it.\n\n"
+                "• Policy applied: **POL-RBI-FEE-001 courtesy waiver** (your account is in prime standing, "
+                "zero prior reversals)\n"
+                f"• Amount credited back: **{format_inr(credited)}**\n"
+                "• Any balance hold tied to that charge is released too\n\n"
+                f"{closer}"
+            )
+
+        # 8. UPI Transfer Guidance & NPCI Limits
+        if any(w in msg for w in ["upi", "transfer money via upi", "send via upi", "gpay",
+                                  "phonepe", "paytm", "vpa"]):
+            vpa = upi_id or "apex@apexmudra"
+            closer = self._vary(seed + "|c", [
+                "Want me to check the last few UPI flows on your account for reference?",
+                "Shall I walk you through sending a specific amount right now?",
+            ])
+            return (
+                f"{greeting}! UPI is the fastest rails you have — and it's free with us.\n\n"
+                f"• Your linked VPA: `{vpa}`\n"
+                "• Per-transaction limit: **₹1,00,000** (NPCI)\n"
+                "• Daily cap: **₹2,00,000 / 20 transfers** per rolling 24 hours\n"
+                "• Charges on P2P and merchant QR: **₹0.00**\n"
+                f"• Works with Google Pay, PhonePe, Paytm, BHIM and any Bharat QR\n\n"
+                f"{closer}"
+            )
+
+        # 9. Balance / Financial Portfolio Inquiry
         if any(w in msg for w in ["balance", "funds", "how much", "kitna", "accounts", "passbook"]):
             acc_details = []
             for a in accounts:
                 bal_inr = a.get("balance_inr", a.get("balance", 0.0))
                 bal_usd = a.get("balance_usd", round(bal_inr / USD_INR_RATE, 2))
-                acc_details.append(f"• **{a['type']}** (`{a['account_id']}`): ₹{bal_inr:,.2f} INR (~${bal_usd:,.2f} USD)")
-
+                hold = a.get("hold_amount", 0.0) or 0.0
+                hold_note = f" (⚠️ **{format_inr(hold)}** on hold: _{a.get('hold_reason', '')[:40]}…_)" if hold else ""
+                acc_details.append(f"• **{a['type']}** (`{a['account_id']}`): "
+                                   f"**{format_inr(bal_inr)}** (~${bal_usd:,.2f} USD){hold_note}")
+            acc_text = "\n".join(acc_details) if acc_details else "• No linked accounts on display right now."
             total_inr = customer_context.get("total_liquid_inr", 0.0)
             total_usd = customer_context.get("total_liquid_usd", 0.0)
-            acc_text = "\n".join(acc_details)
+            held_total = sum((a.get("hold_amount", 0.0) or 0.0) for a in accounts)
+            hold_line = (f"\n• Funds on hold: **{format_inr(held_total)}** — ask me and I'll chase the release"
+                         if held_total else "")
+            closer = self._vary(seed + "|c", [
+                "Want me to show the last 5 transactions behind these balances?",
+                f"Shall I check if a fixed-deposit sweep of surplus funds at **6.85%** makes sense?",
+            ])
             return (
-                f"Namaste {first_name}. Here is your live institutional balance summary:\n\n"
+                f"{greeting}! Here's your live money position.\n\n"
                 f"{acc_text}\n\n"
-                f"📊 **Total Portfolio Valuation**: ₹{total_inr:,.2f} INR (~${total_usd:,.2f} USD at RBI Ref Rate ₹{USD_INR_RATE}/USD)\n"
-                f"• Statutory Protection: Fully insured under Deposit Insurance and Credit Guarantee Corporation (DICGC) up to ₹5,00,000."
+                f"📊 **Total portfolio: {format_inr(total_inr)}** (~${total_usd:,.2f} USD at "
+                f"the reference rate ₹{USD_INR_RATE}/USD)\n"
+                "• Deposit insurance: DICGC-protected up to **₹5,00,000** per bank"
+                f"{hold_line}\n\n"
+                f"{closer}"
             )
-
-        # 9. Currency Conversion & Real-Time Forex Calculator
-        if any(w in msg for w in ["convert", "usd to inr", "inr to usd", "forex", "dollar to rupee", "exchange rate"]):
-            amt_match = re.search(r"(\d+(?:\.\d+)?)", msg)
-            amt = float(amt_match.group(1)) if amt_match else 1200.0
-            
-            if "rupee" in msg and "dollar" not in msg:
-                usd_val = amt / USD_INR_RATE
-                return (
-                    f"💱 **Institutional Forex Calculator**:\n\n"
-                    f"• Source: ₹{amt:,.2f} INR\n"
-                    f"• Converted: **${usd_val:,.2f} USD**\n"
-                    f"• Benchmark Reference Rate: 1 USD = ₹{USD_INR_RATE} INR\n"
-                    f"• Client Benefit: 0.00% Zero-Forex Currency Markup applied for {tier}."
-                )
-            else:
-                inr_val = amt * USD_INR_RATE
-                return (
-                    f"💱 **Institutional Forex Calculator**:\n\n"
-                    f"• Source: ${amt:,.2f} USD\n"
-                    f"• Converted: **₹{inr_val:,.2f} INR**\n"
-                    f"• Benchmark Reference Rate: 1 USD = ₹{USD_INR_RATE} INR\n"
-                    f"• Client Benefit: 0.00% Zero-Forex Currency Markup applied for {tier}."
-                )
 
         # 10. IFSC, Branch, and Bank Clearing Routing
         if any(w in msg for w in ["ifsc", "branch", "micr", "upi id", "vpa", "address"]):
+            ifsc = customer_context.get("ifsc", "APEX0004921")
             return (
-                f"🏛️ **Apex Commercial Bank Routing Credentials**:\n\n"
-                f"• Branch: HITEC City Cyberabad Branch, Hyderabad - 500081\n"
-                f"• IFSC Code: `APEX0004921`\n"
-                f"• MICR Code: `500099042`\n"
-                f"• Linked UPI VPA: `{customer_context.get('upi_id', 'aarav@apexmudra')}`\n"
-                f"• Electronic Clearing (NEFT / RTGS / IMPS): Operational 24x7x365."
+                f"{greeting}! Here are the routing credentials you'd need.\n\n"
+                f"• Branch: **{BANK_BRANCH_FULL}**\n"
+                f"• IFSC code: `{ifsc}`\n"
+                f"• MICR code: `500099042`\n"
+                f"• Linked UPI VPA: `{upi_id or 'apex@apexmudra'}`\n"
+                "• NEFT / RTGS / IMPS clearing runs **24x7x365**\n\n"
+                "Want me to copy these into a single shareable line for a vendor?"
             )
 
         # 11. Fixed Deposit & Treasury Interest Rates
         if any(w in msg for w in ["fixed deposit", "fd", "interest rate", "savings rate", "tax saver"]):
             return (
-                f"📈 **Apex Bank Official Interest Rate Schedule (Effective Q4 2026)**:\n\n"
-                f"• Savings Account: 4.00% p.a. (Calculated daily, credited quarterly)\n"
-                f"• 1-Year Fixed Deposit: 6.85% p.a.\n"
-                f"• 3-Year Tax-Saver Fixed Deposit: 7.65% p.a. (Eligible for Section 80C deduction)\n"
-                f"• Senior Citizen Privilege: Additional +0.50% p.a. across all tenures.\n\n"
-                f"Would you like me to book a high-yield Term Deposit directly from your available checking surplus?"
+                f"{greeting}! Here's today's rate card — self-book takes seconds.\n\n"
+                "• Savings account: **4.00% p.a.** (interest computed daily, credited quarterly)\n"
+                "• 1-year FD: **6.85% p.a.**\n"
+                "• 3-year tax-saver FD: **7.65% p.a.** — Section 80C eligible\n"
+                "• Senior-citizen privilege: **+0.50% p.a.** across all tenures\n\n"
+                "Want me to preview the FD maturity math for a specific amount and tenure?"
             )
 
         # 12. International Travel Notice
-        if any(w in msg for w in ["travel notice", "travelling to", "flying to", "going to dubai", "going to london", "going to singapore", "visiting"]):
+        if any(w in msg for w in ["travel notice", "travelling to", "flying to", "going to dubai",
+                                  "going to london", "going to singapore", "visiting"]):
             dest = "your destination"
             for place in ["Dubai", "Singapore", "San Francisco", "London", "Paris", "Zurich", "Tokyo", "Mumbai"]:
                 if place.lower() in msg:
                     dest = place
                     break
+            if action.get("destination"):
+                dest = action["destination"]
             return (
-                f"Namaste {first_name}. Your international travel notice has been registered for **{dest}**.\n\n"
-                f"• Card Safeguard: {masked_card} has been whitelisted for point-of-sale and ATM operations in that corridor\n"
-                f"• Fraud Protection: Dynamic behavioral fraud monitoring updated to prevent false decline interruptions."
+                f"{greeting}! Travel notice is in place for **{dest}**.\n\n"
+                f"• {masked_card} whitelisted for POS and ATM in that corridor"
+                + (f" (as `{action.get('destination')}`)" if action.get("destination") else "") + "\n"
+                "• Dynamic behavioural fraud monitoring updated — no false declines from unfamiliar geography\n"
+                "• Zero-forex markup applies on every swipe\n\n"
+                "Want me to list the emergency card-helpline numbers for that country too?"
             )
 
         # 13. Loans & Facility Advisory
         if any(w in msg for w in ["loan", "home loan", "personal loan", "emi", "car loan"]):
+            loan_rate_monthly = 0.0999 / 12  # 9.99% p.a.
+            emi_amt = round(1000000 * loan_rate_monthly * (1 + loan_rate_monthly) ** 60 /
+                            ((1 + loan_rate_monthly) ** 60 - 1))  # ₹10L over 60 months
             return (
-                f"🏡 **Pre-Approved Credit Facilities for {name}**:\n\n"
-                f"• Instant Digi-Personal Loan: Pre-approved up to ₹10,00,000 at 9.99% p.a.\n"
-                f"• Premier Housing Loan: Floating rates from 8.25% p.a. with zero processing fee\n\n"
-                f"Would you like me to generate an in-principle sanction letter or connect you with your dedicated Relationship Manager?"
+                f"{greeting}! Good news — pre-approved offers are waiting on your profile.\n\n"
+                "• Instant Digi-personal loan: pre-approved up to **₹10,00,000 at 9.99% p.a.**\n"
+                f"• Illustrative EMI: ~**{format_inr(emi_amt)}/month** for ₹10,00,000 over 5 years\n"
+                "• Premier housing loan: floating from **8.25% p.a.**, zero processing fee\n"
+                "• No collateral, no paperwork — disbursal inside 24 hours\n\n"
+                "Want me to compute the EMI for your exact amount and tenure?"
             )
 
         # 14. Formal Greeting & Scope
         if re.search(r"\b(hi|hello|hey|namaste|good morning|good evening|kya haal|who are you|what can you do|help)\b", msg):
             return (
-                f"Namaste {first_name}. Welcome to Apex Commercial Bank ClientCare Terminal (Cyberabad Branch).\n\n"
-                f"I am your dedicated conversational banking agent equipped with Vectorize Hindsight Long-Term Memory. "
-                f"I can assist you with:\n"
-                f"• Instant card security lock and unfreeze\n"
-                f"• FIRC certificate issuance and SWIFT wire hold clearance\n"
-                f"• Weekend merchant QR Soundbox settlement reconciliation\n"
-                f"• RBI courtesy fee reversals and grievance dispute filing\n"
-                f"• Real-time multi-currency valuation (₹ INR & $ USD)\n\n"
-                f"How may I assist you with your accounts today?"
+                f"{greeting}! ClientCare at Apex Commercial Bank ({BANK_BRANCH}) — and I remember what we "
+                "discuss, so no need to repeat yourself.\n\n"
+                "A few things I can settle right here, end-to-end:\n"
+                "• Card security — instant **block/unblock**, lost-card protection\n"
+                "• **FIRC** issuance and SWIFT wire hold clearance\n"
+                "• Weekend merchant QR/Soundbox settlement reconciliation\n"
+                "• RBI courtesy **fee reversals** and dispute filing\n"
+                "• Live multi-currency valuation (**₹94.11/USD**, zero markup)\n\n"
+                "What would you like to sort out first?"
             )
 
         # 15. Default Context-Aware Response
-        recalls_preview = f" (Recalled {len(recalled_memories)} historical facts from your Hindsight memory bank)" if recalled_memories else ""
+        recalls_note = (f" (and I recall {len(recalled_memories)} earlier facts from our history)" if recalled_memories else "")
+        latest = recent[0] if recent else None
+        latest_line = (f"\n• Most recent activity: {latest.get('description', '')[:50]} — "
+                       f"{format_inr(latest.get('amount_inr', 0))} ({latest.get('status', '')})") if latest else ""
         return (
-            f"Namaste {first_name}. Apex ClientCare Desk at your service{recalls_preview}.\n\n"
-            f"I have your {tier} profile and recent ledger ready. Please let me know how I can assist with your transactions, security, or regulatory queries."
+            f"{greeting}! I have your **{tier}** profile, live balances and recent ledger in front of me"
+            f"{recalls_note}.{latest_line}\n\n"
+            "Tell me what you need — transactions, card security, FIRC, or settlement queries are all instant.\n\n"
+            + self._vary(seed + "|c", [
+                "What are we sorting out today?",
+                "Where shall we start?",
+                "What can I help you with right away?",
+            ])
         )
