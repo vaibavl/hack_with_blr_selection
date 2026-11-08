@@ -1,0 +1,4342 @@
+{
+  "bank_CUST-IN-101": [
+    {
+      "id": "mem_586ff6d0e3",
+      "fact": "Aarav frequently transfers funds between Silicon Valley Bank / Brex in San Francisco and Apex Bank Bengaluru for angel investments and tech ventures.",
+      "timestamp": "2026-10-14T14:30:00Z",
+      "type": "world",
+      "tags": [
+        "nri_profile",
+        "cross_border",
+        "venture_capital"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_c8b8909fa7",
+      "fact": "Aarav experienced an inward wire transfer delay for $5,000 USD where funds were held pending Foreign Inward Remittance Certificate (FIRC) purpose code P0802 (Software Consultancy). Support expedited compliance release after automated digital declaration.",
+      "timestamp": "2026-10-24T09:15:00Z",
+      "type": "experience",
+      "tags": [
+        "firc_hold",
+        "swift_inward",
+        "p0802",
+        "resolved"
+      ],
+      "entities": [
+        {
+          "text": "$5,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_e46d9fb0ce",
+      "fact": "Aarav prefers concise executive communication, no unnecessary polite banter, and wants all transaction receipts directly sent to his verified WhatsApp.",
+      "timestamp": "2026-10-25T11:00:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "whatsapp_preference",
+        "executive"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-102": [
+    {
+      "id": "mem_9cd986c5d5",
+      "fact": "Rajesh runs a wholesale grocery distribution trade in Begum Bazaar, Hyderabad. He relies heavily on weekend UPI Soundbox collections to pay dispatch suppliers every Monday afternoon.",
+      "timestamp": "2026-09-18T16:45:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "begum_bazaar",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_5cf5d248da",
+      "fact": "Rajesh incurred an unexpected ₹350 NACH mandate return fee when an institutional cheque cleared late. Support approved a one-time courtesy reversal under RBI guidelines and noted that any future NACH return waiver requires Branch Manager authorization.",
+      "timestamp": "2026-10-05T10:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_3a27156fde",
+      "fact": "Rajesh gets anxious about weekend UPI batch deposits showing as pending. He appreciates clear confirmation with expected IST clearing timestamps.",
+      "timestamp": "2026-10-28T08:30:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-103": [
+    {
+      "id": "mem_6ef0f22cdc",
+      "fact": "Priya is a software engineer in HITEC City, Hyderabad. She maintains meticulous monthly budgeting through UPI and has auto-sweep enabled into fixed deposits.",
+      "timestamp": "2026-09-02T13:10:00Z",
+      "type": "world",
+      "tags": [
+        "software_engineer",
+        "hitec_city",
+        "auto_sweep",
+        "upi"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_e934e7aa07",
+      "fact": "Priya was charged ₹899 ($10.80 USD) for an international cloud subscription auto-debit she had cancelled. Support raised a chargeback dispute and temporarily disabled International Card-Not-Present (e-commerce) transactions.",
+      "timestamp": "2026-10-15T18:00:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [
+        {
+          "text": "$10.80",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_6292a405a5",
+      "fact": "Priya has had zero prior fee waivers in her 2-year banking history and maintains flawless credit standing with a 790 CIBIL score. Eligible for instant courtesy fee waiver.",
+      "timestamp": "2026-11-01T09:40:00Z",
+      "type": "world",
+      "tags": [
+        "waiver_eligible",
+        "high_cibil",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-104": [
+    {
+      "id": "mem_a701ac491d",
+      "fact": "Vivaan is a software architect based in Pune (Koregaon Park) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_221d9eda8a",
+      "fact": "Vivaan had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_bd96cd1328",
+      "fact": "Vivaan prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-105": [
+    {
+      "id": "mem_05dc85f2a9",
+      "fact": "Aditya maintains a high CIBIL score and active salary account in Mumbai (Andheri West) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_56ad3d05e9",
+      "fact": "Aditya inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_9a5f9a8b17",
+      "fact": "Aditya values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-106": [
+    {
+      "id": "mem_7b90a92791",
+      "fact": "Vihaan frequently shops online and holds a zero-forex markup card linked to their savings account in Chennai (Anna Nagar).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_41d7608142",
+      "fact": "Vihaan reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_36f8f830dc",
+      "fact": "Vihaan expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-107": [
+    {
+      "id": "mem_eb272a3291",
+      "fact": "Arjun operates a thriving retail & distribution enterprise in Bengaluru (Indiranagar) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_b0ec9b93b5",
+      "fact": "Arjun previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_ee91ba9ce6",
+      "fact": "Arjun checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-108": [
+    {
+      "id": "mem_cf9aaa280e",
+      "fact": "Sai is a software architect based in Mumbai (Andheri West) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_078f485bfc",
+      "fact": "Sai had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_106fab40a2",
+      "fact": "Sai prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-109": [
+    {
+      "id": "mem_4f7979c661",
+      "fact": "Reyansh maintains a high CIBIL score and active salary account in Gurugram (CyberHub) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_34ac1617d4",
+      "fact": "Reyansh inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_42067c61d7",
+      "fact": "Reyansh values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-110": [
+    {
+      "id": "mem_61b667fe96",
+      "fact": "Ayaan frequently shops online and holds a zero-forex markup card linked to their savings account in Bengaluru (Koramangala).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_7417bdda73",
+      "fact": "Ayaan reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_ea56c5c124",
+      "fact": "Ayaan expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-111": [
+    {
+      "id": "mem_8e122d091c",
+      "fact": "Krishna operates a thriving retail & distribution enterprise in New Delhi (Connaught Place) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_f2e547466e",
+      "fact": "Krishna previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_7c6878c197",
+      "fact": "Krishna checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-112": [
+    {
+      "id": "mem_98f4101a75",
+      "fact": "Ishaan is a software architect based in Hyderabad (Banjara Hills) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_050c5eba71",
+      "fact": "Ishaan had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_874b548f12",
+      "fact": "Ishaan prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-113": [
+    {
+      "id": "mem_28068878ab",
+      "fact": "Shaurya maintains a high CIBIL score and active salary account in New Delhi (Connaught Place) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_594231a6f5",
+      "fact": "Shaurya inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_78f0b43f9a",
+      "fact": "Shaurya values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-114": [
+    {
+      "id": "mem_f61c347aa0",
+      "fact": "Atharv frequently shops online and holds a zero-forex markup card linked to their savings account in Ahmedabad (SG Highway).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_1d0368b9d4",
+      "fact": "Atharv reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_d087d85913",
+      "fact": "Atharv expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-115": [
+    {
+      "id": "mem_b9110fa61c",
+      "fact": "Advik operates a thriving retail & distribution enterprise in New Delhi (Connaught Place) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_3487c4e54a",
+      "fact": "Advik previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_4d9171033d",
+      "fact": "Advik checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-116": [
+    {
+      "id": "mem_2f047aaccb",
+      "fact": "Pranav is a software architect based in Gurugram (CyberHub) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_327eca59bc",
+      "fact": "Pranav had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_339ecabf08",
+      "fact": "Pranav prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-117": [
+    {
+      "id": "mem_f1fe4828f4",
+      "fact": "Advaith maintains a high CIBIL score and active salary account in Chennai (Anna Nagar) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_7d6171300d",
+      "fact": "Advaith inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_cb0c011443",
+      "fact": "Advaith values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-118": [
+    {
+      "id": "mem_373bec838d",
+      "fact": "Aaryan frequently shops online and holds a zero-forex markup card linked to their savings account in New Delhi (Connaught Place).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_d885f62f06",
+      "fact": "Aaryan reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_e92d9bab60",
+      "fact": "Aaryan expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-119": [
+    {
+      "id": "mem_91e100c31f",
+      "fact": "Dhruv operates a thriving retail & distribution enterprise in Gurugram (CyberHub) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_30cb5fc8dd",
+      "fact": "Dhruv previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_249a1b4cb8",
+      "fact": "Dhruv checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-120": [
+    {
+      "id": "mem_473d11bd66",
+      "fact": "Kabir is a software architect based in Bengaluru (Whitefield) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_2a7e2b9689",
+      "fact": "Kabir had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_ffcfcf2e4b",
+      "fact": "Kabir prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-121": [
+    {
+      "id": "mem_d06c8b87c5",
+      "fact": "Ritvik maintains a high CIBIL score and active salary account in Mumbai (Andheri West) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_3d349b046b",
+      "fact": "Ritvik inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_023b749624",
+      "fact": "Ritvik values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-122": [
+    {
+      "id": "mem_d77e64b975",
+      "fact": "Aarush frequently shops online and holds a zero-forex markup card linked to their savings account in Gurugram (CyberHub).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_cdc39bd79b",
+      "fact": "Aarush reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_4849600b48",
+      "fact": "Aarush expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-123": [
+    {
+      "id": "mem_7038681712",
+      "fact": "Kian operates a thriving retail & distribution enterprise in Hyderabad (Banjara Hills) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_ad71853204",
+      "fact": "Kian previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_137e877254",
+      "fact": "Kian checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-124": [
+    {
+      "id": "mem_9bb9404b15",
+      "fact": "Darsh is a software architect based in New Delhi (Connaught Place) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_8c95e7d044",
+      "fact": "Darsh had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_ce118ab80d",
+      "fact": "Darsh prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-125": [
+    {
+      "id": "mem_bcf1ebe215",
+      "fact": "Veer maintains a high CIBIL score and active salary account in Bengaluru (Yelahanka) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_860b84d192",
+      "fact": "Veer inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_a07d78e0d4",
+      "fact": "Veer values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-126": [
+    {
+      "id": "mem_95ee13e4f7",
+      "fact": "Harsh frequently shops online and holds a zero-forex markup card linked to their savings account in Mumbai (Bandra Kurla Complex).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_9ad46304d6",
+      "fact": "Harsh reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_02ce84c019",
+      "fact": "Harsh expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-127": [
+    {
+      "id": "mem_5e1d9bc053",
+      "fact": "Rohan operates a thriving retail & distribution enterprise in Ahmedabad (SG Highway) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_d5b718e7c0",
+      "fact": "Rohan previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_7105d50a59",
+      "fact": "Rohan checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-128": [
+    {
+      "id": "mem_1131809a82",
+      "fact": "Karthik is a software architect based in Mumbai (Bandra Kurla Complex) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_5dd45a9113",
+      "fact": "Karthik had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_131dfdfa9b",
+      "fact": "Karthik prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-129": [
+    {
+      "id": "mem_39d1415ccc",
+      "fact": "Nikhil maintains a high CIBIL score and active salary account in Mumbai (Andheri West) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_60a69eb4b3",
+      "fact": "Nikhil inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_60170e0748",
+      "fact": "Nikhil values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-130": [
+    {
+      "id": "mem_02ca7af919",
+      "fact": "Siddharth frequently shops online and holds a zero-forex markup card linked to their savings account in Ahmedabad (SG Highway).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_3ba0cf748e",
+      "fact": "Siddharth reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_ce604b54e7",
+      "fact": "Siddharth expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-131": [
+    {
+      "id": "mem_024d5def8a",
+      "fact": "Varun operates a thriving retail & distribution enterprise in New Delhi (Connaught Place) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_7d632be49f",
+      "fact": "Varun previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_681323751d",
+      "fact": "Varun checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-132": [
+    {
+      "id": "mem_0dc66e5630",
+      "fact": "Kunal is a software architect based in Ahmedabad (SG Highway) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_001348be88",
+      "fact": "Kunal had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_dd4026ed73",
+      "fact": "Kunal prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-133": [
+    {
+      "id": "mem_9ab4a93e53",
+      "fact": "Ananya maintains a high CIBIL score and active salary account in Gurugram (CyberHub) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_49e6c0c144",
+      "fact": "Ananya inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_93c6f8b09c",
+      "fact": "Ananya values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-134": [
+    {
+      "id": "mem_4c95aea4a8",
+      "fact": "Diya frequently shops online and holds a zero-forex markup card linked to their savings account in Gurugram (CyberHub).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_99a5bc30d4",
+      "fact": "Diya reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_b073193045",
+      "fact": "Diya expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-135": [
+    {
+      "id": "mem_b9a62f5d34",
+      "fact": "Saanvi operates a thriving retail & distribution enterprise in New Delhi (Connaught Place) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_2edd2d4f6c",
+      "fact": "Saanvi previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_723b99f747",
+      "fact": "Saanvi checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-136": [
+    {
+      "id": "mem_999f38617a",
+      "fact": "Aadhya is a software architect based in Bengaluru (Indiranagar) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_f181cbc114",
+      "fact": "Aadhya had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_1bd39fedee",
+      "fact": "Aadhya prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-137": [
+    {
+      "id": "mem_ddd0dcdea2",
+      "fact": "Pari maintains a high CIBIL score and active salary account in Mumbai (Andheri West) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_ff21ba0e07",
+      "fact": "Pari inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_0e356b86b9",
+      "fact": "Pari values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-138": [
+    {
+      "id": "mem_6eaf9e156d",
+      "fact": "Kiara frequently shops online and holds a zero-forex markup card linked to their savings account in Gurugram (CyberHub).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_ea7520928d",
+      "fact": "Kiara reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_22c39c48d6",
+      "fact": "Kiara expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-139": [
+    {
+      "id": "mem_d4bb9119aa",
+      "fact": "Myra operates a thriving retail & distribution enterprise in Bengaluru (Whitefield) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_fc3c49cdfd",
+      "fact": "Myra previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_5c70103648",
+      "fact": "Myra checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-140": [
+    {
+      "id": "mem_ceaca7bcb5",
+      "fact": "Anvi is a software architect based in Chennai (Anna Nagar) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_420e09d46a",
+      "fact": "Anvi had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_482658944c",
+      "fact": "Anvi prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-141": [
+    {
+      "id": "mem_01e9bdb3a8",
+      "fact": "Riya maintains a high CIBIL score and active salary account in Bengaluru (Yelahanka) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_31e71aa5a7",
+      "fact": "Riya inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_29d0ef5768",
+      "fact": "Riya values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-142": [
+    {
+      "id": "mem_2155ae17c9",
+      "fact": "Aarohi frequently shops online and holds a zero-forex markup card linked to their savings account in Ahmedabad (SG Highway).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_a5eb7b967f",
+      "fact": "Aarohi reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_ec052fb4f5",
+      "fact": "Aarohi expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-143": [
+    {
+      "id": "mem_e495c0a042",
+      "fact": "Ira operates a thriving retail & distribution enterprise in New Delhi (Connaught Place) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_4ed8f2f642",
+      "fact": "Ira previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_749bd38513",
+      "fact": "Ira checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-144": [
+    {
+      "id": "mem_599e234f73",
+      "fact": "Prisha is a software architect based in Ahmedabad (SG Highway) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_71ac45d876",
+      "fact": "Prisha had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_4db995972b",
+      "fact": "Prisha prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-145": [
+    {
+      "id": "mem_999670ce5a",
+      "fact": "Navya maintains a high CIBIL score and active salary account in Hyderabad (Banjara Hills) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_be4aa3b572",
+      "fact": "Navya inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_e6058ebb29",
+      "fact": "Navya values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-146": [
+    {
+      "id": "mem_a784a1c464",
+      "fact": "Kavya frequently shops online and holds a zero-forex markup card linked to their savings account in Bengaluru (Indiranagar).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_0873e9a2fc",
+      "fact": "Kavya reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_e0deeebaba",
+      "fact": "Kavya expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-147": [
+    {
+      "id": "mem_89eb0b9ab5",
+      "fact": "Avani operates a thriving retail & distribution enterprise in New Delhi (Connaught Place) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_0666b3ee26",
+      "fact": "Avani previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_e31345bb79",
+      "fact": "Avani checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-148": [
+    {
+      "id": "mem_13e73b55c0",
+      "fact": "Suhani is a software architect based in Bengaluru (Whitefield) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_a504f8828a",
+      "fact": "Suhani had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_a58da5b7bb",
+      "fact": "Suhani prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-149": [
+    {
+      "id": "mem_5c5afabd0e",
+      "fact": "Nitya maintains a high CIBIL score and active salary account in Bengaluru (Indiranagar) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_b8e0af6ad4",
+      "fact": "Nitya inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_1e95c6bebc",
+      "fact": "Nitya values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-150": [
+    {
+      "id": "mem_5b9e089c4e",
+      "fact": "Pooja frequently shops online and holds a zero-forex markup card linked to their savings account in Bengaluru (Yelahanka).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_af5876cdc3",
+      "fact": "Pooja reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_b2031bf818",
+      "fact": "Pooja expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-151": [
+    {
+      "id": "mem_c981016295",
+      "fact": "Sneha operates a thriving retail & distribution enterprise in Pune (Koregaon Park) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_44459a033f",
+      "fact": "Sneha previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_cd4934e100",
+      "fact": "Sneha checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-152": [
+    {
+      "id": "mem_9224337d75",
+      "fact": "Neha is a software architect based in New Delhi (Connaught Place) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_fe7bcba519",
+      "fact": "Neha had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_6a811887b6",
+      "fact": "Neha prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-153": [
+    {
+      "id": "mem_46ee1cb3d8",
+      "fact": "Vikram maintains a high CIBIL score and active salary account in Bengaluru (Whitefield) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_950bea5a23",
+      "fact": "Vikram inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_3f7d184099",
+      "fact": "Vikram values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-154": [
+    {
+      "id": "mem_64d299f7dc",
+      "fact": "Suresh frequently shops online and holds a zero-forex markup card linked to their savings account in Bengaluru (Koramangala).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_45f7ef785f",
+      "fact": "Suresh reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_0683cad492",
+      "fact": "Suresh expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-155": [
+    {
+      "id": "mem_9e60f238cb",
+      "fact": "Ramesh operates a thriving retail & distribution enterprise in Hyderabad (Banjara Hills) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_714bc18ffd",
+      "fact": "Ramesh previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_2251f29adc",
+      "fact": "Ramesh checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-156": [
+    {
+      "id": "mem_ed0250a34c",
+      "fact": "Manoj is a software architect based in Bengaluru (Indiranagar) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_d75d0c2745",
+      "fact": "Manoj had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_d7fca0d025",
+      "fact": "Manoj prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-157": [
+    {
+      "id": "mem_be14de7103",
+      "fact": "Anil maintains a high CIBIL score and active salary account in Pune (Koregaon Park) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_f97d633d90",
+      "fact": "Anil inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_f70c938aa1",
+      "fact": "Anil values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-158": [
+    {
+      "id": "mem_60b9f7a5f2",
+      "fact": "Sunil frequently shops online and holds a zero-forex markup card linked to their savings account in Mumbai (Bandra Kurla Complex).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_36b069d5ea",
+      "fact": "Sunil reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_fa30374e99",
+      "fact": "Sunil expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-159": [
+    {
+      "id": "mem_004b3218dd",
+      "fact": "Sanjay operates a thriving retail & distribution enterprise in Hyderabad (Banjara Hills) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_92858de585",
+      "fact": "Sanjay previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_a667885c5b",
+      "fact": "Sanjay checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-160": [
+    {
+      "id": "mem_dedd8d6db3",
+      "fact": "Ajay is a software architect based in Bengaluru (Yelahanka) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_c708132ba6",
+      "fact": "Ajay had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_c0bbc82f54",
+      "fact": "Ajay prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-161": [
+    {
+      "id": "mem_34e2c5e131",
+      "fact": "Vijay maintains a high CIBIL score and active salary account in Bengaluru (Yelahanka) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_07e59b8536",
+      "fact": "Vijay inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_99223f2549",
+      "fact": "Vijay values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-162": [
+    {
+      "id": "mem_c5ef8737fc",
+      "fact": "Deepak frequently shops online and holds a zero-forex markup card linked to their savings account in New Delhi (Connaught Place).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_3196b1c0c8",
+      "fact": "Deepak reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_19f5bcdf25",
+      "fact": "Deepak expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-163": [
+    {
+      "id": "mem_5b0b7b4a6f",
+      "fact": "Rakesh operates a thriving retail & distribution enterprise in Gurugram (CyberHub) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_6fa0d118e0",
+      "fact": "Rakesh previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_5cb9a95380",
+      "fact": "Rakesh checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-164": [
+    {
+      "id": "mem_9876a4b353",
+      "fact": "Mukesh is a software architect based in Bengaluru (Whitefield) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_36b30b1dc4",
+      "fact": "Mukesh had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_6968903dfa",
+      "fact": "Mukesh prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-165": [
+    {
+      "id": "mem_ef3a13310a",
+      "fact": "Dinesh maintains a high CIBIL score and active salary account in Mumbai (Andheri West) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_ec254db39f",
+      "fact": "Dinesh inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_47effe0633",
+      "fact": "Dinesh values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-166": [
+    {
+      "id": "mem_62ac8f99f5",
+      "fact": "Mahesh frequently shops online and holds a zero-forex markup card linked to their savings account in Chennai (Anna Nagar).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_39632bed38",
+      "fact": "Mahesh reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_f992e9348d",
+      "fact": "Mahesh expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-167": [
+    {
+      "id": "mem_8c71a41c40",
+      "fact": "Yogesh operates a thriving retail & distribution enterprise in Ahmedabad (SG Highway) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_e32878a064",
+      "fact": "Yogesh previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_2a6768ad7e",
+      "fact": "Yogesh checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-168": [
+    {
+      "id": "mem_084dae953f",
+      "fact": "Nitin is a software architect based in Bengaluru (Indiranagar) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_a09b4e4d9e",
+      "fact": "Nitin had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_b9fcd86c74",
+      "fact": "Nitin prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-169": [
+    {
+      "id": "mem_250cc8d7fd",
+      "fact": "Sachin maintains a high CIBIL score and active salary account in New Delhi (Connaught Place) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_14277e0cad",
+      "fact": "Sachin inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_1c037cd38a",
+      "fact": "Sachin values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-170": [
+    {
+      "id": "mem_a3ee74ac9c",
+      "fact": "Gaurav frequently shops online and holds a zero-forex markup card linked to their savings account in Mumbai (Andheri West).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_507d22bb78",
+      "fact": "Gaurav reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_38f608bfad",
+      "fact": "Gaurav expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-171": [
+    {
+      "id": "mem_5f6c042e11",
+      "fact": "Saurabh operates a thriving retail & distribution enterprise in Ahmedabad (SG Highway) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_defa22935f",
+      "fact": "Saurabh previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_4576cef9dd",
+      "fact": "Saurabh checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-172": [
+    {
+      "id": "mem_90774d6d22",
+      "fact": "Abhishek is a software architect based in Bengaluru (Whitefield) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_af4da0050f",
+      "fact": "Abhishek had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_b5bda7b7f7",
+      "fact": "Abhishek prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-173": [
+    {
+      "id": "mem_ed1ace2aa6",
+      "fact": "Prashant maintains a high CIBIL score and active salary account in Bengaluru (Yelahanka) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_c47edf8db6",
+      "fact": "Prashant inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_76026e6248",
+      "fact": "Prashant values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-174": [
+    {
+      "id": "mem_22df492602",
+      "fact": "Sandeep frequently shops online and holds a zero-forex markup card linked to their savings account in Pune (Koregaon Park).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_9a829e2ba9",
+      "fact": "Sandeep reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_f652bc8e54",
+      "fact": "Sandeep expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-175": [
+    {
+      "id": "mem_656fa812a6",
+      "fact": "Ashish operates a thriving retail & distribution enterprise in Bengaluru (Whitefield) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_70a8e19863",
+      "fact": "Ashish previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_0fd511cfd8",
+      "fact": "Ashish checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-176": [
+    {
+      "id": "mem_2968da70b9",
+      "fact": "Ankit is a software architect based in Gurugram (CyberHub) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_61364c3779",
+      "fact": "Ankit had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_55c918cf01",
+      "fact": "Ankit prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-177": [
+    {
+      "id": "mem_d2917b662c",
+      "fact": "Mayank maintains a high CIBIL score and active salary account in Bengaluru (Indiranagar) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_be5f072b7d",
+      "fact": "Mayank inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_b85d636174",
+      "fact": "Mayank values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-178": [
+    {
+      "id": "mem_581fcd4d6e",
+      "fact": "Pankaj frequently shops online and holds a zero-forex markup card linked to their savings account in Pune (Koregaon Park).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_363a2b87f1",
+      "fact": "Pankaj reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_df4141f44e",
+      "fact": "Pankaj expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-179": [
+    {
+      "id": "mem_a04421548b",
+      "fact": "Neeraj operates a thriving retail & distribution enterprise in New Delhi (Connaught Place) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_c0b1e03c66",
+      "fact": "Neeraj previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_7a25cad66c",
+      "fact": "Neeraj checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-180": [
+    {
+      "id": "mem_618edc2a4c",
+      "fact": "Tarun is a software architect based in Ahmedabad (SG Highway) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_ca5c12bba3",
+      "fact": "Tarun had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_12a241ea9f",
+      "fact": "Tarun prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-181": [
+    {
+      "id": "mem_e42344c2d3",
+      "fact": "Tushar maintains a high CIBIL score and active salary account in Mumbai (Bandra Kurla Complex) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_ea4d627aeb",
+      "fact": "Tushar inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_ffce4745dd",
+      "fact": "Tushar values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-182": [
+    {
+      "id": "mem_73a7d501b2",
+      "fact": "Shruti frequently shops online and holds a zero-forex markup card linked to their savings account in Bengaluru (Indiranagar).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_945cd15f23",
+      "fact": "Shruti reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_5dc3cee298",
+      "fact": "Shruti expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-183": [
+    {
+      "id": "mem_44db2bf044",
+      "fact": "Swati operates a thriving retail & distribution enterprise in New Delhi (Connaught Place) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_7b4975290d",
+      "fact": "Swati previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_b5f94db0f0",
+      "fact": "Swati checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-184": [
+    {
+      "id": "mem_e0d1b00040",
+      "fact": "Divya is a software architect based in Bengaluru (Whitefield) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_1d5d98abf4",
+      "fact": "Divya had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_b54816172b",
+      "fact": "Divya prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-185": [
+    {
+      "id": "mem_9674d11801",
+      "fact": "Kriti maintains a high CIBIL score and active salary account in Bengaluru (Yelahanka) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_645646c199",
+      "fact": "Kriti inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_87d1405ef3",
+      "fact": "Kriti values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-186": [
+    {
+      "id": "mem_b52f147492",
+      "fact": "Megha frequently shops online and holds a zero-forex markup card linked to their savings account in Ahmedabad (SG Highway).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_59cb2c8254",
+      "fact": "Megha reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_c943084ebf",
+      "fact": "Megha expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-187": [
+    {
+      "id": "mem_5e3a341af4",
+      "fact": "Shikha operates a thriving retail & distribution enterprise in New Delhi (Connaught Place) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_87df35909d",
+      "fact": "Shikha previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_8965481fc3",
+      "fact": "Shikha checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-188": [
+    {
+      "id": "mem_29c700fcae",
+      "fact": "Preeti is a software architect based in New Delhi (Connaught Place) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_f359f1d259",
+      "fact": "Preeti had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_0add448410",
+      "fact": "Preeti prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-189": [
+    {
+      "id": "mem_78306d677a",
+      "fact": "Jyoti maintains a high CIBIL score and active salary account in Hyderabad (Banjara Hills) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_f54f7c6b74",
+      "fact": "Jyoti inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_f280b390c9",
+      "fact": "Jyoti values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-190": [
+    {
+      "id": "mem_91a5eade04",
+      "fact": "Pallavi frequently shops online and holds a zero-forex markup card linked to their savings account in Gurugram (CyberHub).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_be621dbe51",
+      "fact": "Pallavi reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_b6cf05df77",
+      "fact": "Pallavi expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-191": [
+    {
+      "id": "mem_9ad32b838d",
+      "fact": "Rashmi operates a thriving retail & distribution enterprise in Gurugram (CyberHub) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_d509b7ad93",
+      "fact": "Rashmi previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_72f0c5cf2b",
+      "fact": "Rashmi checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-192": [
+    {
+      "id": "mem_4c5bd818c2",
+      "fact": "Nandini is a software architect based in Hyderabad (Banjara Hills) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_4f69c0dc9d",
+      "fact": "Nandini had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_e51b3e93fa",
+      "fact": "Nandini prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-193": [
+    {
+      "id": "mem_01a227f911",
+      "fact": "Aditi maintains a high CIBIL score and active salary account in New Delhi (Connaught Place) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_4f51e3293c",
+      "fact": "Aditi inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_a097a2ec20",
+      "fact": "Aditi values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-194": [
+    {
+      "id": "mem_ec1d1392d4",
+      "fact": "Ishita frequently shops online and holds a zero-forex markup card linked to their savings account in Ahmedabad (SG Highway).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_949c6e0404",
+      "fact": "Ishita reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_93bd981cf9",
+      "fact": "Ishita expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-195": [
+    {
+      "id": "mem_0129c06f9a",
+      "fact": "Tanvi operates a thriving retail & distribution enterprise in Bengaluru (Indiranagar) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_d68945535c",
+      "fact": "Tanvi previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_ccdb82101d",
+      "fact": "Tanvi checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-196": [
+    {
+      "id": "mem_9ef985d062",
+      "fact": "Shreya is a software architect based in Gurugram (CyberHub) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_c2b9e573d8",
+      "fact": "Shreya had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_ce5fbbc998",
+      "fact": "Shreya prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-197": [
+    {
+      "id": "mem_6215b0cde7",
+      "fact": "Bhumi maintains a high CIBIL score and active salary account in Mumbai (Bandra Kurla Complex) with zero prior fee reversals in the past 24 months.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "high_cibil",
+        "waiver_eligible",
+        "loyal_customer"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_95baf8f468",
+      "fact": "Bhumi inquired about Debit Card AMC charges and was informed of eligibility for a one-time automated courtesy waiver under POL-RBI-FEE-001.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "amc_fee",
+        "fees",
+        "courtesy_eligible"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_54ca8a0eb5",
+      "fact": "Bhumi values transparent fee disclosures and quick self-service card controls.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "fee_sensitive",
+        "communication_style"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-198": [
+    {
+      "id": "mem_6ce73ee52b",
+      "fact": "Trisha frequently shops online and holds a zero-forex markup card linked to their savings account in Bengaluru (Indiranagar).",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "ecommerce_user",
+        "forex_card"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_4d61978461",
+      "fact": "Trisha reported an unauthorized ₹899 international subscription debit recently; support filed a chargeback and enabled domestic-only card security.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "subscription_dispute",
+        "dispute",
+        "international_ecom",
+        "resolved"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_9c5fc9bff4",
+      "fact": "Trisha expects immediate card freeze/unfreeze confirmation and 48-hour provisional credit timelines.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "security_conscious",
+        "fast_resolution"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-199": [
+    {
+      "id": "mem_8d83424fb1",
+      "fact": "Yashvi operates a thriving retail & distribution enterprise in Bengaluru (Indiranagar) relying on NPCI Bharat QR and UPI Soundbox settlements.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "sme_trader",
+        "upi_soundbox",
+        "supplier_cycle"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_051048f201",
+      "fact": "Yashvi previously used a one-time ₹350 NACH return fee waiver; any future commercial fee waiver requires Regional Branch Manager approval.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "nach_fee",
+        "courtesy_used",
+        "waiver_history"
+      ],
+      "entities": [
+        {
+          "text": "₹350",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_feafcef7ca",
+      "fact": "Yashvi checks settlement finality every Monday morning before paying vendor invoices via NEFT.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "batch_anxiety",
+        "upi_settlement",
+        "ist_timings"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ],
+  "bank_CUST-IN-200": [
+    {
+      "id": "mem_1be8ab5e15",
+      "fact": "Meera is a software architect based in Bengaluru (Yelahanka) who invests monthly via UPI AutoPay into Nifty 50 index funds and equities.",
+      "timestamp": "2026-09-15T10:30:00Z",
+      "type": "world",
+      "tags": [
+        "tech_professional",
+        "sip_investor",
+        "upi_autopay"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_2c6711537a",
+      "fact": "Meera had an ATM cash withdrawal failure of ₹10,000 at an off-us ATM last month; support credited the T+5 RBI auto-reversal plus compensation.",
+      "timestamp": "2026-10-19T14:20:00Z",
+      "type": "experience",
+      "tags": [
+        "atm_dispute",
+        "rbi_compensation",
+        "resolved",
+        "waiver_eligible"
+      ],
+      "entities": [
+        {
+          "text": "₹10,000",
+          "type": "MONETARY_AMOUNT"
+        }
+      ],
+      "context": "customer_support_turn"
+    },
+    {
+      "id": "mem_5652209a11",
+      "fact": "Meera prefers crisp bulleted breakdowns and instant digital receipts via In-App Push.",
+      "timestamp": "2026-10-30T09:15:00Z",
+      "type": "observation",
+      "tags": [
+        "communication_style",
+        "bullet_points",
+        "in_app"
+      ],
+      "entities": [],
+      "context": "customer_support_turn"
+    }
+  ]
+}
