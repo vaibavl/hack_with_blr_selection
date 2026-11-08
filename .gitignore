@@ -13,3 +13,5 @@ ENV/
 data/hindsight_local_banks.json
 
 .env
+
+docs-INTERNAL-do-not-push.md

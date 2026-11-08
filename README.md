@@ -3,37 +3,25 @@
 > A full-stack **FinTech customer-support AI agent** for an Indian commercial bank ("BharatApex"),
 > with **persistent long-term client memory**, tool-calling over a synthetic core-banking layer,
 > and a compliance guardrail engine (RBI / NPCI / FEMA style rules).
-> Originally built for a hackathon; this repository is the maintained version used for
-> **Hack-with-Bengaluru selection** — shared so teammates (and any AI assistant) can understand
-> and run it quickly.
+> Maintained for **Hack-with-Bengaluru selection** — shared so teammates (and any AI assistant)
+> can understand and run it quickly.
 
-**Status:** working & demo-ready · **Stack:** Python 3.10+ / FastAPI / SQLite / vanilla JS (no build step) · **Real LLM:** Groq (`openai/gpt-oss-120b`), with a deterministic local fallback engine so the demo **never breaks without keys**.
+**Status:** working & demo-ready · **Stack:** Python 3.10+ / FastAPI / SQLite / vanilla JS (no build step) · The chatbot uses a real LLM when keys are provided (Groq), and ships with a deterministic local fallback engine so the demo **never breaks without keys**.
 
 ---
 
 ## 1. What is this, in one paragraph?
 
 BharatApex AI is a **customer-service agent for a bank**, exposed through a premium dark dashboard
-at `http://127.0.0.1:8000`. A user logs in as one of three synthetic bank customers, and chats with
+at `http://127.0.0.1:8000`. A user logs in as one of three synthetic bank customers and chats with
 "ClientCare" — an agent that checks balances, releases SWIFT/FIRC holds, blocks/unblocks cards,
 files RBI disputes, waives fees (with policy limits), converts INR↔USD, and registers travel
 notices — by **calling real backend tools**, not by hallucinating. Every action and insight is
 remembered in a **long-term memory engine (Vectorize Hindsight)**, so the agent answers follow-ups
-with context on later days ("that wire we talked about…"). A **Benchmark button** compares this
-memory-enabled agent against a classic stateless chatbot to show the difference during pitches.
-Everything is sandboxed per customer: one login can only ever see its own accounts, cards,
-memories and conversations.
+with context on later days ("that wire we talked about…"). Everything is sandboxed per customer:
+one login can only ever see its own accounts, cards, memories and conversations.
 
-## 2. The 30-second demo script
-
-1. Open `http://127.0.0.1:8000`, log in as `aarav` / `Apex@101`.
-2. Ask: *"Why is my $5,000 SWIFT wire from Silicon Valley Bank on hold?"* → agent recalls purpose
-   code **P0802** from memory and **releases the FIRC compliance hold** (tool call, real state change).
-3. Click **Benchmark** → the stateless-bot comparison shows what a normal chatbot would ask.
-4. Toggle **INR / USD / Dual** in the top bar → balances re-render in both currencies.
-5. Refresh the page → the conversation and history survive (SQLite persistence).
-
-Login accounts (all synthetic, seeds are in `src/synthetic_data/customers.json`):
+## 2. The demo personas
 
 | Username | Password | Customer | Persona |
 |----------|----------|----------|---------|
@@ -87,7 +75,7 @@ rate on 2026-11-08), and the bank's branch identity is **MG Road Corporate Branc
 | Currency conversion | USD↔INR at ₹94.11, zero portfolio markup, Indian digit grouping | same |
 | Reminder of settlement times | weekend UPI/QR batches settle Monday 06:00 IST | same |
 | Travel notices | card regions enabled on request | same |
-| Compliance guardrails | never asks for PIN/CVV/OTP; escalates RBI-Ombudsman/legal threats to the Principal Nodal Officer; single-customer data isolation | `src/banking/compliance.py` |
+| Compliance guardrails | never asks for PIN/CVV/OTP; escalates Ombudsman/legal threats to the Principal Nodal Officer; single-customer data isolation | `src/banking/compliance.py` |
 
 ## 5. Project structure (LLM-friendly map)
 
@@ -103,13 +91,13 @@ apex-fintech-agent/
 │   └── reset_memory.py          # wipes local memory banks, re-seeds the 3 demo customers
 ├── src/
 │   ├── api/
-│   │   └── app.py               # FastAPI app + ALL routes (§6) + static file serving
+│   │   └── app.py               # FastAPI app + all routes + static file serving
 │   ├── auth.py                  # login, server-side sessions, HttpOnly `apex_session` cookie
 │   ├── db.py                    # SQLite helpers (conversations/messages persist across refreshes)
 │   ├── agent/                   # ★ the conversational brain
 │   │   ├── orchestrator.py      # pipeline: compliance → memory recall → snapshot → LLM/tools → retain memory
-│   │   ├── llm_router.py        # Groq/OpenAI/Gemini router + tool loop + post-processing + LOCAL fallback engine
-│   │   ├── prompts.py           # FINTECH_SYSTEM_PROMPT (tone/rules/facts) + classification prompt
+│   │   ├── llm_router.py        # Groq/OpenAI/Gemini router + tool loop + local fallback engine
+│   │   ├── prompts.py           # system prompt (tone/rules/facts) + classification prompt
 │   │   ├── tools.py             # ToolExecutor: binds tool calls to the logged-in customer only
 │   │   └── comparison.py        # stateless-bot benchmark copy for the Benchmark button
 │   ├── banking/                 # ★ the synthetic bank
@@ -128,69 +116,23 @@ apex-fintech-agent/
 │       ├── index.html           # layout: sidebar / top bar / stat cards / chat / wallet / history
 │       ├── styles.css           # dark premium design system (orange #FF4D00 accent) + light theme
 │       └── app.js               # all UI logic, fetch calls, chat rendering — no frameworks
-├── tests/                       # 19 unittest tests (all mocked, no network needed)
-└── WORK-*.md / *.py             # scratch files (safe to ignore)
+└── tests/                       # automated suite (fully mocked, no network needed)
 ```
 
-### The message pipeline (read this to modify the agent)
-
-```
-user message (index.html/app.js)
-   → POST /api/chat (app.py, session-checked)
-   → BankingComplianceGuard.sanitize / escalation check            (banking/compliance.py)
-   → Hindsight recall + reflect: memories & directives             (hindsight/, per-customer "bank")
-   → _customer_snapshot(): cards/balances/last 8 txns context      (agent/orchestrator.py)
-   → LLMRouter.agentic_chat / generate with history + tools:       (agent/llm_router.py)
-        Groq (openai/gpt-oss-120b, ~4 tool rounds max, dedupe)
-        ├─ ToolExecutor(customer_id) MUTATES bank state            (agent/tools.py → banking/)
-        └─ replies post-processed (strip meta text) & enhanced
-   → fallback: deterministic data-driven local engine (no CLI keys needed)
-   → Hindsight retain (stores resolution as a new memory)
-   → JSON: { reply, actions[], banking_action, recalled_memories[], latency_ms, ... }
-   → app.js renders chat bubble + action badges; ledger/stats refresh
-```
-
-## 6. API endpoints
-
-| Method | Path | Auth | Purpose |
-|---|---|---|---|
-| POST | `/api/auth/login` | – | demo credentials → session cookie |
-| POST | `/api/auth/logout` | ✔ | clear session |
-| GET | `/api/auth/me` | ✔ | current customer profile |
-| GET | `/api/overview` | ✔ | accounts, cards, transactions, tiers (drives stat cards/wallet) |
-| GET | `/api/conversations` | ✔ | chat-history sidebar |
-| POST | `/api/conversations` | ✔ | new chat |
-| DELETE | `/api/conversations/{id}` | ✔ | delete chat |
-| GET | `/api/conversations/{id}/messages` | ✔ | reload a conversation |
-| POST | `/api/chat` | ✔ | send message → agent reply + actions + memories |
-| POST | `/api/benchmark` | ✔ | stateless-bot vs memory-agent comparison |
-| GET | `/api/health` | – | liveness |
-
-All user-scoped endpoints are strictly isolated to the logged-in customer.
-
-## 7. Tests
-
-```powershell
-python -m unittest discover tests
-```
-
-19 tests, fully offline/mocked: memory retention, compliance masking, FX conversion, fee policy,
-routing, login/session security, per-customer conversation isolation, chat-history persistence,
-and the Groq tool-calling loop. (`OK (Some noise)` = Starlette/httpx deprecation warning; ignore it.)
-
-## 8. Known quirks / notes for contributors
+## 6. Known quirks / notes for contributors
 
 - The `.env` holds real keys and is **gitignored by design** — never commit it.
 - If Hindsight Cloud is unreachable, the app silently switches to local memory (log line:
   `Cloud recall error … Using local`); the demo stays fully functional.
-- Model on Groq: `llama-3.3-70b-versatile` was decommissioned; use `openai/gpt-oss-120b` (current `.env`).
+- The chatbot's model on Groq: use `openai/gpt-oss-120b` (older `llama-3.3-70b-versatile` was decommissioned).
 - Emoji banner needs UTF-8 console (see §3).
+- A small suite of automated tests lives in `tests/` (offline, mocked) — speak to the team
+  before touching `src/agent/` or `src/banking/` and keep the suite green.
 - The UI was redesigned (v3): orange-accent dark dashboard, sidebar nav, stat cards, wallet tiles,
   cash-flow chart, recent-activities table, and an INR/USD/Dual toggle bound to all money displays.
 
-## 9. Repo / team workflow for Hack-with-BLR
+## 7. Repo / team workflow for Hack-with-BLR
 
 - Upstream repo: `hack_with_blr_selection` (shared selection repo).
-- Do not push `.env` or `data/*.json` generated stores.
+- Do not push `.env` or generated `data/` stores.
 - Suggested branches: `main` = stable demo, `feat/<name>-<topic>` per teammate.
-- Quick check before pushing: `python -m unittest discover tests` must be green.
